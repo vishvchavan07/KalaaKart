@@ -56,7 +56,7 @@
     <div class="card-tags" style="display:flex; gap:6px; flex-wrap:wrap; margin-bottom:20px;">
         ${hobbyTags}
     </div>
-    <a href="#" class="button btn-primary wa-cta" data-name="${profile.name}" data-service="${profile.title}" data-price="${profile.price}" style="display:block; text-align:center; text-decoration:none; width:100%; padding:14px 20px; font-weight:700; border-radius:10px;">Book Now</a>
+    <button class="button btn-primary" data-book-profile="${profile.id}" style="display:block; width:100%; padding:14px 20px; font-weight:700; border-radius:10px; border:none; cursor:pointer;">Book Now</button>
   </div>
 </div>`;
   }
@@ -71,7 +71,7 @@
               <div>
                 <h3 style="margin:0; font-size:1.4rem; color:var(--text-primary); font-weight:800; letter-spacing:-0.02em;">${mentor.name}</h3>
                 <p style="margin:4px 0; font-size:1rem; color:var(--text-secondary); font-weight:600;">
-                  <span style="color:var(--accent);">${mentor.subject}</span> • ${mentor.mode}
+                   <span style="color:var(--accent);">${mentor.subject}</span> • ${mentor.mode}
                 </p>
               </div>
               <div style="text-align:right;">
@@ -88,7 +88,7 @@
                 <span style="font-weight:800; font-size:1.1rem; color:var(--text-primary);">${mentor.rating}</span>
                 <span style="font-size:0.9rem; color:var(--text-secondary);">Expert Mentor</span>
               </div>
-              <a href="#" class="button btn-primary wa-cta" data-name="${mentor.name}" data-service="${mentor.subject} Mentoring" data-price="${mentor.price}" style="display:block; text-align:center; text-decoration:none; padding:12px 32px; font-weight:700; border-radius:12px; font-size:1rem;">Book Session</a>
+              <button class="button btn-primary" data-book-mentor="${index}" style="display:block; padding:12px 32px; font-weight:700; border-radius:12px; font-size:1rem; border:none; cursor:pointer;">Book Session</button>
             </div>
           </div>
         </div>
@@ -108,7 +108,7 @@
           <span class="tag">${item.size}</span>
         </div>
         <p>${item.seller}</p>
-        <a href="#" class="button button-secondary wa-cta" data-name="${item.seller}" data-service="${item.name}" data-price="${item.buyPrice ? 'Buy Rs '+item.buyPrice : 'Rent Rs '+item.rentPrice}" style="display:block; text-align:center; text-decoration:none; width:100%; margin-top:12px;">Contact Seller</a>
+        <button class="button button-secondary" data-book-item="${index}" style="display:block; width:100%; margin-top:12px; border:none; cursor:pointer;">Contact Seller</button>
       </article>
     `;
   }
@@ -583,48 +583,7 @@ const savedLocalTheme = localStorage.getItem('kk-theme') || 'dark-cold';
 setTheme(savedLocalTheme);
 
 
-  // WA.ME GENERATOR
-  function buildWALink(name, service, price) {
-    const msg = encodeURIComponent(
-      `Hi ${name}! I found you on Kalaa Kart.\n` +
-      `I'm interested in: ${service}\n` +
-      `Quoted price: ${price}\n` +
-      `Can we connect?`
-    );
-    return `https://wa.me/919999999999?text=${msg}`;
-  }
-
-  function initWACtas() {
-    document.querySelectorAll('.wa-cta').forEach(btn => {
-      let card = btn.closest('.profile-card, .mentor-card, .market-card, .showcase-card') || btn;
-      let name = card.getAttribute('data-name') || btn.getAttribute('data-name') || 'Creator';
-      let service = card.getAttribute('data-service') || btn.getAttribute('data-service') || 'Your Service';
-      let price = card.getAttribute('data-price') || btn.getAttribute('data-price') || 'Discussed price';
-      
-      if (btn.tagName.toLowerCase() === 'a') {
-        btn.href = buildWALink(name, service, price);
-        btn.target = "_blank";
-        btn.rel = "noopener";
-      } else {
-        btn.addEventListener('click', (e) => {
-          e.preventDefault();
-          window.open(buildWALink(name, service, price), '_blank');
-        });
-      }
-    });
-  }
-  
-  // Call initWACtas periodically to catch dynamic renders or just hook into render functions
-  // Actually, we'll override the render functions to call initWACtas
-  const origRenderMentors = window.renderMentors;
-  const origRenderMarket = window.renderMarket;
-  const origRenderProfiles = window.renderProfiles;
-  
-  // Simple listener for dynamic changes
-  const observer = new MutationObserver((mutations) => {
-      initWACtas();
-  });
-  observer.observe(document.body, { childList: true, subtree: true });
+  // Removed WhatsApp link generation and initialization logic as requested.
 
 // ──────────────────────────────────────────────────────────
 // 5-UPGRADE MOTION & DESIGN SYSTEM INIT
