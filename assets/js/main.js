@@ -89,11 +89,17 @@
   }
 
   if (page === "mentors") {
-    document.getElementById("mentorCards").innerHTML = data.mentors.map(mentorCard).join("");
+    const mentorContainer = document.getElementById("mentorCards");
+    if (mentorContainer) {
+      mentorContainer.innerHTML = data.mentors.map(mentorCard).join("");
+    }
   }
 
   if (page === "marketplace") {
-    document.getElementById("marketplaceCards").innerHTML = data.marketplace.map(marketplaceCard).join("");
+    const marketContainer = document.getElementById("marketplaceCards");
+    if (marketContainer) {
+      marketContainer.innerHTML = data.marketplace.map(marketplaceCard).join("");
+    }
   }
 
   const lightbox = document.createElement("div");

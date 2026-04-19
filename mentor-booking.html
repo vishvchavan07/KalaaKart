@@ -402,34 +402,50 @@ body {
   <script src="assets/js/main.js"></script>
   <script>
     (function () {
-      function animateCounter(el) {
-        const target = parseInt(el.dataset.target, 10);
-        const suffix = el.dataset.suffix || '';
-        const duration = 1400;
-        const step = 16;
-        const increment = target / (duration / step);
-        let current = 0;
-        const timer = setInterval(() => {
-          current += increment;
-          if (current >= target) {
-            current = target;
-            clearInterval(timer);
+      const subjectPills = document.querySelectorAll('#mentorFilterBar .filter-pill');
+      const freeToggle   = document.getElementById('freeToggle');
+      const cards        = document.querySelectorAll('#mentorsGrid .mcard');
+
+      function filterCards() {
+        let activeFilter = 'all';
+        subjectPills.forEach(p => {
+          if (p.classList.contains('active')) activeFilter = p.dataset.filter;
+        });
+        
+        const freeOnly = freeToggle.checked;
+
+        cards.forEach(card => {
+          const matchSub = (activeFilter === 'all') || (card.dataset.subject === activeFilter);
+          const matchFree = freeOnly ? (card.dataset.free === 'true') : true;
+
+          if (matchSub && matchFree) {
+            card.style.display = 'flex';
+          } else {
+            card.style.display = 'none';
           }
-          el.textContent = Math.floor(current) + suffix;
-        }, step);
+        });
       }
 
+      subjectPills.forEach(pill => {
+        pill.addEventListener('click', () => {
+          subjectPills.forEach(p => p.classList.remove('active'));
+          pill.classList.add('active');
+          filterCards();
+        });
+      });
+
+      freeToggle.addEventListener('change', filterCards);
+      
+      // Page reveals
       const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
           if (entry.isIntersecting) {
-            entry.target.querySelectorAll('.stat-number').forEach(animateCounter);
+            entry.target.classList.add("animated");
             observer.unobserve(entry.target);
           }
         });
-      }, { threshold: 0.3 });
-
-      const statsRow = document.querySelector('.hero-stats-premium');
-      if (statsRow) observer.observe(statsRow);
+      }, { threshold: 0.1 });
+      document.querySelectorAll('.mcard, .step-card').forEach(c => observer.observe(c));
     })();
   </script>
   <button id="backToTop" aria-label="Back to top">↑</button>
