@@ -1297,6 +1297,7 @@ body {
 }
 
 .hero-grid-premium {
+  display: grid;
   grid-template-columns: 0.95fr 1.05fr;
   min-height: 620px;
 }
