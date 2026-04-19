@@ -1,142 +1,72 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark-cold">
 <head>
-  <script>
+    <script>
     (function() {
-      const t = localStorage.getItem('kk-theme') || 'warm';
+      const t = localStorage.getItem('kk-theme') || 'dark-cold';
       document.documentElement.setAttribute('data-theme', t);
     })();
   </script>
   <style>
-/* ─── THEME 1: WARM (default) ─── */
-[data-theme="warm"] {
-  --color-primary:        #E86C3A;
-  --color-primary-dark:   #C95A2A;
-  --color-primary-light:  #FFF0E8;
-  --color-secondary:      #C2185B;
-  --color-gradient:       linear-gradient(135deg, #E86C3A, #C2185B);
-
-  --color-bg:             #FFFFFF;
-  --color-bg-soft:        #FFF8F5;
-  --color-bg-card:        #FFFFFF;
-  --color-surface:        #FFF0E8;
-
-  --color-text-primary:   #1A1A1A;
-  --color-text-secondary: #666666;
-  --color-text-muted:     #999999;
-
-  --color-nav-bg:         rgba(255,255,255,0.95);
-  --color-footer-bg:      #1A1A2E;
-  --color-footer-text:    rgba(255,255,255,0.75);
-
-  --color-border:         rgba(0,0,0,0.08);
-  --color-shadow:         rgba(0,0,0,0.08);
-
-  --color-badge-buy-bg:   #1565C0;
-  --color-badge-buy-text: #FFFFFF;
-  --color-badge-rent-bg:  #6A1B9A;
-  --color-badge-rent-text:#FFFFFF;
-
-  --color-free-bg:        #E8F5E9;
-  --color-free-text:      #2E7D32;
-  --color-tag-bg:         #F3E5F5;
-  --color-tag-text:       #6A1B9A;
-
-  --color-overline:       #E86C3A;
-  --color-star:           #E86C3A;
-
-  --radius-card:          16px;
-  --shadow-card:          0 4px 20px rgba(0,0,0,0.08);
-  --shadow-card-hover:    0 12px 32px rgba(232,108,58,0.18);
-  --transition:           0.25s ease;
+:root, [data-theme="dark-cold"] {
+  --bg: #0D0F1A; --surface: #13162A; --nav-bg: rgba(13,15,26,0.85);
+  --card-bg: #181C35; --card-top-bg: #1E2340;
+  --card-top-text: #E8EAFF; --card-top-muted: #8890C4;
+  --text-primary: #E8EAFF; --text-secondary: #9AA0CC;
+  --accent: #7C6EF5; --border: rgba(124,110,245,0.18);
+  --tag-bg: rgba(124,110,245,0.15); --tag-text: #A99BFF;
+  --cursor-color: #7C6EF5; --shadow: 0 4px 24px rgba(124,110,245,0.15);
+}
+[data-theme="dark-warm"] {
+  --bg: #120A05; --surface: #1C1108; --nav-bg: rgba(18,10,5,0.88);
+  --card-bg: #231508; --card-top-bg: #3B1F0A;
+  --card-top-text: #FFE8CC; --card-top-muted: #C49A6A;
+  --text-primary: #FFE8CC; --text-secondary: #BF8D5A;
+  --accent: #E8832A; --border: rgba(232,131,42,0.20);
+  --tag-bg: rgba(232,131,42,0.14); --tag-text: #FFBA78;
+  --cursor-color: #E8832A; --shadow: 0 4px 24px rgba(232,131,42,0.18);
+}
+[data-theme="light-pro"] {
+  --bg: #F7F8FC; --surface: #FFFFFF; --nav-bg: rgba(247,248,252,0.92);
+  --card-bg: #FFFFFF; --card-top-bg: #1A1A2E;
+  --card-top-text: #F0F0FF; --card-top-muted: #9090BB;
+  --text-primary: #1A1A2E; --text-secondary: #555577;
+  --accent: #5046E5; --border: rgba(80,70,229,0.14);
+  --tag-bg: rgba(80,70,229,0.08); --tag-text: #5046E5;
+  --cursor-color: #5046E5; --shadow: 0 4px 20px rgba(0,0,0,0.08);
 }
 
-/* ─── THEME 2: COOL (blue-violet) ─── */
-[data-theme="cool"] {
-  --color-primary:        #5C6BC0;
-  --color-primary-dark:   #3949AB;
-  --color-primary-light:  #E8EAF6;
-  --color-secondary:      #7B1FA2;
-  --color-gradient:       linear-gradient(135deg, #5C6BC0, #7B1FA2);
-
-  --color-bg:             #F0F2FF;
-  --color-bg-soft:        #E8EAF6;
-  --color-bg-card:        #FFFFFF;
-  --color-surface:        #E8EAF6;
-
-  --color-text-primary:   #1A1A2E;
-  --color-text-secondary: #4A4A6A;
-  --color-text-muted:     #8888AA;
-
-  --color-nav-bg:         rgba(240,242,255,0.95);
-  --color-footer-bg:      #0D0D1A;
-  --color-footer-text:    rgba(255,255,255,0.75);
-
-  --color-border:         rgba(92,107,192,0.15);
-  --color-shadow:         rgba(92,107,192,0.12);
-
-  --color-badge-buy-bg:   #1565C0;
-  --color-badge-buy-text: #FFFFFF;
-  --color-badge-rent-bg:  #7B1FA2;
-  --color-badge-rent-text:#FFFFFF;
-
-  --color-free-bg:        #E3F2FD;
-  --color-free-text:      #1565C0;
-  --color-tag-bg:         #EDE7F6;
-  --color-tag-text:       #512DA8;
-
-  --color-overline:       #5C6BC0;
-  --color-star:           #5C6BC0;
-
-  --radius-card:          16px;
-  --shadow-card:          0 4px 20px rgba(92,107,192,0.10);
-  --shadow-card-hover:    0 12px 32px rgba(92,107,192,0.22);
-  --transition:           0.25s ease;
+body {
+  background: var(--bg);
+  color: var(--text-primary);
+  cursor: none;
+  transition: background 0.35s, color 0.35s;
 }
 
-/* ─── THEME 3: SAGE (mint-green + off-white) ─── */
-[data-theme="sage"] {
-  --color-primary:        #2E7D6B;
-  --color-primary-dark:   #1B5E50;
-  --color-primary-light:  #E8F5F2;
-  --color-secondary:      #00897B;
-  --color-gradient:       linear-gradient(135deg, #2E7D6B, #00897B);
-
-  --color-bg:             #F7FAF9;
-  --color-bg-soft:        #EEF5F3;
-  --color-bg-card:        #FFFFFF;
-  --color-surface:        #E8F5F2;
-
-  --color-text-primary:   #1A2E2A;
-  --color-text-secondary: #4A6660;
-  --color-text-muted:     #8AA8A2;
-
-  --color-nav-bg:         rgba(247,250,249,0.95);
-  --color-footer-bg:      #0D1F1C;
-  --color-footer-text:    rgba(255,255,255,0.75);
-
-  --color-border:         rgba(46,125,107,0.12);
-  --color-shadow:         rgba(46,125,107,0.10);
-
-  --color-badge-buy-bg:   #1B5E50;
-  --color-badge-buy-text: #FFFFFF;
-  --color-badge-rent-bg:  #00695C;
-  --color-badge-rent-text:#FFFFFF;
-
-  --color-free-bg:        #E8F5E9;
-  --color-free-text:      #1B5E20;
-  --color-tag-bg:         #E0F2F1;
-  --color-tag-text:       #004D40;
-
-  --color-overline:       #2E7D6B;
-  --color-star:           #2E7D6B;
-
-  --radius-card:          16px;
-  --shadow-card:          0 4px 20px rgba(46,125,107,0.08);
-  --shadow-card-hover:    0 12px 32px rgba(46,125,107,0.20);
-  --transition:           0.25s ease;
+#cursor-dot {
+  position: fixed; width: 8px; height: 8px;
+  background: var(--cursor-color); border-radius: 50%;
+  pointer-events: none; z-index: 99999;
+  transform: translate(-50%, -50%);
+  transition: background 0.3s;
 }
-  </style>
+#cursor-ring {
+  position: fixed; width: 36px; height: 36px;
+  border: 2px solid var(--cursor-color); border-radius: 50%;
+  pointer-events: none; z-index: 99998;
+  transform: translate(-50%, -50%);
+  opacity: 0.65; transition: width 0.2s, height 0.2s, border-color 0.3s;
+}
+
+#theme-switcher { position:fixed; bottom:24px; left:24px; z-index:9000; }
+.theme-toggle-btn { background:var(--accent); color:#fff; border:none; border-radius:50px; padding:10px 18px; font-size:14px; font-weight:600; cursor:none; box-shadow:var(--shadow); }
+.theme-panel { display:none; flex-direction:column; gap:8px; background:var(--surface); border:1px solid var(--border); border-radius:14px; padding:12px; margin-bottom:10px; box-shadow:var(--shadow); }
+.theme-panel.open { display:flex; }
+.theme-opt { display:flex; align-items:center; gap:10px; background:none; border:1px solid transparent; border-radius:10px; padding:8px 12px; cursor:none; color:var(--text-primary); font-size:14px; font-weight:500; transition:border-color 0.2s, background 0.2s; }
+.theme-opt:hover, .theme-opt.active { border-color:var(--accent); background:var(--tag-bg); }
+.theme-opt.active::after { content:'✓'; margin-left:auto; color:var(--accent); font-weight:700; }
+.swatch { width:26px; height:26px; border-radius:7px; display:inline-block; flex-shrink:0; }
+</style>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Kalaa Kart — From Passion to Profession</title>
@@ -154,29 +84,23 @@
   <link rel="stylesheet" href="assets/css/styles.css">
 </head>
 <body data-page="home">
-  <header class="site-header">
-    <div class="container nav-shell">
-      <a class="brand" href="index.html">
-        <img class="brand-logo" src="assets/images/main_logo_final.jpeg" alt="Kalaa Kart logo">
-        <span>
-          <strong>Kalaa Kart</strong>
-          <small>From Passion to Profession</small>
-        </span>
-      </a>
-      <button class="mobile-nav-toggle" id="mobileNavToggle" aria-label="Toggle Navigation">☰</button>
-      <nav class="top-nav">
+<div id="cursor-dot"></div>
+<div id="cursor-ring"></div>
+
+
+
+  <header class="navbar">
+    <a class="nav-brand" href="index.html">
+        <img src="assets/images/main_logo_final.jpeg" alt="Logo">
+        <span>Kalaa Kart</span>
+    </a>
+    <div class="nav-links">
         <a href="index.html">Home</a>
         <a href="profiles.html">Profiles</a>
         <a href="mentor-booking.html">Mentor Booking</a>
         <a href="marketplace.html">Old Clothes</a>
-      </nav>
     </div>
-    <div class="mobile-nav-menu" id="mobileNavMenu">
-      <a href="index.html">Home</a>
-      <a href="profiles.html">Profiles</a>
-      <a href="mentor-booking.html">Mentor Booking</a>
-      <a href="marketplace.html">Old Clothes</a>
-    </div>
+    <button class="nav-hamburger" id="navHamburger">☰</button>
   </header>
 
   <main>
@@ -408,292 +332,33 @@
     })();
   </script>
   <button id="backToTop" aria-label="Back to top">↑</button>
-  <script>
-    (function() {
-      // 1. JS For Premium Polishes
-      const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            entry.target.style.opacity = '1';
-            entry.target.style.transform = 'translateY(0)';
-          }
-        });
-      }, { threshold: 0.1 });
-      document.querySelectorAll('.card, .profile-card, .mentor-card, .market-card, .stat-card, .showcase-card, .pillar-card, .impact-card, .banner-card, .pcard, .mcard, .lcard').forEach(card => {
-        card.style.opacity = '0';
-        card.style.transform = 'translateY(24px)';
-        card.style.transition = 'opacity 0.4s ease, transform 0.4s ease';
-        observer.observe(card);
-      });
 
-      const header = document.querySelector('.site-header');
-      window.addEventListener('scroll', () => {
-        if(header) header.classList.toggle('scrolled', window.scrollY > 60);
-      });
-
-      document.querySelectorAll('button, .button, a[class*="btn"], .pcard-book, .mcard-book, .lcard-btn, .sell-banner-btn').forEach(btn => {
-        btn.addEventListener('click', function(e) {
-          const ripple = document.createElement('span');
-          ripple.classList.add('ripple');
-          const rect = this.getBoundingClientRect();
-          const size = Math.max(rect.width, rect.height);
-          ripple.style.width = ripple.style.height = size + 'px';
-          ripple.style.left = (e.clientX - rect.left - size/2) + 'px';
-          ripple.style.top  = (e.clientY - rect.top  - size/2) + 'px';
-          this.appendChild(ripple);
-          setTimeout(() => ripple.remove(), 600);
-        });
-      });
-
-      const currentPage = window.location.pathname.split("/").pop() || 'index.html';
-      document.querySelectorAll("nav.top-nav a, .mobile-nav-menu a").forEach(link => {
-        const href = link.getAttribute("href");
-        if (href === currentPage || (currentPage === '' && href === 'index.html')) {
-          link.classList.add("nav-active");
-        }
-      });
-      const mobileToggle = document.getElementById('mobileNavToggle');
-      const mobileMenu = document.getElementById('mobileNavMenu');
-      if(mobileToggle && mobileMenu) {
-        mobileToggle.addEventListener('click', () => {
-          mobileMenu.classList.toggle('open');
-        });
-        mobileMenu.querySelectorAll('a').forEach(link => {
-          link.addEventListener('click', () => {
-            mobileMenu.classList.remove('open');
-          });
-        });
-      }
-      const btn = document.getElementById('backToTop');
-      if(btn) {
-        window.addEventListener('scroll', () => {
-          btn.style.opacity = window.scrollY > 300 ? '1' : '0';
-          btn.style.pointerEvents = window.scrollY > 300 ? 'auto' : 'none';
-        });
-        btn.addEventListener('click', () => {
-          window.scrollTo({ top: 0, behavior: 'smooth' });
-        });
-      }
-    })();
-  </script>
-<div id="cursorGlow"></div>
-<script>
-document.addEventListener('DOMContentLoaded', () => {
-  const glow = document.getElementById('cursorGlow');
-  if (glow && window.innerWidth > 768) {
-    document.addEventListener('mousemove', (e) => {
-      glow.style.left = e.clientX + 'px';
-      glow.style.top  = e.clientY + 'px';
-      glow.style.opacity = '1';
-    });
-    document.addEventListener('mouseleave', () => {
-      glow.style.opacity = '0';
-    });
-    /* Burst on hover over buttons/cards */
-    document.querySelectorAll('button, article, .pcard, .mcard, .lcard, .card, .profile-card, nav a').forEach(el => {
-      el.addEventListener('mouseenter', () => {
-        glow.style.width  = '420px';
-        glow.style.height = '420px';
-        glow.style.background = `radial-gradient(circle, color-mix(in srgb, var(--color-primary) 13%, transparent) 0%, transparent 70%)`;
-      });
-      el.addEventListener('mouseleave', () => {
-        glow.style.width  = '300px';
-        glow.style.height = '300px';
-        glow.style.background = `radial-gradient(circle, color-mix(in srgb, var(--color-primary) 8%, transparent) 0%, transparent 70%)`;
-      });
-    });
-  }
-});
-</script>
-<div id="themeSwitcher">
-  <button id="themeToggleBtn" aria-label="Change theme">
-    🎨
-  </button>
-  <div id="themePalette" class="hidden">
-    <p class="palette-label">Choose Theme</p>
-
-    <button class="theme-option" data-theme="warm">
-      <span class="theme-swatch warm-swatch"></span>
-      <span class="theme-name">Warm</span>
-      <span class="theme-check" id="check-warm">✓</span>
-    </button>
-
-    <button class="theme-option" data-theme="cool">
-      <span class="theme-swatch cool-swatch"></span>
-      <span class="theme-name">Cool</span>
-      <span class="theme-check" id="check-cool">✓</span>
-    </button>
-
-    <button class="theme-option" data-theme="sage">
-      <span class="theme-swatch sage-swatch"></span>
-      <span class="theme-name">Sage</span>
-      <span class="theme-check" id="check-sage">✓</span>
-    </button>
+<div id="theme-switcher">
+  <button class="theme-toggle-btn" onclick="document.getElementById('theme-panel').classList.toggle('open')">🎨 Theme</button>
+  <div class="theme-panel" id="theme-panel">
+    <button class="theme-opt" data-theme="dark-cold" onclick="setTheme('dark-cold')"><span class="swatch" style="background:linear-gradient(135deg,#0D0F1A,#7C6EF5)"></span>Dark Cold</button>
+    <button class="theme-opt" data-theme="dark-warm" onclick="setTheme('dark-warm')"><span class="swatch" style="background:linear-gradient(135deg,#120A05,#E8832A)"></span>Dark Warm</button>
+    <button class="theme-opt" data-theme="light-pro" onclick="setTheme('light-pro')"><span class="swatch" style="background:linear-gradient(135deg,#F7F8FC,#5046E5)"></span>Light Pro</button>
   </div>
 </div>
 
-<style>
-#themeSwitcher {
-  position: fixed;
-  bottom: 84px;
-  right: 24px;
-  z-index: 9999;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  gap: 8px;
-}
-
-#themeToggleBtn {
-  width: 48px;
-  height: 48px;
-  border-radius: 50%;
-  background: var(--color-primary);
-  border: none;
-  font-size: 20px;
-  cursor: pointer;
-  box-shadow: 0 4px 16px var(--color-shadow);
-  transition: transform 0.2s ease, background 0.3s ease;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-#themeToggleBtn:hover {
-  transform: scale(1.1);
-  background: var(--color-primary-dark);
-}
-
-#themePalette {
-  background: var(--color-bg-card);
-  border-radius: 16px;
-  padding: 16px;
-  box-shadow: 0 8px 32px rgba(0,0,0,0.15);
-  min-width: 160px;
-  border: 1px solid var(--color-border);
-  transition: all 0.3s ease;
-}
-#themePalette.hidden {
-  opacity: 0;
-  pointer-events: none;
-  transform: translateY(8px) scale(0.97);
-}
-#themePalette:not(.hidden) {
-  opacity: 1;
-  pointer-events: auto;
-  transform: translateY(0) scale(1);
-}
-
-.palette-label {
-  font-size: 11px;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  color: var(--color-text-muted);
-  margin-bottom: 12px;
-}
-
-.theme-option {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  width: 100%;
-  padding: 10px 12px;
-  border: 1px solid var(--color-border);
-  border-radius: 10px;
-  background: var(--color-bg-soft);
-  cursor: pointer;
-  margin-bottom: 8px;
-  transition: all 0.2s ease;
-}
-.theme-option:last-child { margin-bottom: 0; }
-.theme-option:hover {
-  border-color: var(--color-primary);
-  background: var(--color-primary-light);
-  transform: translateX(-2px);
-}
-.theme-option.active {
-  border-color: var(--color-primary);
-  background: var(--color-primary-light);
-}
-
-.theme-swatch {
-  width: 22px;
-  height: 22px;
-  border-radius: 50%;
-  flex-shrink: 0;
-  border: 2px solid rgba(0,0,0,0.08);
-}
-.warm-swatch {
-  background: linear-gradient(135deg, #E86C3A, #C2185B);
-}
-.cool-swatch {
-  background: linear-gradient(135deg, #5C6BC0, #7B1FA2);
-}
-.sage-swatch {
-  background: linear-gradient(135deg, #2E7D6B, #00897B);
-}
-
-.theme-name {
-  font-size: 14px;
-  font-weight: 600;
-  color: var(--color-text-primary);
-  flex: 1;
-}
-
-.theme-check {
-  font-size: 13px;
-  font-weight: 700;
-  color: var(--color-primary);
-  opacity: 0;
-  transition: opacity 0.2s ease;
-}
-.theme-option.active .theme-check { opacity: 1; }
-</style>
 <script>
-  // Apply saved or default theme immediately
-  const savedTheme = localStorage.getItem('kk-theme') || 'warm';
-  document.documentElement.setAttribute('data-theme', savedTheme);
+function setTheme(t) {
+  document.documentElement.setAttribute('data-theme', t);
+  localStorage.setItem('kk-theme', t);
+  document.querySelectorAll('.theme-opt').forEach(b => b.classList.toggle('active', b.dataset.theme === t));
+}
+(function(){ setTheme(localStorage.getItem('kk-theme') || 'dark-cold'); })();
 
-  function applyTheme(theme) {
-    document.documentElement.setAttribute('data-theme', theme);
-    localStorage.setItem('kk-theme', theme);
-
-    // Update active states on buttons
-    document.querySelectorAll('.theme-option').forEach(btn => {
-      const isActive = btn.dataset.theme === theme;
-      btn.classList.toggle('active', isActive);
-      // Ensure the check icon is toggled appropriately
-      const checkIcon = btn.querySelector('.theme-check');
-      if(checkIcon) checkIcon.style.opacity = isActive ? '1' : '0';
-    });
-  }
-
-  // Set initial active state
-  document.addEventListener('DOMContentLoaded', () => {
-    applyTheme(savedTheme);
-
-    // Toggle palette open/close
-    const toggleBtn = document.getElementById('themeToggleBtn');
-    const palette   = document.getElementById('themePalette');
-
-    toggleBtn.addEventListener('click', (e) => {
-      e.stopPropagation();
-      palette.classList.toggle('hidden');
-    });
-
-    // Close palette when clicking outside
-    document.addEventListener('click', () => {
-      palette.classList.add('hidden');
-    });
-    palette.addEventListener('click', e => e.stopPropagation());
-
-    // Theme option click
-    document.querySelectorAll('.theme-option').forEach(btn => {
-      btn.addEventListener('click', () => {
-        applyTheme(btn.dataset.theme);
-      });
-    });
-  });
+const dot = document.getElementById('cursor-dot');
+const ring = document.getElementById('cursor-ring');
+let rx=0,ry=0,dx=0,dy=0;
+document.addEventListener('mousemove', e => { dx=e.clientX; dy=e.clientY; dot.style.left=dx+'px'; dot.style.top=dy+'px'; });
+(function loop(){ rx+=(dx-rx)*0.12; ry+=(dy-ry)*0.12; ring.style.left=rx+'px'; ring.style.top=ry+'px'; requestAnimationFrame(loop); })();
+document.querySelectorAll('a,button,.profile-card,.card').forEach(el=>{
+  el.addEventListener('mouseenter',()=>{ ring.style.width='52px'; ring.style.height='52px'; ring.style.opacity='1'; });
+  el.addEventListener('mouseleave',()=>{ ring.style.width='36px'; ring.style.height='36px'; ring.style.opacity='0.65'; });
+});
 </script>
 </body>
 </html>

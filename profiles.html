@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark-cold">
 <head>
   <script>
     (function() {
-      const t = localStorage.getItem('kk-theme') || 'warm';
+      const t = localStorage.getItem('kk-theme') || 'dark-cold';
       document.documentElement.setAttribute('data-theme', t);
     })();
   </script>
@@ -354,253 +354,23 @@
   </style>
 </head>
 <body data-page="profiles">
-  <header class="site-header">
-    <div class="container nav-shell">
-      <a class="brand" href="index.html">
-        <img class="brand-logo" src="assets/images/main_logo_final.jpeg" alt="Kalaa Kart logo">
-        <span>
-          <strong>Kalaa Kart</strong>
-          <small>From Passion to Profession</small>
-        </span>
-      </a>
-      <button class="mobile-nav-toggle" id="mobileNavToggle" aria-label="Toggle Navigation">☰</button>
-      <nav class="top-nav">
+  <div id="cursor-dot"></div>
+  <div id="cursor-ring"></div>
+  
+  <header class="navbar">
+    <a class="nav-brand" href="index.html">
+        <img src="assets/images/main_logo_final.jpeg" alt="Logo">
+        <span>Kalaa Kart</span>
+    </a>
+    <div class="nav-links">
         <a href="index.html">Home</a>
         <a href="profiles.html">Profiles</a>
         <a href="mentor-booking.html">Mentor Booking</a>
         <a href="marketplace.html">Old Clothes</a>
-      </nav>
     </div>
-    <div class="mobile-nav-menu" id="mobileNavMenu">
-      <a href="index.html">Home</a>
-      <a href="profiles.html">Profiles</a>
-      <a href="mentor-booking.html">Mentor Booking</a>
-      <a href="marketplace.html">Old Clothes</a>
-    </div>
+    <button class="nav-hamburger" id="navHamburger">☰</button>
   </header>
 
-  <main class="container page-main">
-    <section class="page-hero page-hero-premium">
-      <span class="eyebrow">Student Directory</span>
-      <h1>Discover talented students around your campus.</h1>
-      <p>Browse student creators, see their work, and book a service — all in one place.</p>
-    </section>
-
-    <!-- Category Filters -->
-    <section class="filters-bar" id="filterBar">
-      <button class="filter-pill active" data-filter="all">All</button>
-      <button class="filter-pill" data-filter="Creative Arts">Creative Arts</button>
-      <button class="filter-pill" data-filter="Photography">Photography</button>
-      <button class="filter-pill" data-filter="Writing">Writing</button>
-      <button class="filter-pill" data-filter="Teaching">Teaching</button>
-      <button class="filter-pill" data-filter="Handmade Crafts">Handmade Crafts</button>
-    </section>
-
-    <!-- Student Profile Cards -->
-    <div class="profiles-grid" id="profilesGrid">
-
-      <!-- 1. Priya Sharma -->
-      <article class="pcard" data-category="Creative Arts">
-        <div class="pcard-header">
-          <img class="pcard-avatar" src="https://api.dicebear.com/7.x/thumbs/svg?seed=Priya" alt="Priya Sharma avatar">
-          <div class="pcard-identity">
-            <h2 class="pcard-name">Priya Sharma</h2>
-            <span class="pcard-dept">Computer Engineering · 3rd Year</span>
-          </div>
-        </div>
-        <p class="pcard-tagline">"I turn your photos into painted memories"</p>
-        <div class="pcard-rating">
-          <span class="pcard-stars">
-            <span class="star-filled">★★★★★</span>
-          </span>
-          <span class="pcard-reviews">4.8 · 34 reviews</span>
-        </div>
-        <div class="pcard-tags">
-          <span class="pcard-tag">Painting</span>
-          <span class="pcard-tag">Portraits</span>
-          <span class="pcard-tag">Custom Art</span>
-        </div>
-        <p class="pcard-orders">✓ 27 orders completed</p>
-        <div class="pcard-footer">
-          <span class="pcard-price">From ₹299</span>
-          <a href="#" class="pcard-book">Book Now</a>
-        </div>
-      </article>
-
-      <!-- 2. Rohan Desai -->
-      <article class="pcard" data-category="Handmade Crafts">
-        <div class="pcard-header">
-          <img class="pcard-avatar" src="https://api.dicebear.com/7.x/thumbs/svg?seed=Rohan" alt="Rohan Desai avatar">
-          <div class="pcard-identity">
-            <h2 class="pcard-name">Rohan Desai</h2>
-            <span class="pcard-dept">Mechanical Engineering · 4th Year</span>
-          </div>
-        </div>
-        <p class="pcard-tagline">"Resin art that lasts a lifetime"</p>
-        <div class="pcard-rating">
-          <span class="pcard-stars">
-            <span class="star-filled">★★★★</span><span class="star-empty">★</span>
-          </span>
-          <span class="pcard-reviews">4.6 · 18 reviews</span>
-        </div>
-        <div class="pcard-tags">
-          <span class="pcard-tag">Resin Art</span>
-          <span class="pcard-tag">Keychains</span>
-          <span class="pcard-tag">Décor</span>
-        </div>
-        <p class="pcard-orders">✓ 15 orders completed</p>
-        <div class="pcard-footer">
-          <span class="pcard-price">From ₹199</span>
-          <a href="#" class="pcard-book">Book Now</a>
-        </div>
-      </article>
-
-      <!-- 3. Meera Joshi -->
-      <article class="pcard" data-category="Handmade Crafts">
-        <div class="pcard-header">
-          <img class="pcard-avatar" src="https://api.dicebear.com/7.x/thumbs/svg?seed=Meera" alt="Meera Joshi avatar">
-          <div class="pcard-identity">
-            <h2 class="pcard-name">Meera Joshi</h2>
-            <span class="pcard-dept">IT Engineering · 2nd Year</span>
-          </div>
-        </div>
-        <p class="pcard-tagline">"Handmade gifts crafted with love"</p>
-        <div class="pcard-rating">
-          <span class="pcard-stars">
-            <span class="star-filled">★★★★★</span>
-          </span>
-          <span class="pcard-reviews">4.9 · 41 reviews</span>
-        </div>
-        <div class="pcard-tags">
-          <span class="pcard-tag">Knitting</span>
-          <span class="pcard-tag">Gift Boxes</span>
-          <span class="pcard-tag">Crochet</span>
-        </div>
-        <p class="pcard-orders">✓ 38 orders completed</p>
-        <div class="pcard-footer">
-          <span class="pcard-price">From ₹199</span>
-          <a href="#" class="pcard-book">Book Now</a>
-        </div>
-      </article>
-
-      <!-- 4. Arjun Patil -->
-      <article class="pcard" data-category="Photography">
-        <div class="pcard-header">
-          <img class="pcard-avatar" src="https://api.dicebear.com/7.x/thumbs/svg?seed=Arjun" alt="Arjun Patil avatar">
-          <div class="pcard-identity">
-            <h2 class="pcard-name">Arjun Patil</h2>
-            <span class="pcard-dept">Civil Engineering · 3rd Year</span>
-          </div>
-        </div>
-        <p class="pcard-tagline">"Campus photographer for every moment"</p>
-        <div class="pcard-rating">
-          <span class="pcard-stars">
-            <span class="star-filled">★★★★★</span>
-          </span>
-          <span class="pcard-reviews">4.7 · 22 reviews</span>
-        </div>
-        <div class="pcard-tags">
-          <span class="pcard-tag">Photography</span>
-          <span class="pcard-tag">Editing</span>
-          <span class="pcard-tag">Reels</span>
-        </div>
-        <p class="pcard-orders">✓ 19 orders completed</p>
-        <div class="pcard-footer">
-          <span class="pcard-price">From ₹349</span>
-          <a href="#" class="pcard-book">Book Now</a>
-        </div>
-      </article>
-
-      <!-- 5. Sneha Kulkarni -->
-      <article class="pcard" data-category="Creative Arts">
-        <div class="pcard-header">
-          <img class="pcard-avatar" src="https://api.dicebear.com/7.x/thumbs/svg?seed=Sneha" alt="Sneha Kulkarni avatar">
-          <div class="pcard-identity">
-            <h2 class="pcard-name">Sneha Kulkarni</h2>
-            <span class="pcard-dept">Electronics · 2nd Year</span>
-          </div>
-        </div>
-        <p class="pcard-tagline">"Calligraphy and lettering for all occasions"</p>
-        <div class="pcard-rating">
-          <span class="pcard-stars">
-            <span class="star-filled">★★★★★</span>
-          </span>
-          <span class="pcard-reviews">5.0 · 12 reviews</span>
-        </div>
-        <div class="pcard-tags">
-          <span class="pcard-tag">Calligraphy</span>
-          <span class="pcard-tag">Lettering</span>
-          <span class="pcard-tag">Cards</span>
-        </div>
-        <p class="pcard-orders">✓ 11 orders completed</p>
-        <div class="pcard-footer">
-          <span class="pcard-price">From ₹149</span>
-          <a href="#" class="pcard-book">Book Now</a>
-        </div>
-      </article>
-
-      <!-- 6. Karan Mehta -->
-      <article class="pcard" data-category="Writing">
-        <div class="pcard-header">
-          <img class="pcard-avatar" src="https://api.dicebear.com/7.x/thumbs/svg?seed=Karan" alt="Karan Mehta avatar">
-          <div class="pcard-identity">
-            <h2 class="pcard-name">Karan Mehta</h2>
-            <span class="pcard-dept">Computer Engineering · 4th Year</span>
-          </div>
-        </div>
-        <p class="pcard-tagline">"Video editing that makes your content pop"</p>
-        <div class="pcard-rating">
-          <span class="pcard-stars">
-            <span class="star-filled">★★★★</span><span class="star-empty">★</span>
-          </span>
-          <span class="pcard-reviews">4.5 · 29 reviews</span>
-        </div>
-        <div class="pcard-tags">
-          <span class="pcard-tag">Video Editing</span>
-          <span class="pcard-tag">Reels</span>
-          <span class="pcard-tag">Thumbnails</span>
-        </div>
-        <p class="pcard-orders">✓ 23 orders completed</p>
-        <div class="pcard-footer">
-          <span class="pcard-price">From ₹399</span>
-          <a href="#" class="pcard-book">Book Now</a>
-        </div>
-      </article>
-
-    </div><!-- /profiles-grid -->
-  </main>
-
-  <footer class="site-footer-premium">
-    <div class="footer-main">
-      <div class="footer-brand">
-        <div class="footer-logo-row">
-          <img src="assets/images/main_logo_final.jpeg" alt="Kalaa Kart logo">
-          <strong>Kalaa Kart</strong>
-        </div>
-        <p class="footer-tagline">From Passion to Profession</p>
-        <p class="footer-desc">A student-powered platform for skills, mentoring, and campus essentials.</p>
-      </div>
-      <div class="footer-links-col">
-        <h4>Quick Links</h4>
-        <div>
-          <a href="index.html">Home</a>
-          <a href="profiles.html">Profiles</a>
-          <a href="mentor-booking.html">Mentor Booking</a>
-          <a href="marketplace.html">Old Clothes</a>
-        </div>
-      </div>
-    </div>
-    <div class="footer-bottom">
-      <p>© 2025 Kalaa Kart. Made with ♥ for campus communities.</p>
-      <div class="footer-social">
-        <a href="#" aria-label="Instagram">📸</a>
-        <a href="#" aria-label="Twitter">𝕏</a>
-        <a href="#" aria-label="LinkedIn">💼</a>
-      </div>
-    </div>
-  </footer>
-
-  <script src="assets/js/data.js"></script>
   <script src="assets/js/main.js"></script>
   <script>
     // ── Category Filter Logic ─────────────────────────────
@@ -635,21 +405,18 @@
       const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
           if (entry.isIntersecting) {
-            entry.target.style.opacity = '1';
-            entry.target.style.transform = 'translateY(0)';
+            entry.target.classList.add("animated");
           }
         });
       }, { threshold: 0.1 });
       document.querySelectorAll('.card, .profile-card, .mentor-card, .market-card, .stat-card, .showcase-card, .pillar-card, .impact-card, .banner-card, .pcard, .mcard, .lcard').forEach(card => {
-        card.style.opacity = '0';
-        card.style.transform = 'translateY(24px)';
-        card.style.transition = 'opacity 0.4s ease, transform 0.4s ease';
+        card.classList.add("scroll-reveal");
         observer.observe(card);
       });
 
       const header = document.querySelector('.site-header');
       window.addEventListener('scroll', () => {
-        if(header) header.classList.toggle('scrolled', window.scrollY > 60);
+        const b = document.getElementById("backToTop"); if(b) b.classList.toggle("scrolled", window.scrollY > 400); if(header) header.classList.toggle('scrolled', window.scrollY > 60);
       });
 
       document.querySelectorAll('button, .button, a[class*="btn"], .pcard-book, .mcard-book, .lcard-btn, .sell-banner-btn').forEach(btn => {
@@ -694,10 +461,10 @@
       });
 
       const currentPage = window.location.pathname.split("/").pop() || 'index.html';
-      document.querySelectorAll("nav.top-nav a, .mobile-nav-menu a").forEach(link => {
+      document.querySelectorAll(".nav-links a").forEach(link => {
         const href = link.getAttribute("href");
         if (href === currentPage || (currentPage === '' && href === 'index.html')) {
-          link.classList.add("nav-active");
+          link.classList.add("active");
         }
       });
       const mobileToggle = document.getElementById('mobileNavToggle');
@@ -724,7 +491,7 @@
       }
     })();
   </script>
-<div id="cursorGlow"></div>
+
 <script>
 document.addEventListener('DOMContentLoaded', () => {
   const glow = document.getElementById('cursorGlow');
@@ -753,32 +520,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 });
 </script>
-<div id="themeSwitcher">
-  <button id="themeToggleBtn" aria-label="Change theme">
-    🎨
-  </button>
-  <div id="themePalette" class="hidden">
-    <p class="palette-label">Choose Theme</p>
 
-    <button class="theme-option" data-theme="warm">
-      <span class="theme-swatch warm-swatch"></span>
-      <span class="theme-name">Warm</span>
-      <span class="theme-check" id="check-warm">✓</span>
-    </button>
-
-    <button class="theme-option" data-theme="cool">
-      <span class="theme-swatch cool-swatch"></span>
-      <span class="theme-name">Cool</span>
-      <span class="theme-check" id="check-cool">✓</span>
-    </button>
-
-    <button class="theme-option" data-theme="sage">
-      <span class="theme-swatch sage-swatch"></span>
-      <span class="theme-name">Sage</span>
-      <span class="theme-check" id="check-sage">✓</span>
-    </button>
-  </div>
-</div>
 
 <style>
 #themeSwitcher {
@@ -899,7 +641,7 @@ document.addEventListener('DOMContentLoaded', () => {
 </style>
 <script>
   // Apply saved or default theme immediately
-  const savedTheme = localStorage.getItem('kk-theme') || 'warm';
+  const savedTheme = localStorage.getItem('kk-theme') || 'dark-cold';
   document.documentElement.setAttribute('data-theme', savedTheme);
 
   function applyTheme(theme) {
@@ -942,6 +684,33 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     });
   });
+</script>
+<div id="theme-switcher">
+  <button class="theme-toggle-btn" onclick="document.getElementById('theme-panel').classList.toggle('open')">🎨 Theme</button>
+  <div class="theme-panel" id="theme-panel">
+    <button class="theme-opt" data-theme="dark-cold" onclick="setTheme('dark-cold')"><span class="swatch" style="background:linear-gradient(135deg,#0D0F1A,#7C6EF5)"></span>Dark Cold</button>
+    <button class="theme-opt" data-theme="dark-warm" onclick="setTheme('dark-warm')"><span class="swatch" style="background:linear-gradient(135deg,#120A05,#E8832A)"></span>Dark Warm</button>
+    <button class="theme-opt" data-theme="light-pro" onclick="setTheme('light-pro')"><span class="swatch" style="background:linear-gradient(135deg,#F7F8FC,#5046E5)"></span>Light Pro</button>
+  </div>
+</div>
+
+<script>
+function setTheme(t) {
+  document.documentElement.setAttribute('data-theme', t);
+  localStorage.setItem('kk-theme', t);
+  document.querySelectorAll('.theme-opt').forEach(b => b.classList.toggle('active', b.dataset.theme === t));
+}
+(function(){ setTheme(localStorage.getItem('kk-theme') || 'dark-cold'); })();
+
+const dot = document.getElementById('cursor-dot');
+const ring = document.getElementById('cursor-ring');
+let rx=0,ry=0,dx=0,dy=0;
+document.addEventListener('mousemove', e => { dx=e.clientX; dy=e.clientY; dot.style.left=dx+'px'; dot.style.top=dy+'px'; });
+(function loop(){ rx+=(dx-rx)*0.12; ry+=(dy-ry)*0.12; ring.style.left=rx+'px'; ring.style.top=ry+'px'; requestAnimationFrame(loop); })();
+document.querySelectorAll('a,button,.profile-card,.card').forEach(el=>{
+  el.addEventListener('mouseenter',()=>{ ring.style.width='52px'; ring.style.height='52px'; ring.style.opacity='1'; });
+  el.addEventListener('mouseleave',()=>{ ring.style.width='36px'; ring.style.height='36px'; ring.style.opacity='0.65'; });
+});
 </script>
 </body>
 </html>

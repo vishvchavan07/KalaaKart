@@ -1,107 +1,28 @@
-<!DOCTYPE html>
-<html lang="en" data-theme="dark-cold">
-<head>
-    <script>
-    (function() {
-      const t = localStorage.getItem('kk-theme') || 'dark-cold';
-      document.documentElement.setAttribute('data-theme', t);
-    })();
-  </script>
-  <style>
-:root, [data-theme="dark-cold"] {
-  --bg: #0D0F1A; --surface: #13162A; --nav-bg: rgba(13,15,26,0.85);
-  --card-bg: #181C35; --card-top-bg: #1E2340;
-  --card-top-text: #E8EAFF; --card-top-muted: #8890C4;
-  --text-primary: #E8EAFF; --text-secondary: #9AA0CC;
-  --accent: #7C6EF5; --border: rgba(124,110,245,0.18);
-  --tag-bg: rgba(124,110,245,0.15); --tag-text: #A99BFF;
-  --cursor-color: #7C6EF5; --shadow: 0 4px 24px rgba(124,110,245,0.15);
-}
-[data-theme="dark-warm"] {
-  --bg: #120A05; --surface: #1C1108; --nav-bg: rgba(18,10,5,0.88);
-  --card-bg: #231508; --card-top-bg: #3B1F0A;
-  --card-top-text: #FFE8CC; --card-top-muted: #C49A6A;
-  --text-primary: #FFE8CC; --text-secondary: #BF8D5A;
-  --accent: #E8832A; --border: rgba(232,131,42,0.20);
-  --tag-bg: rgba(232,131,42,0.14); --tag-text: #FFBA78;
-  --cursor-color: #E8832A; --shadow: 0 4px 24px rgba(232,131,42,0.18);
-}
-[data-theme="light-pro"] {
-  --bg: #F7F8FC; --surface: #FFFFFF; --nav-bg: rgba(247,248,252,0.92);
-  --card-bg: #FFFFFF; --card-top-bg: #1A1A2E;
-  --card-top-text: #F0F0FF; --card-top-muted: #9090BB;
-  --text-primary: #1A1A2E; --text-secondary: #555577;
-  --accent: #5046E5; --border: rgba(80,70,229,0.14);
-  --tag-bg: rgba(80,70,229,0.08); --tag-text: #5046E5;
-  --cursor-color: #5046E5; --shadow: 0 4px 20px rgba(0,0,0,0.08);
-}
+import re
 
-body {
-  background: var(--bg);
-  color: var(--text-primary);
-  cursor: none;
-  transition: background 0.35s, color 0.35s;
-}
+def build_mentor_page():
+    # Read the head base from index.html
+    with open('index.html', 'r', encoding='utf-8') as f:
+        idx_html = f.read()
+    
+    # Extract everything from DOCTYPE down to the closing </head>
+    head_match = re.search(r'<!DOCTYPE html>.*?</head>', idx_html, re.DOTALL)
+    head_content = head_match.group(0)
+    
+    # Custom adjustments for mentor title/description
+    head_content = head_content.replace('Kalaa Kart — From Passion to Profession', 'Mentor Booking — Kalaa Kart')
+    head_content = head_content.replace('content="Kalaa Kart is a student-powered platform', 'content="Book peer mentors to learn the exact college syllabus on Kalaa Kart.')
+    
+    # Extract the navbar from index.html
+    nav_match = re.search(r'<header class="navbar">.*?</header>', idx_html, re.DOTALL)
+    navbar_content = nav_match.group(0)
+    
+    # Extract the footer and end of scripts (theme switcher, cursor JS)
+    footer_match = re.search(r'<footer.*?</html>', idx_html, re.DOTALL)
+    footer_content = footer_match.group(0)
 
-#cursor-dot {
-  position: fixed; width: 8px; height: 8px;
-  background: var(--cursor-color); border-radius: 50%;
-  pointer-events: none; z-index: 99999;
-  transform: translate(-50%, -50%);
-  transition: background 0.3s;
-}
-#cursor-ring {
-  position: fixed; width: 36px; height: 36px;
-  border: 2px solid var(--cursor-color); border-radius: 50%;
-  pointer-events: none; z-index: 99998;
-  transform: translate(-50%, -50%);
-  opacity: 0.65; transition: width 0.2s, height 0.2s, border-color 0.3s;
-}
-
-#theme-switcher { position:fixed; bottom:24px; left:24px; z-index:9000; }
-.theme-toggle-btn { background:var(--accent); color:#fff; border:none; border-radius:50px; padding:10px 18px; font-size:14px; font-weight:600; cursor:none; box-shadow:var(--shadow); }
-.theme-panel { display:none; flex-direction:column; gap:8px; background:var(--surface); border:1px solid var(--border); border-radius:14px; padding:12px; margin-bottom:10px; box-shadow:var(--shadow); }
-.theme-panel.open { display:flex; }
-.theme-opt { display:flex; align-items:center; gap:10px; background:none; border:1px solid transparent; border-radius:10px; padding:8px 12px; cursor:none; color:var(--text-primary); font-size:14px; font-weight:500; transition:border-color 0.2s, background 0.2s; }
-.theme-opt:hover, .theme-opt.active { border-color:var(--accent); background:var(--tag-bg); }
-.theme-opt.active::after { content:'✓'; margin-left:auto; color:var(--accent); font-weight:700; }
-.swatch { width:26px; height:26px; border-radius:7px; display:inline-block; flex-shrink:0; }
-</style>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Mentor Booking — Kalaa Kart</title>
-  <meta name="description" content="Book peer mentors to learn the exact college syllabus on Kalaa Kart. for discovering campus talent, booking peer mentors, and buying affordable college wear.">
-  <link rel="icon" type="image/jpeg" href="assets/images/main_logo_final.jpeg">
-  <link rel="apple-touch-icon" href="assets/images/main_logo_final.jpeg">
-  <meta property="og:title" content="Mentor Booking — Kalaa Kart">
-  <meta property="og:description" content="A student-powered platform for campus talent, peer mentoring, and affordable college wear.">
-  <meta property="og:image" content="https://kalaakart.vercel.app/assets/images/main_logo_final.jpeg">
-  <meta property="og:url" content="https://kalaakart.vercel.app">
-  <meta property="og:type" content="website">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="assets/css/styles.css">
-</head>
-<body data-page="mentors">
-  <div id="cursor-dot"></div>
-  <div id="cursor-ring"></div>
-  
-<header class="navbar">
-    <a class="nav-brand" href="index.html">
-        <img src="assets/images/main_logo_final.jpeg" alt="Logo">
-        <span>Kalaa Kart</span>
-    </a>
-    <div class="nav-links">
-        <a href="index.html">Home</a>
-        <a href="profiles.html">Profiles</a>
-        <a href="mentor-booking.html">Mentor Booking</a>
-        <a href="marketplace.html">Old Clothes</a>
-    </div>
-    <button class="nav-hamburger" id="navHamburger">☰</button>
-  </header>
-
-
+    # Now define the actual mentor content instructed
+    main_content = """
   <main>
     <!-- HERO SECTION -->
     <section class="hero-section page-hero">
@@ -366,100 +287,22 @@ body {
     </section>
 
   </main>
+"""
 
+    full_html = f'''{head_content}
+<body data-page="mentors">
+  <div id="cursor-dot"></div>
+  <div id="cursor-ring"></div>
+  
+{navbar_content}
 
-<footer class="site-footer-premium">
-    <div class="footer-main">
-      <div class="footer-brand">
-        <div class="footer-logo-row">
-          <img src="assets/images/main_logo_final.jpeg" alt="Kalaa Kart logo">
-          <strong>Kalaa Kart</strong>
-        </div>
-        <p class="footer-tagline">From Passion to Profession</p>
-        <p class="footer-desc">A student-powered platform for skills, mentoring, and campus essentials.</p>
-      </div>
-      <div class="footer-links-col">
-        <h4>Quick Links</h4>
-        <div>
-          <a href="index.html">Home</a>
-          <a href="profiles.html">Profiles</a>
-          <a href="mentor-booking.html">Mentor Booking</a>
-          <a href="marketplace.html">Old Clothes</a>
-        </div>
-      </div>
-    </div>
-    <div class="footer-bottom">
-      <p>© 2025 Kalaa Kart. Made with ♥ for campus communities.</p>
-      <div class="footer-social">
-        <a href="#" aria-label="Instagram">📸</a>
-        <a href="#" aria-label="Twitter">𝕏</a>
-        <a href="#" aria-label="LinkedIn">💼</a>
-      </div>
-    </div>
-  </footer>
+{main_content}
 
-  <script src="assets/js/data.js"></script>
-  <script src="assets/js/main.js"></script>
-  <script>
-    (function () {
-      function animateCounter(el) {
-        const target = parseInt(el.dataset.target, 10);
-        const suffix = el.dataset.suffix || '';
-        const duration = 1400;
-        const step = 16;
-        const increment = target / (duration / step);
-        let current = 0;
-        const timer = setInterval(() => {
-          current += increment;
-          if (current >= target) {
-            current = target;
-            clearInterval(timer);
-          }
-          el.textContent = Math.floor(current) + suffix;
-        }, step);
-      }
+{footer_content}
+'''
+    
+    with open('mentor-booking.html', 'w', encoding='utf-8') as f:
+        f.write(full_html)
 
-      const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            entry.target.querySelectorAll('.stat-number').forEach(animateCounter);
-            observer.unobserve(entry.target);
-          }
-        });
-      }, { threshold: 0.3 });
-
-      const statsRow = document.querySelector('.hero-stats-premium');
-      if (statsRow) observer.observe(statsRow);
-    })();
-  </script>
-  <button id="backToTop" aria-label="Back to top">↑</button>
-
-<div id="theme-switcher">
-  <button class="theme-toggle-btn" onclick="document.getElementById('theme-panel').classList.toggle('open')">🎨 Theme</button>
-  <div class="theme-panel" id="theme-panel">
-    <button class="theme-opt" data-theme="dark-cold" onclick="setTheme('dark-cold')"><span class="swatch" style="background:linear-gradient(135deg,#0D0F1A,#7C6EF5)"></span>Dark Cold</button>
-    <button class="theme-opt" data-theme="dark-warm" onclick="setTheme('dark-warm')"><span class="swatch" style="background:linear-gradient(135deg,#120A05,#E8832A)"></span>Dark Warm</button>
-    <button class="theme-opt" data-theme="light-pro" onclick="setTheme('light-pro')"><span class="swatch" style="background:linear-gradient(135deg,#F7F8FC,#5046E5)"></span>Light Pro</button>
-  </div>
-</div>
-
-<script>
-function setTheme(t) {
-  document.documentElement.setAttribute('data-theme', t);
-  localStorage.setItem('kk-theme', t);
-  document.querySelectorAll('.theme-opt').forEach(b => b.classList.toggle('active', b.dataset.theme === t));
-}
-(function(){ setTheme(localStorage.getItem('kk-theme') || 'dark-cold'); })();
-
-const dot = document.getElementById('cursor-dot');
-const ring = document.getElementById('cursor-ring');
-let rx=0,ry=0,dx=0,dy=0;
-document.addEventListener('mousemove', e => { dx=e.clientX; dy=e.clientY; dot.style.left=dx+'px'; dot.style.top=dy+'px'; });
-(function loop(){ rx+=(dx-rx)*0.12; ry+=(dy-ry)*0.12; ring.style.left=rx+'px'; ring.style.top=ry+'px'; requestAnimationFrame(loop); })();
-document.querySelectorAll('a,button,.profile-card,.card').forEach(el=>{
-  el.addEventListener('mouseenter',()=>{ ring.style.width='52px'; ring.style.height='52px'; ring.style.opacity='1'; });
-  el.addEventListener('mouseleave',()=>{ ring.style.width='36px'; ring.style.height='36px'; ring.style.opacity='0.65'; });
-});
-</script>
-</body>
-</html>
+if __name__ == '__main__':
+    build_mentor_page()

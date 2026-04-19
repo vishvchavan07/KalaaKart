@@ -2,73 +2,42 @@
   const data = window.campusCircleData;
   const page = document.body.dataset.page;
 
-  function renderStars(rating) {
+      function renderStars(rating) {
     const rounded = Math.round(Number(rating));
-    return `${"★".repeat(rounded)}${"☆".repeat(5 - rounded)}`;
+    return `<span class="star" style="color:#F5A623 !important;">★</span>`.repeat(rounded) + `<span class="star-empty" style="color:#ccc !important;">☆</span>`.repeat(5 - rounded);
   }
 
-  function profileCard(profile) {
-    const hobbyTags = profile.hobbies.map((hobby) => `<span class="tag">${hobby}</span>`).join("");
-    const galleryItems = profile.gallery.map((item) => `
-      <button class="gallery-item" type="button" data-work-src="${item.src}" data-work-title="${item.title}" data-work-owner="${profile.name}">
-        <img src="${item.src}" alt="${item.title} by ${profile.name}">
-        <span class="gallery-overlay">
-          <strong>${item.title}</strong>
-          <small>Click to view</small>
-        </span>
-      </button>
-    `).join("");
+    function profileCard(profile) {
+    let hobbyTags = '';
+    if(profile.hobbies && Array.isArray(profile.hobbies)){
+       hobbyTags = profile.hobbies.map(hobby => `<span class="tag">${hobby}</span>`).join("");
+    }
     return `
-      <article class="profile-card" data-profile-id="${profile.id}" tabindex="0" aria-label="Open ${profile.name} profile booking slate">
-        <div class="profile-header">
-          <img src="${profile.image}" alt="${profile.name} profile photo">
-          <div>
-            <div class="profile-name-row">
-              <div>
-                <h3>${profile.name}</h3>
-                <p>${profile.title}</p>
-              </div>
-              <span class="price-badge">${profile.price}</span>
-            </div>
-            <div class="review-row">
-              <span class="review-chip">${renderStars(profile.rating)} ${profile.rating}</span>
-              <span class="review-chip">${profile.reviews} reviews</span>
-            </div>
-          </div>
+<div class="profile-card" style="display:flex; flex-direction:column; justify-content:space-between;">
+  <div>
+      <div style="display:flex; align-items:center; gap:12px; margin-bottom:12px;">
+        <img src="${profile.image || ''}" style="width:48px;height:48px;border-radius:50%;object-fit:cover;" alt="${profile.name || ''}">
+        <div>
+          <h3 style="margin:0;font-size:18px;">${profile.name || ''}</h3>
+          <p style="margin:0;font-size:13px;color:var(--text-secondary);">${profile.title || 'Student Profile'}</p>
         </div>
-        <div class="profile-meta">
-          <p>${profile.bio}</p>
-          <div class="tag-row">${hobbyTags}</div>
-          <div class="meta-row">
-            <div class="meta-card">
-              <strong>${profile.works}</strong>
-              <span>submitted works</span>
-            </div>
-            <div class="meta-card">
-              <strong>${profile.rating}/5</strong>
-              <span>student rating</span>
-            </div>
-          </div>
-          <div class="work-gallery-block">
-            <div class="gallery-head">
-              <strong>Work gallery</strong>
-              <span>3 featured samples</span>
-            </div>
-            <div class="work-gallery">
-              ${galleryItems}
-            </div>
-          </div>
-          <div class="sample-work sample-review">
-            <div>
-              <strong>Past work highlight</strong>
-              <p>${profile.review}</p>
-            </div>
-          </div>
-          <div class="student-note">${profile.note}</div>
-          <button class="button button-primary profile-book-button" type="button" data-book-profile="${profile.id}">Book Profile</button>
-        </div>
-      </article>
-    `;
+      </div>
+      <div style="background:var(--tag-bg); padding:10px; border-radius:8px; margin-bottom:12px;">
+        <span style="font-size:14px;color:var(--text-primary);display:block;">${profile.bio || 'Creative student offering services on campus.'}</span>
+      </div>
+      <div style="display:flex; align-items:center; gap:6px; white-space:nowrap; margin-bottom:16px;">
+        ${renderStars(profile.rating || 5)}
+        <span style="font-size:14px;font-weight:600;margin-left:4px;">${profile.rating || '5.0'}</span>
+        <span style="font-size:13px;color:var(--text-secondary);">(${profile.reviews || 0})</span>
+      </div>
+  </div>
+  <div class="card-bottom">
+    <div class="card-tags" style="display:flex; gap:8px; flex-wrap:wrap; margin-bottom:16px;">
+        ${hobbyTags}
+    </div>
+    <a href="mentor-booking.html" class="button btn-primary" style="width:100%;">Book Now</a>
+  </div>
+</div>`;
   }
 
   function mentorCard(mentor) {
@@ -304,3 +273,59 @@
     }
   });
 })();
+
+
+// --- ANTIGRAVITY CUSTOM JS ---
+
+const cursorDot = document.getElementById('cursor-dot');
+const cursorRing = document.getElementById('cursor-ring');
+if(cursorDot && cursorRing) {
+  let ringX = 0, ringY = 0;
+  let dotX = 0, dotY = 0;
+
+  document.addEventListener('mousemove', (e) => {
+    dotX = e.clientX;
+    dotY = e.clientY;
+    cursorDot.style.left = dotX + 'px';
+    cursorDot.style.top = dotY + 'px';
+  });
+
+  function animateRing() {
+    ringX += (dotX - ringX) * 0.12;
+    ringY += (dotY - ringY) * 0.12;
+    cursorRing.style.left = ringX + 'px';
+    cursorRing.style.top = ringY + 'px';
+    requestAnimationFrame(animateRing);
+  }
+  animateRing();
+
+  document.querySelectorAll('a, button, .profile-card, .tag, .mkt-pill').forEach(el => {
+    el.addEventListener('mouseenter', () => {
+      cursorRing.style.width = '54px';
+      cursorRing.style.height = '54px';
+      cursorRing.style.opacity = '1';
+    });
+    el.addEventListener('mouseleave', () => {
+      cursorRing.style.width = '36px';
+      cursorRing.style.height = '36px';
+      cursorRing.style.opacity = '0.6';
+    });
+  });
+}
+
+function setTheme(theme) {
+  document.documentElement.setAttribute('data-theme', theme);
+  localStorage.setItem('kk-theme', theme);
+  document.querySelectorAll('.theme-opt').forEach(btn => {
+    btn.classList.toggle('active', btn.dataset.theme === theme);
+  });
+}
+
+window.setTheme = setTheme; // export to global for onclick to hit
+window.toggleThemePanel = function() {
+  const p = document.getElementById('theme-panel');
+  if(p) p.classList.toggle('open');
+};
+
+const savedLocalTheme = localStorage.getItem('kk-theme') || 'dark-cold';
+setTheme(savedLocalTheme);
