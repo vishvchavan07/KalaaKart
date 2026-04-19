@@ -3717,14 +3717,15 @@ select#sortSelect {
   border-color: var(--accent);
 }
 
-.item-0 { top: 15%; right: 10%; width: 110px; height: 110px; }
-.item-1 { bottom: 20%; left: 10%; width: 90px; height: 90px; }
-.item-2 { top: 40%; right: 5%; width: 85px; height: 85px; }
+/* FIX: Non-overlapping floating craft strip along the right edge */
+.item-0 { top: 14px;  right: 14px; width: 104px; height: 104px; animation-delay: 0s; }
+.item-1 { top: 132px; right: 14px; width: 95px;  height: 95px;  animation-delay: 0.3s; }
+.item-2 { top: 242px; right: 14px; width: 88px;  height: 88px;  animation-delay: 0.6s; }
 
+/* FIX: Reduced float distance to prevent overlap */
 @keyframes floatAround {
-  0%, 100% { transform: translateY(0) rotate(0); }
-  33% { transform: translateY(-15px) rotate(2deg); }
-  66% { transform: translateY(10px) rotate(-2deg); }
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-8px) rotate(1deg); }
 }
 
 .slate-rating-overlay {

@@ -203,41 +203,57 @@ window.campusCircleData = {
     }
   ],
   marketplace: [
-    {
+    { // FIX: Added category + type for filter/sort logic
       name: "College Blazer",
       image: "assets/images/works/blazer-item.svg",
       description: "Well-kept formal blazer, worn only for two events. Good for presentations and placement drives.",
       price: "Buy at Rs 700",
       alternate: "Rent at Rs 149 per day",
       seller: "Listed by Aarav, final year",
-      size: "Size M"
+      size: "Size M",
+      category: "formals",
+      type: "both",
+      buyPrice: 700,
+      rentPrice: 149
     },
-    {
+    { // FIX: Added category + type for filter/sort logic
       name: "Lab Coat",
       image: "assets/images/works/labcoat-item.svg",
       description: "Clean lab coat with good stitching, suitable for pharmacy or chemistry practicals.",
       price: "Buy at Rs 300",
       alternate: "Rent at Rs 99 per week",
       seller: "Listed by Pooja, second year",
-      size: "Size L"
+      size: "Size L",
+      category: "lab",
+      type: "both",
+      buyPrice: 300,
+      rentPrice: 99
     },
-    {
+    { // FIX: Added category + type for filter/sort logic
       name: "White College Shirt",
       image: "assets/images/works/shirt-item.svg",
       description: "Plain white shirt in excellent condition, useful for uniform days and presentation events.",
       price: "Buy at Rs 250",
       alternate: "Rent at Rs 79 per day",
       seller: "Listed by Karan, first year",
-      size: "Size M"
+      size: "Size M",
+      category: "formals",
+      type: "both",
+      buyPrice: 250,
+      rentPrice: 79
     },
-    {
+    { // FIX: Added category + type for filter/sort logic
       name: "Fest Kurta Set",
       image: "assets/images/works/kurta-item.svg",
       description: "Colorful ethnic wear set used once during cultural day. Looks fresh and photo-friendly.",
       price: "Buy at Rs 450",
       alternate: "Rent at Rs 129 per day",
       seller: "Listed by Meenal, third year",
-      size: "Size S"
+      size: "Size S",
+      category: "fest",
+      type: "both",
+      buyPrice: 450,
+      rentPrice: 129
     }
   ]
 };

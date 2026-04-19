@@ -115,31 +115,94 @@
 
   if (page === "home") {
     const feat = document.getElementById("featuredProfiles");
-    if (feat) {
-      feat.innerHTML = data.featuredProfiles.map(profileCard).join("");
-    }
+    if (feat) feat.innerHTML = data.featuredProfiles.map(profileCard).join("");
   }
 
+  // FIX: Profile filtering by hobby pill
   if (page === "profiles") {
     const allProfiles = [...data.featuredProfiles, ...data.extraProfiles];
     const allContainer = document.getElementById("allProfiles");
-    if (allContainer) {
-      allContainer.innerHTML = allProfiles.map(profileCard).join("");
+    function renderProfiles(filter) {
+      const filtered = filter === "all"
+        ? allProfiles
+        : allProfiles.filter(p => p.hobbies && p.hobbies.some(h => h.toLowerCase().includes(filter.toLowerCase())));
+      allContainer.innerHTML = filtered.length
+        ? filtered.map(profileCard).join("")
+        : `<p style="color:var(--text-secondary);grid-column:1/-1;text-align:center;padding:2rem;">No creators found for this filter.</p>`;
     }
+    if (allContainer) renderProfiles("all");
+    document.querySelectorAll(".filter-pill").forEach(btn => {
+      btn.addEventListener("click", function() {
+        document.querySelectorAll(".filter-pill").forEach(b => b.classList.remove("active"));
+        this.classList.add("active");
+        renderProfiles(this.dataset.filter || "all");
+      });
+    });
   }
 
+  // FIX: Mentor filtering by subject + free-only toggle
   if (page === "mentors") {
     const mentorContainer = document.getElementById("mentorCards");
-    if (mentorContainer) {
-      mentorContainer.innerHTML = data.mentors.map((m, i) => mentorCard(m, i)).join("");
+    function renderMentors() {
+      const activeFilter = (document.querySelector(".filter-pill.active") || {}).dataset && document.querySelector(".filter-pill.active").dataset.filter || "all";
+      const freeOnly = document.getElementById("freeToggle") && document.getElementById("freeToggle").checked;
+      let list = [...data.mentors];
+      if (activeFilter !== "all") list = list.filter(m => m.subject && m.subject.toLowerCase().includes(activeFilter.toLowerCase()));
+      if (freeOnly) list = list.filter(m => m.price.toLowerCase().includes("free") || (m.freeOption && m.freeOption.toLowerCase().includes("free")));
+      mentorContainer.innerHTML = list.length
+        ? list.map((m, i) => mentorCard(m, data.mentors.indexOf(m))).join("")
+        : `<p style="color:var(--text-secondary);padding:2rem;text-align:center;">No mentors found for this filter.</p>`;
     }
+    if (mentorContainer) renderMentors();
+    document.querySelectorAll(".filter-pill").forEach(btn => {
+      btn.addEventListener("click", function() {
+        document.querySelectorAll(".filter-pill").forEach(b => b.classList.remove("active"));
+        this.classList.add("active");
+        renderMentors();
+      });
+    });
+    const freeToggle = document.getElementById("freeToggle");
+    if (freeToggle) freeToggle.addEventListener("change", renderMentors);
   }
 
+  // FIX: Marketplace: category filter + buy/rent toggle + sort dropdown
   if (page === "marketplace") {
     const marketContainer = document.getElementById("marketplaceCards");
-    if (marketContainer) {
-      marketContainer.innerHTML = data.marketplace.map((m, i) => marketplaceCard(m, i)).join("");
+    function renderMarket() {
+      const activeCategory = (document.querySelector(".mkt-pill.active") || {}).dataset && document.querySelector(".mkt-pill.active").dataset.category || "all";
+      const showBuy  = !document.getElementById("buyToggle")  || document.getElementById("buyToggle").checked;
+      const showRent = !document.getElementById("rentToggle") || document.getElementById("rentToggle").checked;
+      const sortVal  = document.getElementById("sortSelect") ? document.getElementById("sortSelect").value : "newest";
+
+      let list = [...data.marketplace];
+      // Category filter
+      if (activeCategory !== "all") list = list.filter(m => m.category === activeCategory);
+      // Buy/Rent filter
+      if (!showBuy && showRent) list = list.filter(m => m.rentPrice);
+      if (showBuy && !showRent) list = list.filter(m => m.buyPrice);
+      if (!showBuy && !showRent) list = [];
+      // Sort
+      if (sortVal === "low")  list.sort((a, b) => (a.buyPrice || 9999) - (b.buyPrice || 9999));
+      if (sortVal === "high") list.sort((a, b) => (b.buyPrice || 0) - (a.buyPrice || 0));
+      // Render
+      marketContainer.innerHTML = list.length
+        ? list.map((m, i) => marketplaceCard(m, data.marketplace.indexOf(m))).join("")
+        : `<p style="color:var(--text-secondary);padding:3rem;text-align:center;">No items match your filters.</p>`;
     }
+    if (marketContainer) renderMarket();
+    document.querySelectorAll(".mkt-pill").forEach(btn => {
+      btn.addEventListener("click", function() {
+        document.querySelectorAll(".mkt-pill").forEach(b => b.classList.remove("active"));
+        this.classList.add("active");
+        renderMarket();
+      });
+    });
+    ["buyToggle","rentToggle"].forEach(id => {
+      const el = document.getElementById(id);
+      if (el) el.addEventListener("change", renderMarket);
+    });
+    const sortSel = document.getElementById("sortSelect");
+    if (sortSel) sortSel.addEventListener("change", renderMarket);
   }
 
   const lightbox = document.createElement("div");
