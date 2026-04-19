@@ -4616,43 +4616,125 @@ body.page-exit {
   to { opacity: 1; }
 }
 
-/* D · MARQUEE REVIEWS */
-.marquee-wrapper {
+
+/* D · MARQUEE REVIEWS (Updated to dual-row cards) */
+.kk-marquee-section {
   overflow: hidden;
-  white-space: nowrap;
-  width: 100vw;
-  max-width: 100%;
-  padding: 2rem 0;
-  background: var(--surface);
-  border-top: 1px solid var(--border);
-  border-bottom: 1px solid var(--border);
+  padding: 3.5rem 0;
   position: relative;
-  left: 50%;
-  right: 50%;
-  margin-left: -50vw;
-  margin-right: -50vw;
+  width: 100%;
 }
-.marquee-content {
-  display: inline-block;
-  animation: marqueeScroll 30s linear infinite;
-  padding-left: 2rem;
+
+.kk-marquee-section::before,
+.kk-marquee-section::after {
+  content: '';
+  position: absolute;
+  top: 0; bottom: 0;
+  width: 80px;
+  z-index: 2;
+  pointer-events: none;
 }
-.marquee-item {
-  display: inline-block;
-  font-size: 1.1rem;
-  font-weight: 500;
-  padding: 0 2rem;
+
+.kk-marquee-section::before {
+  left: 0;
+  background: linear-gradient(
+    to right,
+    var(--bg, #f3f4f6), transparent
+  );
+}
+
+.kk-marquee-section::after {
+  right: 0;
+  background: linear-gradient(
+    to left,
+    var(--bg, #f3f4f6), transparent
+  );
+}
+
+.kk-marquee-track {
+  overflow: hidden;
+  width: 100%;
+}
+
+.kk-marquee-row {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  gap: 14px;
+  width: max-content;
+  will-change: transform;
+}
+
+.kk-marquee-row.row-1 {
+  animation: kkMarqueeLeft 30s linear infinite;
+}
+
+.kk-marquee-row.row-2 {
+  animation: kkMarqueeRight 26s linear infinite;
+  margin-top: 0;
+}
+
+.kk-marquee-section:hover .kk-marquee-row {
+  animation-play-state: paused;
+}
+
+@keyframes kkMarqueeLeft {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+@keyframes kkMarqueeRight {
+  from { transform: translateX(-50%); }
+  to   { transform: translateX(0); }
+}
+
+.kk-review-card {
+  flex-shrink: 0;
+  width: 256px;
+  min-width: 256px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 1.1rem 1.25rem;
+  user-select: none;
+  box-sizing: border-box;
+}
+
+.kk-review-stars {
+  font-size: 13px;
+  color: #f59e0b;
+  margin-bottom: 8px;
+  letter-spacing: 1px;
+  display: block;
+}
+
+.kk-review-text {
+  font-size: 13px;
+  line-height: 1.55;
   color: var(--text-primary);
-  border-right: 1px solid var(--border);
+  margin-bottom: 10px;
+  display: block;
 }
-.marquee-item:last-child { border-right: none; }
-.marquee-item span { color: var(--accent); margin-right: 8px; }
-@keyframes marqueeScroll {
-  0% { transform: translateX(0); }
-  100% { transform: translateX(-50%); } 
+
+.kk-review-author {
+  font-size: 11px;
+  color: var(--text-secondary);
+  font-weight: 600;
+  display: block;
+}
+
+.kk-marquee-eyebrow {
+  text-align: center;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 1.75rem;
 }
 
 /* E · SKELETON LOADERS */
+
 .skeleton {
   background: linear-gradient(90deg, var(--card-top-bg) 25%, var(--border) 50%, var(--card-top-bg) 75%);
   background-size: 200% 100%;
