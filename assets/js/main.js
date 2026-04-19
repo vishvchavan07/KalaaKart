@@ -80,12 +80,18 @@
   }
 
   if (page === "home") {
-    document.getElementById("featuredProfiles").innerHTML = data.featuredProfiles.map(profileCard).join("");
+    const feat = document.getElementById("featuredProfiles");
+    if (feat) {
+      feat.innerHTML = data.featuredProfiles.map(profileCard).join("");
+    }
   }
 
   if (page === "profiles") {
     const allProfiles = [...data.featuredProfiles, ...data.extraProfiles];
-    document.getElementById("allProfiles").innerHTML = allProfiles.map(profileCard).join("");
+    const allContainer = document.getElementById("allProfiles");
+    if (allContainer) {
+      allContainer.innerHTML = allProfiles.map(profileCard).join("");
+    }
   }
 
   if (page === "mentors") {
