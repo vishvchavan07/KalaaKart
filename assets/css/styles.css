@@ -1012,9 +1012,11 @@ body.lightbox-open {
 }
 
 .market-card img {
-  aspect-ratio: 16 / 10;
-  object-fit: cover;
-  margin-bottom: 0.9rem;
+  width: 100% !important;
+  aspect-ratio: 16 / 10 !important;
+  object-fit: cover !important;
+  margin-bottom: 0.9rem !important;
+  border-radius: 12px 12px 0 0 !important;
 }
 
 .market-meta {
@@ -3530,3 +3532,44 @@ nav, .navbar, header {
   height: 40px !important;
   font-size: 0.9rem !important;
 }
+
+/* ─── PCARD OVERRIDES (PROFILE CARDS) ─── */
+.profile-card {
+  padding: 24px !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 16px !important;
+  background: var(--card-bg) !important;
+  border: 1px solid var(--border) !important;
+  border-radius: 16px !important;
+  transition: transform 0.3s ease, box-shadow 0.3s ease !important;
+  text-align: left !important;
+}
+.profile-card:hover { transform: translateY(-4px) !important; box-shadow: var(--shadow) !important; }
+.profile-card img { width: 64px !important; height: 64px !important; border-radius: 50% !important; object-fit: cover !important; border: 2px solid var(--border) !important; }
+
+/* ─── MARKET-CARD OVERRIDES ─── */
+.market-card {
+  padding: 24px !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 12px !important;
+  background: var(--card-bg) !important;
+  border: 1px solid var(--border) !important;
+  border-radius: 16px !important;
+  transition: transform 0.3s ease !important;
+}
+.market-card:hover { transform: translateY(-4px) !important; box-shadow: var(--shadow) !important; }
+.market-card img {
+  width: 100% !important;
+  height: 200px !important;
+  object-fit: contain !important;
+  background: var(--card-top-bg) !important;
+  border-radius: 12px !important;
+  padding: 20px !important;
+}
+.market-card h3 { margin: 8px 0 4px 0 !important; font-size: 1.2rem !important; color: var(--text-primary) !important; }
+.market-card p { margin: 0 !important; font-size: 0.95rem !important; color: var(--text-secondary) !important; line-height: 1.5 !important; }
+.market-meta { display: flex !important; flex-wrap: wrap !important; gap: 8px !important; margin: 8px 0 !important; }
+.market-card .button { margin-top: auto !important; }
+

@@ -197,22 +197,52 @@ body {
 </div>
 
 <script>
-function setTheme(t) {
-  document.documentElement.setAttribute('data-theme', t);
-  localStorage.setItem('kk-theme', t);
-  document.querySelectorAll('.theme-opt').forEach(b => b.classList.toggle('active', b.dataset.theme === t));
-}
-(function(){ setTheme(localStorage.getItem('kk-theme') || 'dark-cold'); })();
+    (function () {
+      const pills = document.querySelectorAll('#filterBar .filter-pill');
+      const grid = document.getElementById('allProfiles');
 
-const dot = document.getElementById('cursor-dot');
-const ring = document.getElementById('cursor-ring');
-let rx=0,ry=0,dx=0,dy=0;
-document.addEventListener('mousemove', e => { dx=e.clientX; dy=e.clientY; dot.style.left=dx+'px'; dot.style.top=dy+'px'; });
-(function loop(){ rx+=(dx-rx)*0.12; ry+=(dy-ry)*0.12; ring.style.left=rx+'px'; ring.style.top=ry+'px'; requestAnimationFrame(loop); })();
-document.querySelectorAll('a,button,.profile-card,.card').forEach(el=>{
-  el.addEventListener('mouseenter',()=>{ ring.style.width='52px'; ring.style.height='52px'; ring.style.opacity='1'; });
-  el.addEventListener('mouseleave',()=>{ ring.style.width='36px'; ring.style.height='36px'; ring.style.opacity='0.65'; });
-});
-</script>
+      function applyFilters() {
+        const activeFilter = document.querySelector('#filterBar .filter-pill.active').dataset.filter;
+        const cards = grid.querySelectorAll('.profile-card');
+
+        cards.forEach(card => {
+          if (activeFilter === 'all') {
+            card.style.display = 'flex';
+          } else {
+            // Check if role text contains filter keyword
+            const role = card.querySelector('p').innerText.toLowerCase();
+            card.style.display = role.includes(activeFilter.toLowerCase()) ? 'flex' : 'none';
+          }
+        });
+      }
+
+      pills.forEach(pill => {
+        pill.addEventListener('click', () => {
+          pills.forEach(p => p.classList.remove('active'));
+          pill.classList.add('active');
+          applyFilters();
+        });
+      });
+
+      // Cursor support
+      const dot = document.getElementById('cursor-dot');
+      const ring = document.getElementById('cursor-ring');
+      let rx = 0, ry = 0, dx = 0, dy = 0;
+      document.addEventListener('mousemove', e => { dx = e.clientX; dy = e.clientY; dot.style.left = dx + 'px'; dot.style.top = dy + 'px'; });
+      (function loop() { rx += (dx - rx) * 0.12; ry += (dy - ry) * 0.12; ring.style.left = rx + 'px'; ring.style.top = ry + 'px'; requestAnimationFrame(loop); })();
+
+      document.querySelectorAll('a, button, .profile-card, .filter-pill').forEach(el => {
+        el.addEventListener('mouseenter', () => { ring.style.width = '52px'; ring.style.height = '52px'; ring.style.opacity = '1'; });
+        el.addEventListener('mouseleave', () => { ring.style.width = '36px'; ring.style.height = '36px'; ring.style.opacity = '0.65'; });
+      });
+    })();
+
+    function setTheme(t) {
+      document.documentElement.setAttribute('data-theme', t);
+      localStorage.setItem('kk-theme', t);
+      document.querySelectorAll('.theme-opt').forEach(b => b.classList.toggle('active', b.dataset.theme === t));
+    }
+    (function () { setTheme(localStorage.getItem('kk-theme') || 'dark-cold'); })();
+  </script>
 </body>
 </html>

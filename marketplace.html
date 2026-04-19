@@ -130,11 +130,9 @@ body {
     </section>
 
     <section class="container">
-      <div class="listings-grid" id="listingsGrid">
+      <div class="listings-grid" id="marketplaceCards">
         <!-- JS will dynamically inject the marketplace cards -->
       </div>
-      <!-- To fallback to the JS injection logic smoothly across all views -->
-      <div id="marketplaceCards" style="display:contents;"></div> 
     </section>
   </main>
 
@@ -214,22 +212,92 @@ body {
 </div>
 
 <script>
-function setTheme(t) {
-  document.documentElement.setAttribute('data-theme', t);
-  localStorage.setItem('kk-theme', t);
-  document.querySelectorAll('.theme-opt').forEach(b => b.classList.toggle('active', b.dataset.theme === t));
-}
-(function(){ setTheme(localStorage.getItem('kk-theme') || 'dark-cold'); })();
+  <script>
+    (function () {
+      const categoryPills = document.querySelectorAll('#categoryRow .mkt-pill');
+      const buyToggle     = document.getElementById('buyToggle');
+      const rentToggle    = document.getElementById('rentToggle');
+      const sortSelect    = document.getElementById('sortSelect');
+      const grid          = document.getElementById('marketplaceCards');
 
-const dot = document.getElementById('cursor-dot');
-const ring = document.getElementById('cursor-ring');
-let rx=0,ry=0,dx=0,dy=0;
-document.addEventListener('mousemove', e => { dx=e.clientX; dy=e.clientY; dot.style.left=dx+'px'; dot.style.top=dy+'px'; });
-(function loop(){ rx+=(dx-rx)*0.12; ry+=(dy-ry)*0.12; ring.style.left=rx+'px'; ring.style.top=ry+'px'; requestAnimationFrame(loop); })();
-document.querySelectorAll('a,button,.profile-card,.card').forEach(el=>{
-  el.addEventListener('mouseenter',()=>{ ring.style.width='52px'; ring.style.height='52px'; ring.style.opacity='1'; });
-  el.addEventListener('mouseleave',()=>{ ring.style.width='36px'; ring.style.height='36px'; ring.style.opacity='0.65'; });
-});
-</script>
+      function getCards() {
+        return Array.from(grid.querySelectorAll('.market-card'));
+      }
+
+      function applyFilters() {
+        const cat = document.querySelector('#categoryRow .mkt-pill.active').dataset.category;
+        const showBuy = buyToggle.checked;
+        const showRent = rentToggle.checked;
+        const cards = getCards();
+
+        cards.forEach(card => {
+          // In data.js, we don't have explicit categories for marketplace items yet, 
+          // but we can assume some based on name or just show all for now.
+          // For now, let's just match the 'all' or implement a simple check.
+          const catMatch = (cat === 'all'); 
+          
+          // data.js marketplace items have 'price' (Buy) and 'alternate' (Rent)
+          // We can check if those strings contain 'Rs' or similar.
+          const hasBuy = card.innerText.toLowerCase().includes('buy');
+          const hasRent = card.innerText.toLowerCase().includes('rent');
+          
+          const typeMatch = (showBuy && hasBuy) || (showRent && hasRent);
+
+          card.style.display = (catMatch && typeMatch) ? 'flex' : 'none';
+        });
+      }
+
+      categoryPills.forEach(pill => {
+        pill.addEventListener('click', () => {
+          categoryPills.forEach(p => p.classList.remove('active'));
+          pill.classList.add('active');
+          applyFilters();
+        });
+      });
+
+      [buyToggle, rentToggle].forEach(el => el.addEventListener('change', applyFilters));
+      
+      sortSelect.addEventListener('change', () => {
+        const mode = sortSelect.value;
+        const cards = getCards();
+        
+        cards.sort((a, b) => {
+          // Simple price extraction from text for demo purposes
+          const getPrice = (el) => {
+            const txt = el.innerText.match(/Rs\s*(\d+)/);
+            return txt ? parseInt(txt[1], 10) : 0;
+          };
+          
+          const pA = getPrice(a);
+          const pB = getPrice(b);
+          
+          if (mode === 'low') return pA - pB;
+          if (mode === 'high') return pB - pA;
+          return 0; // 'newest' is default DOM order
+        });
+        
+        cards.forEach(card => grid.appendChild(card));
+      });
+
+      // Cursor support
+      const dot = document.getElementById('cursor-dot');
+      const ring = document.getElementById('cursor-ring');
+      let rx = 0, ry = 0, dx = 0, dy = 0;
+      document.addEventListener('mousemove', e => { dx = e.clientX; dy = e.clientY; dot.style.left = dx + 'px'; dot.style.top = dy + 'px'; });
+      (function loop() { rx += (dx - rx) * 0.12; ry += (dy - ry) * 0.12; ring.style.left = rx + 'px'; ring.style.top = ry + 'px'; requestAnimationFrame(loop); })();
+      
+      document.querySelectorAll('a, button, .market-card, .mkt-pill').forEach(el => {
+        el.addEventListener('mouseenter', () => { ring.style.width = '52px'; ring.style.height = '52px'; ring.style.opacity = '1'; });
+        el.addEventListener('mouseleave', () => { ring.style.width = '36px'; ring.style.height = '36px'; ring.style.opacity = '0.65'; });
+      });
+    })();
+
+    function setTheme(t) {
+      document.documentElement.setAttribute('data-theme', t);
+      localStorage.setItem('kk-theme', t);
+      document.querySelectorAll('.theme-opt').forEach(b => b.classList.toggle('active', b.dataset.theme === t));
+    }
+    (function () { setTheme(localStorage.getItem('kk-theme') || 'dark-cold'); })();
+  </script>
 </body>
 </html>
