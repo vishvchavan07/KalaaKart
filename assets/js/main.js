@@ -63,27 +63,32 @@
 
   function mentorCard(mentor, index) {
     return `
-      <article class="mentor-card" data-mentor-id="${index}" style="background:var(--card-bg); border:1px solid var(--border); border-radius:18px; padding:20px; margin-bottom:16px; transition:transform 0.3s ease;">
-        <div class="mentor-card-top" style="display:flex; gap:16px; align-items:start;">
-          <img src="${mentor.image}" style="width:72px; height:72px; border-radius:14px; object-fit:cover; border:2px solid var(--accent); background:var(--surface);" alt="${mentor.name}">
-          <div style="flex:1;">
-            <div style="display:flex; justify-content:space-between; align-items:start; flex-wrap:wrap; gap:8px;">
+      <article class="mentor-card" data-mentor-id="${index}" style="background:var(--card-bg); border:1px solid var(--border); border-radius:24px; padding:24px; margin-bottom:20px; transition:all 0.3s cubic-bezier(0.4, 0, 0.2, 1); display:flex; flex-direction:column; gap:20px; box-shadow:var(--shadow);">
+        <div class="mentor-card-top" style="display:flex; gap:20px; align-items:start; flex-wrap:wrap;">
+          <img src="${mentor.image}" style="width:84px; height:84px; border-radius:18px; object-fit:cover; border:2px solid var(--accent); background:var(--surface); padding:3px;" alt="${mentor.name}">
+          <div style="flex:1; min-width:240px;">
+            <div style="display:flex; justify-content:space-between; align-items:start; gap:12px;">
               <div>
-                <h3 style="margin:0; font-size:1.25rem;">${mentor.name}</h3>
-                <p style="margin:2px 0; font-size:0.9rem; color:var(--text-secondary);"><strong>${mentor.subject}</strong> • ${mentor.mode}</p>
+                <h3 style="margin:0; font-size:1.4rem; color:var(--text-primary); font-weight:800; letter-spacing:-0.02em;">${mentor.name}</h3>
+                <p style="margin:4px 0; font-size:1rem; color:var(--text-secondary); font-weight:600;">
+                  <span style="color:var(--accent);">${mentor.subject}</span> • ${mentor.mode}
+                </p>
               </div>
-              <span class="status-pill" style="background:var(--tag-bg); color:var(--accent); padding:4px 10px; border-radius:8px; font-size:0.85rem; font-weight:700;">${mentor.price}</span>
+              <div style="text-align:right;">
+                <div style="font-size:1.15rem; font-weight:800; color:var(--text-primary);">${mentor.price}</div>
+                <div style="font-size:0.85rem; color:var(--text-secondary); margin-top:2px;">${mentor.freeOption}</div>
+              </div>
             </div>
-            <p style="margin:12px 0; font-size:0.98rem; line-height:1.6; color:var(--text-primary);">${mentor.description || ''}</p>
             
-            <div style="display:flex; align-items:center; gap:12px; margin-top:14px; flex-wrap:wrap;">
-              ${renderStars(mentor.rating)}
-              <span style="font-weight:700; font-size:0.9rem;">${mentor.rating}</span>
-              <span style="font-size:0.85rem; color:var(--text-secondary); background:var(--tag-bg); padding:2px 8px; border-radius:4px;">${mentor.freeOption}</span>
-            </div>
-
-            <div class="mentor-actions" style="margin-top:20px;">
-              <button class="button btn-primary" data-book-mentor="${index}" style="width:100%; padding:14px; font-weight:700; border-radius:10px;">Book session</button>
+            <p style="margin:16px 0; font-size:1.05rem; line-height:1.6; color:var(--text-primary); opacity:0.9;">${mentor.description || ''}</p>
+            
+            <div style="display:flex; align-items:center; justify-content:space-between; margin-top:24px; flex-wrap:wrap; gap:16px; border-top:1px solid var(--border); padding-top:20px;">
+              <div style="display:flex; align-items:center; gap:12px;">
+                ${renderStars(mentor.rating)}
+                <span style="font-weight:800; font-size:1.1rem; color:var(--text-primary);">${mentor.rating}</span>
+                <span style="font-size:0.9rem; color:var(--text-secondary);">Expert Mentor</span>
+              </div>
+              <button class="button btn-primary" data-book-mentor="${index}" style="padding:12px 32px; font-weight:700; border-radius:12px; font-size:1rem;">Book session</button>
             </div>
           </div>
         </div>

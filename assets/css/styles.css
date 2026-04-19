@@ -771,7 +771,7 @@ body.lightbox-open {
   border: 0;
   border-radius: 999px;
   background: rgba(255, 255, 255, 0.1);
-  color: #f7efe8;
+  color: var(--text-primary);
   font-size: 1.35rem;
   cursor: pointer;
   z-index: 2;
@@ -790,7 +790,7 @@ body.lightbox-open {
   min-height: 520px;
   padding: 1rem;
   border-radius: 20px;
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.03));
+  background: linear-gradient(180deg, var(--border), rgba(255, 255, 255, 0.03));
 }
 
 .slate-photo {
@@ -799,12 +799,12 @@ body.lightbox-open {
   object-fit: cover;
   object-position: center;
   border-radius: 18px;
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  border: 1px solid var(--border);
 }
 
 .slate-rating {
   margin-top: 0.8rem;
-  color: #f7efe8;
+  color: var(--text-primary);
   font-weight: 700;
 }
 
@@ -818,7 +818,7 @@ body.lightbox-open {
   font-size: clamp(2rem, 4vw, 3.4rem);
   line-height: 1;
   letter-spacing: -0.05em;
-  color: #f5eee7;
+  color: var(--text-primary);
 }
 
 .slate-title,
@@ -865,7 +865,7 @@ body.lightbox-open {
 
 .slate-contact strong {
   margin-bottom: 0.28rem;
-  color: #f5eee7;
+  color: var(--text-primary);
   font-size: 0.82rem;
 }
 
@@ -887,7 +887,7 @@ body.lightbox-open {
 
 .slider-top strong,
 .slider-value {
-  color: #f5eee7;
+  color: var(--text-primary);
 }
 
 .slider-value {
@@ -931,20 +931,23 @@ body.lightbox-open {
 }
 
 .filter-pill {
-  border: 0;
-  background: rgba(24, 34, 45, 0.06);
-  color: var(--ink);
-  padding: 0.66rem 0.88rem;
+  border: 1px solid var(--border);
+  background: var(--tag-bg);
+  color: var(--text-secondary);
+  padding: 0.6rem 1.2rem;
   border-radius: 999px;
-  font: inherit;
-  font-family: var(--font-body);
-  font-size: 0.84rem;
-  font-weight: 500;
+  font-family: inherit;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.25s ease;
 }
 
 .filter-pill.active {
-  background: linear-gradient(135deg, var(--accent-deep), var(--accent));
-  color: white;
+  background: var(--accent);
+  color: #fff;
+  border-color: var(--accent);
+  box-shadow: var(--shadow);
 }
 
 .mentor-hero,
@@ -1188,7 +1191,7 @@ body.lightbox-open {
 }
 
 body {
-  color: #f7efe8;
+  color: var(--text-primary);
   background:
     radial-gradient(circle at 75% 22%, rgba(195, 37, 37, 0.16), transparent 20%),
     radial-gradient(circle at 20% 0%, rgba(255, 166, 77, 0.08), transparent 16%),
@@ -1206,7 +1209,7 @@ body {
 .eyebrow,
 .text-link,
 .footer-links a:hover {
-  color: #f7efe8;
+  color: var(--text-primary);
 }
 
 .brand small,
@@ -1284,7 +1287,7 @@ body {
   width: min(280px, 52vw);
   height: auto;
   border-radius: 16px;
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  border: 1px solid var(--border);
   box-shadow: 0 18px 40px rgba(0, 0, 0, 0.18);
 }
 
@@ -1349,8 +1352,7 @@ body {
 .pricing-card,
 .filters-bar,
 .page-hero {
-  background: linear-gradient(180deg, rgba(42, 10, 10, 0.92), rgba(25, 6, 6, 0.94));
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  border: 1px solid var(--border);
   box-shadow: 0 22px 50px rgba(0, 0, 0, 0.22);
 }
 
@@ -1366,7 +1368,7 @@ body {
 .impact-card h3,
 .gallery-head strong,
 .lightbox-title {
-  color: #f5eee7;
+  color: var(--text-primary);
 }
 
 .hero-stats span,
@@ -1427,8 +1429,8 @@ body {
 .tag,
 .review-chip,
 .status-pill {
-  background: rgba(255, 255, 255, 0.08);
-  color: #f7efe8;
+  background: var(--border);
+  color: var(--text-primary);
 }
 
 .tag {
@@ -1441,9 +1443,9 @@ body {
 }
 
 .button-secondary {
-  background: rgba(255, 255, 255, 0.08);
+  background: var(--border);
   border-color: rgba(255, 255, 255, 0.1);
-  color: #f7efe8;
+  color: var(--text-primary);
 }
 
 .section-dark {
@@ -1493,7 +1495,7 @@ body {
 
 .filter-pill {
   background: rgba(255, 255, 255, 0.06);
-  color: #f7efe8;
+  color: var(--text-primary);
 }
 
 .filter-pill.active {
@@ -1502,20 +1504,20 @@ body {
 
 .lightbox-panel {
   background: linear-gradient(180deg, rgba(35, 8, 8, 0.98), rgba(18, 4, 4, 0.98));
-  border-color: rgba(255, 255, 255, 0.08);
+  border-color: var(--border);
 }
 
 .lightbox-close {
-  background: rgba(255, 255, 255, 0.08);
-  color: #f7efe8;
+  background: var(--border);
+  color: var(--text-primary);
 }
 
 .lightbox-image {
-  border-color: rgba(255, 255, 255, 0.08);
+  border-color: var(--border);
 }
 
 .footer-shell {
-  border-top-color: rgba(255, 255, 255, 0.08);
+  border-top-color: var(--border);
 }
 
 @media (max-width: 960px) {
@@ -1703,7 +1705,6 @@ body {
   width: 500px;
   height: 500px;
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(232, 108, 58, 0.08) 0%, transparent 70%);
   transform: translateY(-50%);
   pointer-events: none;
   z-index: 0;
@@ -1817,7 +1818,7 @@ body {
 .showcase-overlay strong {
   font-size: 0.78rem;
   font-weight: 700;
-  color: #f5eee7;
+  color: var(--text-primary);
   font-family: var(--font-body);
   line-height: 1.3;
 }
@@ -2470,7 +2471,6 @@ article:hover .stars span:nth-child(5) { transition-delay: 0.16s; transform: sca
   border-radius: 50%;
   pointer-events: none;
   z-index: 0;
-  background: radial-gradient(circle, color-mix(in srgb, var(--color-primary) 8%, transparent) 0%, transparent 70%);
   transform: translate(-50%, -50%);
   transition: opacity 0.3s ease, width 0.3s ease, height 0.3s ease;
   opacity: 0;
