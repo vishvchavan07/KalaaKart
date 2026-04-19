@@ -5,15 +5,13 @@
       function renderStars(rating) {
     const rounded = Math.round(Number(rating));
     return `<span class="star" style="color:#F5A623 !important;">★</span>`.repeat(rounded) + `<span class="star-empty" style="color:#ccc !important;">☆</span>`.repeat(5 - rounded);
-  }
-
-    function profileCard(profile) {
+  }  function profileCard(profile) {
     let hobbyTags = '';
     if(profile.hobbies && Array.isArray(profile.hobbies)){
        hobbyTags = profile.hobbies.map(hobby => `<span class="tag">${hobby}</span>`).join("");
     }
     return `
-<div class="profile-card" style="display:flex; flex-direction:column; justify-content:space-between;">
+<div class="profile-card" data-profile-id="${profile.id}" style="display:flex; flex-direction:column; justify-content:space-between;">
   <div>
       <div style="display:flex; align-items:center; gap:12px; margin-bottom:12px;">
         <img src="${profile.image || ''}" style="width:48px;height:48px;border-radius:50%;object-fit:cover;" alt="${profile.name || ''}">
@@ -35,14 +33,14 @@
     <div class="card-tags" style="display:flex; gap:8px; flex-wrap:wrap; margin-bottom:16px;">
         ${hobbyTags}
     </div>
-    <a href="mentor-booking.html" class="button btn-primary" style="width:100%;">Book Now</a>
+    <button class="button btn-primary" data-book-profile="${profile.id}" style="width:100%;">Book Now</button>
   </div>
 </div>`;
   }
 
-  function mentorCard(mentor) {
+  function mentorCard(mentor, index) {
     return `
-      <article class="mentor-card">
+      <article class="mentor-card" data-mentor-id="${index}">
         <img class="mentor-avatar" src="${mentor.image}" alt="${mentor.name} mentor photo">
         <div>
           <h3>${mentor.name}</h3>
@@ -56,15 +54,15 @@
         </div>
         <div class="mentor-actions">
           <span class="status-pill">${mentor.price}</span>
-          <a class="button button-primary" href="#">Book session</a>
+          <button class="button button-primary" data-book-mentor="${index}">Book session</button>
         </div>
       </article>
     `;
   }
 
-  function marketplaceCard(item) {
+  function marketplaceCard(item, index) {
     return `
-      <article class="market-card">
+      <article class="market-card" data-item-id="${index}">
         <img src="${item.image}" alt="${item.name}">
         <h3>${item.name}</h3>
         <p>${item.description}</p>
@@ -74,7 +72,7 @@
           <span class="tag">${item.size}</span>
         </div>
         <p>${item.seller}</p>
-        <a class="button button-secondary" href="#">View details</a>
+        <button class="button button-secondary" data-book-item="${index}" style="width:100%; margin-top:12px;">View details</button>
       </article>
     `;
   }
@@ -97,14 +95,14 @@
   if (page === "mentors") {
     const mentorContainer = document.getElementById("mentorCards");
     if (mentorContainer) {
-      mentorContainer.innerHTML = data.mentors.map(mentorCard).join("");
+      mentorContainer.innerHTML = data.mentors.map((m, i) => mentorCard(m, i)).join("");
     }
   }
 
   if (page === "marketplace") {
     const marketContainer = document.getElementById("marketplaceCards");
     if (marketContainer) {
-      marketContainer.innerHTML = data.marketplace.map(marketplaceCard).join("");
+      marketContainer.innerHTML = data.marketplace.map((m, i) => marketplaceCard(m, i)).join("");
     }
   }
 
@@ -208,7 +206,7 @@
   function updateBookingPrice(profile) {
     const value = Number(bookingRange.value);
     sliderValue.textContent = `Rs ${value}`;
-    slateMailAction.href = `mailto:${profile.email}?subject=Kalaa Kart booking request for ${encodeURIComponent(profile.name)}&body=Hi ${encodeURIComponent(profile.name)},%0D%0A%0D%0AI want to book your ${encodeURIComponent(profile.title)} service.%0D%0AMy selected budget is Rs ${value}.%0D%0A%0D%0APlease share your availability.`;
+    slateMailAction.href = `mailto:${profile.email}?subject=Kalaa Kart booking request for ${encodeURIComponent(profile.name)}&body=Hi ${encodeURIComponent(profile.name)},%0D%0AI want to book your ${encodeURIComponent(profile.title)} service.%0D%0AMy selected budget is Rs ${value}.%0D%0A%0D%0APlease share your availability.`;
   }
 
   function openBookingSlate(profileId) {
@@ -250,10 +248,26 @@
       return;
     }
 
-    const bookButton = event.target.closest("[data-book-profile]");
-    if (bookButton) {
+    const bookProfileButton = event.target.closest("[data-book-profile]");
+    if (bookProfileButton) {
       event.stopPropagation();
-      openBookingSlate(bookButton.dataset.bookProfile);
+      openBookingSlate(bookProfileButton.dataset.bookProfile);
+      return;
+    }
+
+    const bookMentorButton = event.target.closest("[data-book-mentor]");
+    if (bookMentorButton) {
+      const mentor = data.mentors[bookMentorButton.dataset.bookMentor];
+      const mailto = `mailto:mentors@kalaakart.in?subject=Mentorship Request: ${encodeURIComponent(mentor.subject)}&body=Hi ${encodeURIComponent(mentor.name)},%0D%0AI want to book a mentorship session for ${encodeURIComponent(mentor.subject)}.%0D%0AI saw your profile on Kalaa Kart.%0D%0APlease let me know your availability for an ${encodeURIComponent(mentor.mode)} session.`;
+      window.location.href = mailto;
+      return;
+    }
+
+    const bookItemButton = event.target.closest("[data-book-item]");
+    if (bookItemButton) {
+      const item = data.marketplace[bookItemButton.dataset.bookItem];
+      const mailto = `mailto:marketplace@kalaakart.in?subject=Marketplace Inquiry: ${encodeURIComponent(item.name)}&body=Hi,%0D%0AI am interested in the ${encodeURIComponent(item.name)} listed on Kalaa Kart.%0D%0ADescription: ${encodeURIComponent(item.description)}%0D%0AIs this still available for ${encodeURIComponent(item.price)}?`;
+      window.location.href = mailto;
       return;
     }
 
@@ -284,6 +298,82 @@
       openBookingSlate(focusedCard.dataset.profileId);
     }
   });
+
+  // --- FILTERING & SORTING LOGIC ---
+  if (page === "mentors") {
+    const subjectPills = document.querySelectorAll('.filter-pill');
+    const freeToggle = document.getElementById('freeToggle');
+    const grid = document.getElementById('mentorCards');
+
+    const filterMentors = () => {
+      const activeFilter = document.querySelector('.filter-pill.active')?.dataset.filter || 'all';
+      const freeOnly = freeToggle?.checked || false;
+
+      grid.innerHTML = data.mentors
+        .map((m, i) => ({ ...m, index: i }))
+        .filter(m => (activeFilter === 'all' || m.subject === activeFilter))
+        .filter(m => (freeOnly ? m.price.toLowerCase().includes('free') : true))
+        .map(m => mentorCard(m, m.index))
+        .join("");
+    };
+
+    subjectPills.forEach(pill => {
+      pill.addEventListener('click', () => {
+        subjectPills.forEach(p => p.classList.remove('active'));
+        pill.classList.add('active');
+        filterMentors();
+      });
+    });
+    freeToggle?.addEventListener('change', filterMentors);
+    filterMentors(); // Initial render
+  }
+
+  if (page === "marketplace") {
+    const categoryPills = document.querySelectorAll('.mkt-pill');
+    const buyToggle = document.getElementById('buyToggle');
+    const rentToggle = document.getElementById('rentToggle');
+    const sortSelect = document.getElementById('sortSelect');
+    const grid = document.getElementById('marketplaceCards');
+
+    const filterMarketplace = () => {
+      const activeCat = document.querySelector('.mkt-pill.active')?.dataset.category || 'all';
+      const showBuy = buyToggle?.checked || false;
+      const showRent = rentToggle?.checked || false;
+      const sortBy = sortSelect?.value || 'newest';
+
+      let items = data.marketplace.map((m, i) => ({ ...m, index: i }));
+      
+      // Filter
+      items = items.filter(m => {
+        const catMatch = (activeCat === 'all'); // Add complex category logic if data structure allows
+        const buyMatch = showBuy && m.price.toLowerCase().includes('buy');
+        const rentMatch = showRent && m.alternate.toLowerCase().includes('rent');
+        return catMatch && (buyMatch || rentMatch);
+      });
+
+      // Sort
+      if (sortBy === 'low' || sortBy === 'high') {
+        items.sort((a, b) => {
+          const getP = (s) => parseInt(s.match(/\d+/)?.[0] || 0);
+          const priceA = getP(a.price);
+          const priceB = getP(b.price);
+          return sortBy === 'low' ? priceA - priceB : priceB - priceA;
+        });
+      }
+
+      grid.innerHTML = items.map(m => marketplaceCard(m, m.index)).join("");
+    };
+
+    categoryPills.forEach(pill => {
+      pill.addEventListener('click', () => {
+        categoryPills.forEach(p => p.classList.remove('active'));
+        pill.classList.add('active');
+        filterMarketplace();
+      });
+    });
+    [buyToggle, rentToggle, sortSelect].forEach(el => el?.addEventListener('change', filterMarketplace));
+    filterMarketplace(); // Initial render
+  }
 })();
 
 

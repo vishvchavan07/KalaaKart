@@ -142,34 +142,64 @@ window.campusCircleData = {
   extraProfiles: [],
   mentors: [
     {
-      name: "Riya Jadhav",
-      subject: "Engineering Physics",
-      mode: "Offline in library",
-      price: "Rs 199 per hour",
+      name: "Aditya Verma",
+      subject: "Physics",
+      mode: "Mechanical Eng · Final Year",
+      price: "Rs 149 / session",
       rating: "4.9",
-      freeOption: "Also takes one free doubt session weekly",
-      image: "assets/images/avatars/riya.svg",
-      description: "Second-year student who simplifies numerical problems and teaches only what matters for the university exam pattern."
+      freeOption: "Matches your syllabus",
+      image: "https://api.dicebear.com/7.x/thumbs/svg?seed=Aditya",
+      description: "Cleared SPPU Physics with 9.2 CGPA — I'll help you do the same. Handles Doubt Solving, Exam Revision."
     },
     {
-      name: "Prathamesh More",
-      subject: "Mathematics I & II",
-      mode: "Offline + hybrid",
-      price: "Rs 249 per session",
+      name: "Riya Nair",
+      subject: "Programming",
+      mode: "Computer Eng · Third Year",
+      price: "Rs 199 / hour",
       rating: "4.8",
-      freeOption: "Group revision session available",
-      image: "assets/images/avatars/prathamesh.svg",
-      description: "Known for step-by-step problem solving and compact formula revision sheets before internals and semester exams."
+      freeOption: "Free draft available",
+      image: "https://api.dicebear.com/7.x/thumbs/svg?seed=Riya",
+      description: "Specializes in C++ and Data Structures. Will help you clear all lab practicals and assignments."
     },
     {
-      name: "Sneha Kale",
-      subject: "C Programming",
-      mode: "Lab support + offline",
-      price: "Free / pay what you feel",
+      name: "Samyak Misal",
+      subject: "Mathematics",
+      mode: "Civil Eng · Second Year",
+      price: "Rs 150 / session",
+      rating: "5.0",
+      freeOption: "First session free",
+      image: "https://api.dicebear.com/7.x/thumbs/svg?seed=Samyak",
+      description: "Master of integration and differentiation. I provide step-by-step notes for all M1/M2 topics."
+    },
+    {
+      name: "Pratiksha",
+      subject: "Graphics",
+      mode: "Mechanical Eng · Third Year",
+      price: "Rs 249 / session",
       rating: "4.7",
-      freeOption: "Free teaching option enabled",
-      image: "assets/images/avatars/sneha.svg",
-      description: "Helps juniors understand loops, arrays, practicals, and viva questions in a calm and beginner-friendly way."
+      freeOption: "Drafting sheets included",
+      image: "https://api.dicebear.com/7.x/thumbs/svg?seed=Pratiksha",
+      description: "Struggling with projections? I'll help you master Engineering Graphics with easy shortcuts."
+    },
+    {
+      name: "Ishan Deshmukh",
+      subject: "Mathematics",
+      mode: "ENTC · Final Year",
+      price: "Rs 199 / session",
+      rating: "4.9",
+      freeOption: "Group discounts",
+      image: "https://api.dicebear.com/7.x/thumbs/svg?seed=Ishan",
+      description: "Expert in M3 and Signal Processing. Simplified methods for complex university problems."
+    },
+    {
+      name: "Ananya",
+      subject: "Electronics",
+      mode: "ENTC · Second Year",
+      price: "Free",
+      rating: "4.6",
+      freeOption: "Completely Free",
+      image: "https://api.dicebear.com/7.x/thumbs/svg?seed=Ananya",
+      description: "Passionate about Basic Electronics. Helping juniors for free as part of the peer club."
     }
   ],
   marketplace: [
