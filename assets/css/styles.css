@@ -4579,3 +4579,100 @@ article, .card, .profile-card, .mentor-card, .market-card,
     display: none !important;
   }
 }
+
+/* ──────────────────────────────────────────────────────────
+   5-UPGRADE MOTION & DESIGN SYSTEM
+───────────────────────────────────────────────────────────── */
+
+/* A · ENTRANCE ANIMATIONS */
+.reveal-on-scroll {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.8s cubic-bezier(0.2, 0.8, 0.2, 1), transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+  will-change: opacity, transform;
+}
+.reveal-on-scroll.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* B · 3D CARD TILT (CSS vars set by JS) */
+.tilt-card {
+  transition: transform 0.1s ease-out, box-shadow 0.1s ease-out;
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+
+/* C · PAGE TRANSITIONS */
+body {
+  opacity: 0;
+  animation: pageFadeIn 0.4s ease-out forwards;
+}
+body.page-exit {
+  opacity: 0 !important;
+  transition: opacity 0.3s ease-out;
+}
+@keyframes pageFadeIn {
+  to { opacity: 1; }
+}
+
+/* D · MARQUEE REVIEWS */
+.marquee-wrapper {
+  overflow: hidden;
+  white-space: nowrap;
+  width: 100vw;
+  max-width: 100%;
+  padding: 2rem 0;
+  background: var(--surface);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  position: relative;
+  left: 50%;
+  right: 50%;
+  margin-left: -50vw;
+  margin-right: -50vw;
+}
+.marquee-content {
+  display: inline-block;
+  animation: marqueeScroll 30s linear infinite;
+  padding-left: 2rem;
+}
+.marquee-item {
+  display: inline-block;
+  font-size: 1.1rem;
+  font-weight: 500;
+  padding: 0 2rem;
+  color: var(--text-primary);
+  border-right: 1px solid var(--border);
+}
+.marquee-item:last-child { border-right: none; }
+.marquee-item span { color: var(--accent); margin-right: 8px; }
+@keyframes marqueeScroll {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); } 
+}
+
+/* E · SKELETON LOADERS */
+.skeleton {
+  background: linear-gradient(90deg, var(--card-top-bg) 25%, var(--border) 50%, var(--card-top-bg) 75%);
+  background-size: 200% 100%;
+  animation: skeletonLoading 1.5s infinite;
+  border-radius: 8px;
+  min-height: 20px;
+  margin-bottom: 10px;
+  border: none !important;
+  color: transparent !important;
+}
+.skeleton-card {
+  min-height: 300px;
+  border-radius: var(--radius-lg, 14px);
+  background: var(--card-bg);
+  padding: 20px;
+}
+.skeleton-circle { width: 60px; height: 60px; border-radius: 50%; margin-bottom: 15px; }
+.skeleton-title { width: 70%; height: 24px; }
+.skeleton-text { width: 100%; height: 16px; margin-top: 10px;}
+@keyframes skeletonLoading {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}

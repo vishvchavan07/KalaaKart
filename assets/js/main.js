@@ -625,3 +625,104 @@ setTheme(savedLocalTheme);
       initWACtas();
   });
   observer.observe(document.body, { childList: true, subtree: true });
+
+// ──────────────────────────────────────────────────────────
+// 5-UPGRADE MOTION & DESIGN SYSTEM INIT
+// ──────────────────────────────────────────────────────────
+
+document.addEventListener('DOMContentLoaded', () => {
+    
+  // --- A. ENTRANCE ANIMATIONS ---
+  const sections = document.querySelectorAll('section, .showcase-card, .pillar-card');
+  sections.forEach(sec => sec.classList.add('reveal-on-scroll'));
+  
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('is-visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+  
+  sections.forEach(sec => observer.observe(sec));
+
+  // --- B. 3D CARD TILT ---
+  function initTilt() {
+    const cards = document.querySelectorAll('.profile-card, .mentor-card, .market-card');
+    cards.forEach(card => {
+      card.classList.add('tilt-card');
+      card.addEventListener('mousemove', (e) => {
+        const rect = card.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        const centerX = rect.width / 2;
+        const centerY = rect.height / 2;
+        const rotateX = ((y - centerY) / centerY) * -5;
+        const rotateY = ((x - centerX) / centerX) * 5;
+        card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`;
+        card.style.boxShadow = `0 20px 40px rgba(0,0,0,0.2)`;
+      });
+      card.addEventListener('mouseleave', () => {
+        card.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)`;
+        card.style.boxShadow = ``;
+      });
+    });
+  }
+  // Initialize tilt immediately and observe for dynamically rendered cards
+  initTilt();
+  const tiltObs = new MutationObserver(() => initTilt());
+  const grids = document.querySelectorAll('.card-grid, .listings-grid');
+  grids.forEach(g => tiltObs.observe(g, { childList: true }));
+
+  // --- C. PAGE TRANSITIONS ---
+  const internalLinks = document.querySelectorAll('a[href$=".html"]');
+  internalLinks.forEach(link => {
+    link.addEventListener('click', (e) => {
+      if (link.target === '_blank' || e.ctrlKey || e.metaKey) return;
+      e.preventDefault();
+      const href = link.getAttribute('href');
+      document.body.classList.add('page-exit');
+      setTimeout(() => { window.location.href = href; }, 250);
+    });
+  });
+
+  // --- E. SKELETON LOADERS (Simulate network delay) ---
+  function wrapWithSkeleton(containerId, count) {
+    const container = document.getElementById(containerId);
+    if (!container) return false;
+    
+    // Store original HTML
+    const originalHTML = container.innerHTML;
+    if(originalHTML.includes('skeleton')) return false; // Already skeleton
+    
+    // Show skeleton
+    let skelHTML = '';
+    for(let i=0; i<count; i++) {
+        skelHTML += `<div class="skeleton-card">
+          <div class="skeleton skeleton-circle"></div>
+          <div class="skeleton skeleton-title"></div>
+          <div class="skeleton skeleton-text"></div>
+          <div class="skeleton skeleton-text" style="width:80%"></div>
+          <div class="skeleton skeleton-text" style="width:60%; margin-top:20px;"></div>
+        </div>`;
+    }
+    container.innerHTML = skelHTML;
+    
+    // Restore after delay
+    setTimeout(() => {
+        container.innerHTML = originalHTML;
+        // Re-run the WA CTA init since we replaced innerHTML
+        if(typeof initWACtas === 'function') initWACtas();
+    }, 600);
+    
+    return true;
+  }
+  
+  // Apply skeletons logic on dynamic grids
+  wrapWithSkeleton('featuredProfiles', 3);
+  wrapWithSkeleton('allProfiles', 4);
+  wrapWithSkeleton('mentorCards', 4);
+  wrapWithSkeleton('marketplaceCards', 4);
+
+});
