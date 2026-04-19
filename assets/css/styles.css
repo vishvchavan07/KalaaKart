@@ -4565,19 +4565,22 @@ article, .card, .profile-card, .mentor-card, .market-card,
   z-index: 999;
   text-decoration: none;
   transition: transform 0.2s;
+  overflow: hidden;
 }
 .wa-floating-btn:hover {
   transform: scale(1.05);
 }
 .wa-floating-btn svg {
   fill: white;
-  width: 26px;
-  height: 26px;
+  width: 26px !important;
+  max-width: 26px !important;
+  height: 26px !important;
 }
 @media (min-width: 481px) {
   .wa-floating-btn {
     display: none !important;
-  }
+    overflow: hidden;
+}
 }
 
 /* ──────────────────────────────────────────────────────────
