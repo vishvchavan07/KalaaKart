@@ -2,35 +2,58 @@
   const data = window.campusCircleData;
   const page = document.body.dataset.page;
 
-      function renderStars(rating) {
-    const rounded = Math.round(Number(rating));
-    return `<span class="star" style="color:#F5A623 !important;">★</span>`.repeat(rounded) + `<span class="star-empty" style="color:#ccc !important;">☆</span>`.repeat(5 - rounded);
-  }  function profileCard(profile) {
+  function renderStars(rating) {
+    const r = parseFloat(rating) || 5;
+    let html = '';
+    for (let i = 1; i <= 5; i++) {
+       if (i <= Math.floor(r)) html += '<span class="star" style="color:#F5A623 !important;">★</span>';
+       else if (i - 0.5 <= r) html += '<span class="star-half" style="color:#F5A623 !important;">★</span>';
+       else html += '<span class="star-empty" style="color:#ccc !important;">☆</span>';
+    }
+    return `<div class="star-rating-rendered" style="display:inline-flex; gap:2px;">${html}</div>`;
+  }
+
+  function profileCard(profile) {
     let hobbyTags = '';
     if(profile.hobbies && Array.isArray(profile.hobbies)){
        hobbyTags = profile.hobbies.map(hobby => `<span class="tag">${hobby}</span>`).join("");
     }
+    
+    let galleryHtml = '';
+    if(profile.gallery && Array.isArray(profile.gallery)){
+      galleryHtml = `
+        <div class="works-preview" style="display:flex; gap:8px; overflow-x:auto; margin: 12px 0; padding-bottom:6px; scrollbar-width: none;">
+          ${profile.gallery.map(work => `
+            <img src="${work.src}" alt="${work.title}" style="width:90px; height:90px; border-radius:10px; object-fit:cover; flex-shrink:0; border:1px solid var(--border); box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+          `).join("")}
+        </div>
+      `;
+    }
+
     return `
 <div class="profile-card" data-profile-id="${profile.id}" style="display:flex; flex-direction:column; justify-content:space-between;">
   <div>
       <div style="display:flex; align-items:center; gap:12px; margin-bottom:12px;">
-        <img src="${profile.image || ''}" style="width:48px;height:48px;border-radius:50%;object-fit:cover;" alt="${profile.name || ''}">
+        <img src="${profile.image || ''}" style="width:54px;height:54px;border-radius:50%;object-fit:cover; border:2px solid var(--accent); padding:2px;" alt="${profile.name || ''}">
         <div>
           <h3 style="margin:0;font-size:18px;">${profile.name || ''}</h3>
           <p style="margin:0;font-size:13px;color:var(--text-secondary);">${profile.title || 'Student Profile'}</p>
         </div>
       </div>
-      <div style="background:var(--tag-bg); padding:10px; border-radius:8px; margin-bottom:12px;">
-        <span style="font-size:14px;color:var(--text-primary);display:block;">${profile.bio || 'Creative student offering services on campus.'}</span>
+      <div style="background:var(--tag-bg); padding:10px; border-radius:12px; margin-bottom:12px;">
+        <p style="margin:0; font-size:13.5px; line-height:1.5; color:var(--text-primary);">${profile.bio || ''}</p>
       </div>
-      <div style="display:flex; align-items:center; gap:6px; white-space:nowrap; margin-bottom:16px;">
-        ${renderStars(profile.rating || 5)}
-        <span style="font-size:14px;font-weight:600;margin-left:4px;">${profile.rating || '5.0'}</span>
-        <span style="font-size:13px;color:var(--text-secondary);">(${profile.reviews || 0})</span>
+      
+      ${galleryHtml}
+
+      <div style="display:flex; align-items:center; gap:8px; margin-bottom:16px;">
+        ${renderStars(profile.rating)}
+        <span style="font-size:14px;font-weight:700;">${profile.rating || '5.0'}</span>
+        <span style="font-size:12px;color:var(--text-secondary);">(${profile.reviews || 0} reviews)</span>
       </div>
   </div>
   <div class="card-bottom">
-    <div class="card-tags" style="display:flex; gap:8px; flex-wrap:wrap; margin-bottom:16px;">
+    <div class="card-tags" style="display:flex; gap:6px; flex-wrap:wrap; margin-bottom:16px;">
         ${hobbyTags}
     </div>
     <button class="button btn-primary" data-book-profile="${profile.id}" style="width:100%;">Book Now</button>
@@ -40,21 +63,29 @@
 
   function mentorCard(mentor, index) {
     return `
-      <article class="mentor-card" data-mentor-id="${index}">
-        <img class="mentor-avatar" src="${mentor.image}" alt="${mentor.name} mentor photo">
-        <div>
-          <h3>${mentor.name}</h3>
-          <p><strong>${mentor.subject}</strong> • ${mentor.mode}</p>
-          <p>${mentor.description}</p>
-          <div class="tag-row">
-            <span class="tag">${mentor.price}</span>
-            <span class="tag">${mentor.freeOption}</span>
-            <span class="tag">${renderStars(mentor.rating)} ${mentor.rating}</span>
+      <article class="mentor-card" data-mentor-id="${index}" style="background:var(--card-bg); border:1px solid var(--border); border-radius:18px; padding:20px; margin-bottom:16px; transition:transform 0.3s ease;">
+        <div class="mentor-card-top" style="display:flex; gap:16px; align-items:start;">
+          <img src="${mentor.image}" style="width:72px; height:72px; border-radius:14px; object-fit:cover; border:2px solid var(--accent); background:var(--surface);" alt="${mentor.name}">
+          <div style="flex:1;">
+            <div style="display:flex; justify-content:space-between; align-items:start; flex-wrap:wrap; gap:8px;">
+              <div>
+                <h3 style="margin:0; font-size:1.25rem;">${mentor.name}</h3>
+                <p style="margin:2px 0; font-size:0.9rem; color:var(--text-secondary);"><strong>${mentor.subject}</strong> • ${mentor.mode}</p>
+              </div>
+              <span class="status-pill" style="background:var(--tag-bg); color:var(--accent); padding:4px 10px; border-radius:8px; font-size:0.85rem; font-weight:700;">${mentor.price}</span>
+            </div>
+            <p style="margin:12px 0; font-size:0.98rem; line-height:1.6; color:var(--text-primary);">${mentor.description || ''}</p>
+            
+            <div style="display:flex; align-items:center; gap:12px; margin-top:14px; flex-wrap:wrap;">
+              ${renderStars(mentor.rating)}
+              <span style="font-weight:700; font-size:0.9rem;">${mentor.rating}</span>
+              <span style="font-size:0.85rem; color:var(--text-secondary); background:var(--tag-bg); padding:2px 8px; border-radius:4px;">${mentor.freeOption}</span>
+            </div>
+
+            <div class="mentor-actions" style="margin-top:20px;">
+              <button class="button btn-primary" data-book-mentor="${index}" style="width:100%; padding:14px; font-weight:700; border-radius:10px;">Book session</button>
+            </div>
           </div>
-        </div>
-        <div class="mentor-actions">
-          <span class="status-pill">${mentor.price}</span>
-          <button class="button button-primary" data-book-mentor="${index}">Book session</button>
         </div>
       </article>
     `;
@@ -373,6 +404,30 @@
     });
     [buyToggle, rentToggle, sortSelect].forEach(el => el?.addEventListener('change', filterMarketplace));
     filterMarketplace(); // Initial render
+  }
+
+  if (page === "profiles") {
+    const pills = document.querySelectorAll('.filter-pill');
+    const grid = document.getElementById('allProfiles');
+
+    const filterProfiles = () => {
+      const activeFilter = document.querySelector('.filter-pill.active')?.dataset.filter || 'all';
+      const allData = [...data.featuredProfiles, ...data.extraProfiles];
+      
+      grid.innerHTML = allData
+        .filter(p => (activeFilter === 'all' || p.title.toLowerCase().includes(activeFilter.toLowerCase()) || p.hobbies.some(h => h.toLowerCase().includes(activeFilter.toLowerCase()))))
+        .map(p => profileCard(p))
+        .join("");
+    };
+
+    pills.forEach(pill => {
+      pill.addEventListener('click', () => {
+        pills.forEach(p => p.classList.remove('active'));
+        pill.classList.add('active');
+        filterProfiles();
+      });
+    });
+    filterProfiles(); // Initial render
   }
 })();
 

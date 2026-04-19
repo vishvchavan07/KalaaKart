@@ -2271,11 +2271,11 @@ html {
 .btn-primary, .button-primary, button.book-now, button.book-session, .pcard-book, .mcard-book {
   position: relative;
   overflow: hidden;
-  background: var(--color-primary) !important;
+  background: var(--accent) !important;
   color: #fff !important;
   border: none !important;
   cursor: pointer;
-  z-index: 1; /* z-index > 0 to allow glowing pseudo element underneath */
+  z-index: 1; 
   transition: transform 0.25s ease, box-shadow 0.25s ease !important;
 }
 
@@ -2283,7 +2283,8 @@ html {
   content: '';
   position: absolute;
   inset: 0;
-  background: var(--color-gradient);
+  background: var(--accent);
+  filter: brightness(1.2);
   opacity: 0;
   transition: opacity 0.3s ease;
   z-index: -1;
