@@ -33,30 +33,30 @@
     return `
 <div class="profile-card" data-profile-id="${profile.id}" style="display:flex; flex-direction:column; justify-content:space-between;">
   <div>
-      <div style="display:flex; align-items:center; gap:12px; margin-bottom:12px;">
-        <img src="${profile.image || ''}" style="width:54px;height:54px;border-radius:50%;object-fit:cover; border:2px solid var(--accent); padding:2px;" alt="${profile.name || ''}">
+      <div style="display:flex; align-items:center; gap:16px; margin-bottom:16px;">
+        <img src="${profile.image || ''}" style="width:80px;height:80px;border-radius:50%;object-fit:cover; border:3px solid var(--accent); padding:3px; background:var(--surface);" alt="${profile.name || ''}">
         <div>
-          <h3 style="margin:0;font-size:18px;">${profile.name || ''}</h3>
-          <p style="margin:0;font-size:13px;color:var(--text-secondary);">${profile.title || 'Student Profile'}</p>
+          <h3 style="margin:0;font-size:20px;letter-spacing:-0.01em;">${profile.name || ''}</h3>
+          <p style="margin:2px 0 0;font-size:14px;color:var(--text-secondary);">${profile.title || 'Student Profile'}</p>
         </div>
       </div>
-      <div style="background:var(--tag-bg); padding:10px; border-radius:12px; margin-bottom:12px;">
-        <p style="margin:0; font-size:13.5px; line-height:1.5; color:var(--text-primary);">${profile.bio || ''}</p>
+      <div style="background:var(--tag-bg); padding:12px; border-radius:14px; margin-bottom:16px;">
+        <p style="margin:0; font-size:14px; line-height:1.6; color:var(--text-primary); opacity:0.9;">${profile.bio || ''}</p>
       </div>
       
-      ${galleryHtml}
+      ${galleryHtml.replace(/<img/g, '<img class="work-preview-item" style="cursor:zoom-in;"')}
 
-      <div style="display:flex; align-items:center; gap:8px; margin-bottom:16px;">
+      <div style="display:flex; align-items:center; gap:8px; margin-bottom:20px;">
         ${renderStars(profile.rating)}
-        <span style="font-size:14px;font-weight:700;">${profile.rating || '5.0'}</span>
-        <span style="font-size:12px;color:var(--text-secondary);">(${profile.reviews || 0} reviews)</span>
+        <span style="font-size:15px;font-weight:800;">${profile.rating || '5.0'}</span>
+        <span style="font-size:13px;color:var(--text-secondary);">(${profile.reviews || 0} reviews)</span>
       </div>
   </div>
   <div class="card-bottom">
-    <div class="card-tags" style="display:flex; gap:6px; flex-wrap:wrap; margin-bottom:16px;">
+    <div class="card-tags" style="display:flex; gap:6px; flex-wrap:wrap; margin-bottom:20px;">
         ${hobbyTags}
     </div>
-    <button class="button btn-primary" data-book-profile="${profile.id}" style="width:100%;">Book Now</button>
+    <button class="button btn-primary" data-book-profile="${profile.id}" style="width:100%; padding:14px 20px; font-weight:700; border-radius:10px;">Book Now</button>
   </div>
 </div>`;
   }
@@ -246,7 +246,7 @@
 
     slatePhoto.src = profile.image;
     slatePhoto.alt = `${profile.name} profile photo`;
-    slateRating.textContent = `${renderStars(profile.rating)} ${profile.rating} • ${profile.reviews} reviews`;
+    slateRating.innerHTML = `${renderStars(profile.rating)} <span style="font-weight:700;margin-left:8px;">${profile.rating}</span> • ${profile.reviews} reviews`;
     slateName.textContent = profile.name;
     slateTitle.textContent = profile.title;
     slateBio.textContent = profile.bio;
@@ -268,12 +268,22 @@
   }
 
   document.addEventListener("click", (event) => {
-    const trigger = event.target.closest(".gallery-item");
+    const trigger = event.target.closest(".gallery-item, .work-preview-item");
     if (trigger) {
-      lightboxImage.src = trigger.dataset.workSrc;
-      lightboxImage.alt = trigger.dataset.workTitle;
-      lightboxTitle.textContent = trigger.dataset.workTitle;
-      lightboxOwner.textContent = trigger.dataset.workOwner;
+      if (trigger.classList.contains("work-preview-item")) {
+        // Find profile to get work details if possible, or just use img src
+        lightboxImage.src = trigger.src;
+        lightboxImage.alt = trigger.alt;
+        lightboxTitle.textContent = trigger.alt;
+        // Find seller name
+        const pCard = trigger.closest(".profile-card");
+        if (pCard) lightboxOwner.textContent = `by ${pCard.querySelector("h3").textContent}`;
+      } else {
+        lightboxImage.src = trigger.dataset.workSrc;
+        lightboxImage.alt = trigger.dataset.workTitle;
+        lightboxTitle.textContent = trigger.dataset.workTitle;
+        lightboxOwner.textContent = trigger.dataset.workOwner;
+      }
       lightbox.classList.add("is-open");
       document.body.classList.add("lightbox-open");
       return;
