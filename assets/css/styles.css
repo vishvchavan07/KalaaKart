@@ -823,7 +823,7 @@ body.lightbox-open {
 
 .slate-title,
 .slate-bio {
-  color: rgba(247, 239, 232, 0.74);
+  color: var(--text-secondary);
 }
 
 .slate-title {
@@ -871,7 +871,7 @@ body.lightbox-open {
 
 .slate-contact span,
 .slate-contact a {
-  color: rgba(247, 239, 232, 0.76);
+  color: var(--text-secondary);
   font-size: 0.9rem;
   overflow-wrap: anywhere;
 }
@@ -902,7 +902,7 @@ body.lightbox-open {
 }
 
 .slider-scale {
-  color: rgba(247, 239, 232, 0.64);
+  color: var(--text-secondary);
   font-size: 0.82rem;
 }
 
@@ -1230,7 +1230,7 @@ body {
 .pricing-card ul,
 .booking-panel ol,
 .footer-links {
-  color: rgba(247, 239, 232, 0.72);
+  color: var(--text-secondary);
 }
 
 .brand-mark {
@@ -1239,7 +1239,7 @@ body {
 }
 
 .top-nav a {
-  color: rgba(247, 239, 232, 0.76);
+  color: var(--text-secondary);
 }
 
 .top-nav a:hover,
@@ -1293,7 +1293,7 @@ body {
   max-width: 260px;
   font-size: 0.95rem;
   line-height: 1.5;
-  color: rgba(247, 239, 232, 0.82);
+  color: var(--text-secondary);
 }
 
 .hero-grid-premium {
@@ -1308,25 +1308,26 @@ body {
 }
 
 .hero-copy-premium h1 {
-  max-width: 7ch;
+  max-width: 12ch;
   margin: 0;
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-  font-size: clamp(3.5rem, 7vw, 6rem);
+  font-family: inherit;
+  font-size: clamp(3rem, 6vw, 5rem);
   font-weight: 800;
-  line-height: 0.96;
-  letter-spacing: -0.07em;
-  color: #f5eee7;
+  line-height: 1.1;
+  letter-spacing: -0.04em;
+  color: var(--text-primary);
 }
 
 .hero-copy-premium h1 span {
-  color: #d43824;
+  color: var(--accent);
 }
 
 .hero-copy-premium p {
-  max-width: 520px;
-  margin: 1.35rem 0 0;
-  font-size: 1rem;
-  line-height: 1.7;
+  max-width: 580px;
+  margin: 1.5rem 0 0;
+  font-size: 1.1rem;
+  line-height: 1.6;
+  color: var(--text-secondary);
 }
 
 .hero-stats-premium {
@@ -1369,7 +1370,7 @@ body {
 
 .hero-stats span,
 .gallery-overlay small {
-  color: rgba(247, 239, 232, 0.7);
+  color: var(--text-secondary);
 }
 
 .hero-visual-premium {
@@ -1615,19 +1616,12 @@ body {
 }
 
 /* ─── 2. Gradient Headline ───────────────────────────────────────── */
-.hero-headline-gradient {
-  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  color: transparent;
-}
-
-.hero-headline-gradient span {
-  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+.hero-headline-gradient, .hero-headline-gradient span {
+  background: none;
+  -webkit-background-clip: unset;
+  -webkit-text-fill-color: initial;
+  background-clip: border-box;
+  color: inherit;
 }
 
 /* ─── 3. Warm CTA Buttons ────────────────────────────────────────── */
@@ -1683,7 +1677,7 @@ body {
 }
 
 .stat-card span {
-  color: rgba(247, 239, 232, 0.68) !important;
+  color: var(--text-secondary) !important;
   font-size: 0.82rem;
   font-family: var(--font-body);
 }
@@ -1729,7 +1723,7 @@ body {
   font-weight: 700;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: rgba(247, 239, 232, 0.48);
+  color: var(--text-secondary);
   font-family: var(--font-body);
 }
 
@@ -1849,7 +1843,7 @@ body {
   font-weight: 700;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: rgba(247, 239, 232, 0.45);
+  color: var(--text-secondary);
   font-family: var(--font-body);
 }
 
