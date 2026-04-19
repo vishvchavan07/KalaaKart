@@ -169,43 +169,46 @@
       <button class="slate-close" type="button" aria-label="Close profile booking">×</button>
       <div class="slate-grid">
         <div class="slate-media">
-          <img class="slate-photo" src="" alt="">
-          <div class="slate-rating"></div>
+          <div class="slate-visual-container">
+            <img class="slate-main-photo" src="" alt="">
+            <div class="floating-crafts"></div>
+            <div class="slate-rating-overlay"></div>
+          </div>
         </div>
         <div class="slate-content">
-          <span class="eyebrow">Seller Profile</span>
+          <span class="eyebrow">SELLER PROFILE</span>
           <h2 class="slate-name"></h2>
-          <p class="slate-title"></p>
-          <p class="slate-bio"></p>
+          <p class="slate-title" style="color:var(--accent); font-weight:700; font-size:1.1rem; margin: 4px 0 16px;"></p>
+          <p class="slate-bio" style="line-height:1.6; opacity:0.9; margin-bottom:20px;"></p>
           <div class="slate-tags"></div>
           <div class="slate-contact">
-            <div>
-              <strong>Gmail</strong>
+            <div class="contact-item">
+              <strong>GMAIL</strong>
               <a class="slate-email" href="#"></a>
             </div>
-            <div>
-              <strong>Campus spot</strong>
+            <div class="contact-item">
+              <strong>CAMPUS SPOT</strong>
               <span class="slate-location"></span>
             </div>
-            <div>
-              <strong>Response</strong>
+            <div class="contact-item">
+              <strong>RESPONSE</strong>
               <span class="slate-response"></span>
             </div>
           </div>
-          <div class="price-slider-card">
-            <div class="slider-top">
-              <strong>Select your budget</strong>
-              <span class="slider-value"></span>
+          <div class="price-slider-card" style="background:var(--tag-bg); padding:20px; border-radius:16px; margin-top:24px; border:1px solid var(--border);">
+            <div class="slider-top" style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+              <strong style="font-size:0.95rem;">Select your budget</strong>
+              <span class="slider-value" style="color:var(--accent); font-weight:800; font-size:1.2rem;"></span>
             </div>
-            <input class="booking-range" type="range">
-            <div class="slider-scale">
+            <input class="booking-range" type="range" style="width:100%; accent-color:var(--accent);">
+            <div class="slider-scale" style="display:flex; justify-content:space-between; font-size:0.8rem; opacity:0.6; margin-top:8px;">
               <span class="slider-min"></span>
               <span class="slider-max"></span>
             </div>
           </div>
-          <div class="slate-actions">
-            <a class="button button-primary slate-mail-action" href="#">Send Booking Request</a>
-            <button class="button button-secondary slate-close-inline" type="button">Maybe Later</button>
+          <div class="slate-actions" style="margin-top:28px;">
+            <a class="button btn-primary slate-mail-action" href="#" style="width:100%; padding:16px; font-weight:800; border-radius:12px; font-size:1.1rem;">Send Booking Request</a>
+            <button class="button button-secondary slate-close-inline" type="button" style="width:100%; margin-top:12px; background:none; border:none; opacity:0.6; font-weight:600;">Maybe Later</button>
           </div>
         </div>
       </div>
@@ -214,8 +217,9 @@
   document.body.appendChild(bookingSlate);
 
   const allProfiles = [...data.featuredProfiles, ...data.extraProfiles];
-  const slatePhoto = bookingSlate.querySelector(".slate-photo");
-  const slateRating = bookingSlate.querySelector(".slate-rating");
+  const slateMainPhoto = bookingSlate.querySelector(".slate-main-photo");
+  const floatingCrafts = bookingSlate.querySelector(".floating-crafts");
+  const slateRatingOverlay = bookingSlate.querySelector(".slate-rating-overlay");
   const slateName = bookingSlate.querySelector(".slate-name");
   const slateTitle = bookingSlate.querySelector(".slate-title");
   const slateBio = bookingSlate.querySelector(".slate-bio");
@@ -249,9 +253,22 @@
     const profile = allProfiles.find((item) => item.id === profileId);
     if (!profile) return;
 
-    slatePhoto.src = profile.image;
-    slatePhoto.alt = `${profile.name} profile photo`;
-    slateRating.innerHTML = `${renderStars(profile.rating)} <span style="font-weight:700;margin-left:8px;">${profile.rating}</span> • ${profile.reviews} reviews`;
+    slateMainPhoto.src = profile.image;
+    slateMainPhoto.alt = `${profile.name} portrait`;
+    
+    // Fill floating crafts
+    if (profile.gallery) {
+      floatingCrafts.innerHTML = profile.gallery.map((work, idx) => `
+        <div class="floating-item item-${idx}" style="--delay:${idx * 0.2}s">
+          <img src="${work.src}" alt="${work.title}">
+        </div>
+      `).join("");
+    } else {
+      floatingCrafts.innerHTML = '';
+    }
+
+    slateRatingOverlay.innerHTML = `${renderStars(profile.rating)} <span style="font-weight:700;">${profile.rating}</span> • ${profile.reviews} reviews`;
+    
     slateName.textContent = profile.name;
     slateTitle.textContent = profile.title;
     slateBio.textContent = profile.bio;
