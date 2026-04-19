@@ -3743,3 +3743,574 @@ select#sortSelect {
   border: 1px solid rgba(255, 255, 255, 0.1);
   pointer-events: none;
 }
+
+/* ═══════════════════════════════════════════════════════════════════
+   RESPONSIVE SYSTEM — KalaaKart
+   Breakpoints:
+     --mobile:  320px–480px
+     --tablet:  481px–1024px
+     --laptop:  1025px–1440px
+     --desktop: 1441px+
+   ═══════════════════════════════════════════════════════════════════ */
+
+/* RESPONSIVE FIX: Global foundation — prevent horizontal scroll, fluid images */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html, body {
+  overflow-x: hidden;
+  width: 100%;
+  max-width: 100vw;
+}
+
+img, svg, video {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* RESPONSIVE FIX: Fluid typography using clamp() */
+h1 { font-size: clamp(1.8rem, 5vw, 3.5rem); }
+h2 { font-size: clamp(1.4rem, 3.5vw, 2.5rem); }
+h3 { font-size: clamp(1.1rem, 2.5vw, 1.75rem); }
+p, li { font-size: clamp(0.875rem, 1.5vw, 1.05rem); line-height: 1.7; }
+
+/* RESPONSIVE FIX: Fluid section padding */
+.section, section {
+  padding: clamp(2rem, 6vw, 6rem) 0;
+}
+
+/* RESPONSIVE FIX: All buttons minimum 44px tap target */
+button, .button, a.button, .btn-primary, .btn-secondary {
+  min-height: 44px;
+  padding: 0.75rem 1.25rem;
+}
+button:active, .button:active, .btn-primary:active {
+  transform: scale(0.97);
+}
+
+/* ───────────────────────────────────────────────────────────
+   NAVBAR — All Breakpoints
+   ─────────────────────────────────────────────────────────── */
+
+/* RESPONSIVE FIX: Navbar layout base — desktop default */
+nav, .navbar, header {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  padding: 0 clamp(1rem, 4vw, 3rem) !important;
+  height: 64px !important;
+  position: sticky !important;
+  top: 0 !important;
+  z-index: 1000 !important;
+  backdrop-filter: blur(14px) !important;
+  background: var(--nav-bg) !important;
+  border-bottom: 1px solid var(--border) !important;
+  width: 100% !important;
+  max-width: 100vw !important;
+}
+
+/* RESPONSIVE FIX: Desktop nav links — single row, no wrap */
+.nav-links {
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  gap: 2rem !important;
+  list-style: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  flex-wrap: nowrap !important;
+}
+
+.nav-links a {
+  font-size: 0.95rem !important;
+  font-weight: 500 !important;
+  color: var(--text-secondary) !important;
+  text-decoration: none !important;
+  white-space: nowrap !important;
+  transition: color 0.2s ease !important;
+  padding: 0.5rem 0 !important;
+}
+
+.nav-links a:hover {
+  color: var(--text-primary) !important;
+}
+
+/* RESPONSIVE FIX: Hamburger hidden on desktop */
+.nav-hamburger {
+  display: none !important;
+  background: none !important;
+  border: 1px solid var(--border) !important;
+  color: var(--text-primary) !important;
+  font-size: 1.4rem !important;
+  width: 44px !important;
+  height: 44px !important;
+  border-radius: 10px !important;
+  cursor: pointer !important;
+  align-items: center !important;
+  justify-content: center !important;
+  flex-shrink: 0 !important;
+  transition: background 0.2s !important;
+}
+
+.nav-hamburger:hover {
+  background: var(--tag-bg) !important;
+}
+
+/* RESPONSIVE FIX: Mobile dropdown nav — hidden by default */
+.nav-mobile-dropdown {
+  display: none;
+  flex-direction: column;
+  position: absolute;
+  top: 64px;
+  left: 0;
+  width: 100%;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.18);
+  z-index: 999;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease;
+}
+
+.nav-mobile-dropdown.open {
+  display: flex;
+  max-height: 300px;
+}
+
+.nav-mobile-dropdown a {
+  padding: 0.9rem 1.5rem !important;
+  font-size: 1.1rem !important;
+  font-weight: 600 !important;
+  color: var(--text-primary) !important;
+  border-bottom: 1px solid var(--border) !important;
+  text-decoration: none !important;
+  display: block !important;
+  min-height: 48px !important;
+  display: flex !important;
+  align-items: center !important;
+}
+
+.nav-mobile-dropdown a:last-child {
+  border-bottom: none !important;
+}
+
+/* ───────────────────────────────────────────────────────────
+   LAPTOP: 1025px – 1440px
+   ─────────────────────────────────────────────────────────── */
+@media (min-width: 1025px) and (max-width: 1440px) {
+  /* RESPONSIVE FIX: Slightly smaller nav links on laptop */
+  .nav-links a { font-size: 0.9rem !important; }
+  .nav-links { gap: 1.5rem !important; }
+
+  /* RESPONSIVE FIX: Profiles grid — 3 cards per row */
+  #allProfiles, .profiles-grid {
+    grid-template-columns: repeat(3, 1fr) !important;
+  }
+
+  /* RESPONSIVE FIX: Marketplace/Mentor grid — 3 per row */
+  #marketplaceCards, .listings-grid, .mentors-grid {
+    grid-template-columns: repeat(3, 1fr) !important;
+  }
+}
+
+/* ───────────────────────────────────────────────────────────
+   DESKTOP: 1441px+
+   ─────────────────────────────────────────────────────────── */
+@media (min-width: 1441px) {
+  /* RESPONSIVE FIX: Profiles — 4 cards per row on desktop */
+  #allProfiles, .profiles-grid {
+    grid-template-columns: repeat(4, 1fr) !important;
+  }
+
+  /* RESPONSIVE FIX: Marketplace — 4 cards per row */
+  #marketplaceCards, .listings-grid {
+    grid-template-columns: repeat(4, 1fr) !important;
+  }
+
+  /* RESPONSIVE FIX: Mentors — 3 cards per row */
+  .mentors-grid {
+    grid-template-columns: repeat(3, 1fr) !important;
+  }
+}
+
+/* ───────────────────────────────────────────────────────────
+   TABLET: 481px – 1024px
+   ─────────────────────────────────────────────────────────── */
+@media (max-width: 1024px) {
+  /* RESPONSIVE FIX: Switch to hamburger below 1024px */
+  .nav-hamburger { display: flex !important; }
+  .nav-links { display: none !important; }
+
+  /* RESPONSIVE FIX: Hero grid collapses to single column */
+  .hero-grid-premium {
+    grid-template-columns: 1fr !important;
+    min-height: auto !important;
+  }
+
+  /* RESPONSIVE FIX: Hero visual min-height for tablet */
+  .hero-visual-premium { min-height: 380px !important; }
+
+  /* RESPONSIVE FIX: Profiles — 2 per row on tablet */
+  #allProfiles, .profiles-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+
+  /* RESPONSIVE FIX: Marketplace — 2 per row on tablet */
+  #marketplaceCards, .listings-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+
+  /* RESPONSIVE FIX: Mentors — 2 per row on tablet */
+  .mentors-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+
+  /* RESPONSIVE FIX: Showcase grid — 2 columns */
+  .showcase-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+
+  /* RESPONSIVE FIX: Steps grid — 2x2 */
+  .steps-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+
+  /* RESPONSIVE FIX: Featured profiles — 2 per row */
+  #featuredProfiles {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+
+  /* RESPONSIVE FIX: Marketplace filter bar — wrap on tablet */
+  .filter-section {
+    padding: 20px !important;
+  }
+
+  /* RESPONSIVE FIX: Booking slate single column */
+  .slate-grid {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+/* ───────────────────────────────────────────────────────────
+   MOBILE: 320px – 480px
+   ─────────────────────────────────────────────────────────── */
+@media (max-width: 480px) {
+  /* RESPONSIVE FIX: Tighter container on mobile */
+  .container {
+    width: calc(100% - 2rem) !important;
+    padding: 0 !important;
+  }
+
+  /* RESPONSIVE FIX: Nav brand smaller on mobile */
+  .nav-brand span { font-size: 1rem !important; }
+  .nav-brand img { width: 34px !important; height: 34px !important; }
+
+  /* RESPONSIVE FIX: Hero single column — centered text */
+  .hero-grid-premium {
+    grid-template-columns: 1fr !important;
+    min-height: auto !important;
+  }
+
+  .hero-brand-copy {
+    text-align: center !important;
+    align-items: center !important;
+  }
+
+  .hero-brand-block {
+    align-items: center !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 0.5rem !important;
+  }
+
+  .hero-logo-badge {
+    width: min(200px, 70vw) !important;
+  }
+
+  .hero-copy-premium h1 {
+    text-align: center !important;
+    font-size: clamp(2rem, 10vw, 3rem) !important;
+    max-width: 100% !important;
+  }
+
+  .hero-copy-premium p {
+    text-align: center !important;
+    max-width: 100% !important;
+  }
+
+  .hero-visual-premium {
+    min-height: 280px !important;
+    order: -1 !important;
+  }
+
+  .hero-feather {
+    width: min(280px, 85vw) !important;
+    margin: 0 auto !important;
+    position: relative !important;
+    right: auto !important;
+    bottom: auto !important;
+  }
+
+  /* RESPONSIVE FIX: Hero buttons stacked vertically full width */
+  .hero-actions {
+    flex-direction: column !important;
+    width: 100% !important;
+    gap: 0.75rem !important;
+  }
+
+  .hero-actions .button, .hero-actions a.button {
+    width: 100% !important;
+    justify-content: center !important;
+  }
+
+  /* RESPONSIVE FIX: Stats row — single horizontal row on mobile */
+  .hero-stats-premium {
+    display: flex !important;
+    flex-wrap: nowrap !important;
+    gap: 0.5rem !important;
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+    scrollbar-width: none !important;
+    padding-bottom: 4px !important;
+    max-width: 100% !important;
+  }
+
+  .hero-stats-premium::-webkit-scrollbar { display: none !important; }
+
+  .hero-stats-premium article {
+    flex-shrink: 0 !important;
+    min-width: 100px !important;
+  }
+
+  /* RESPONSIVE FIX: Profile cards — 1 per row on mobile */
+  #allProfiles, .profiles-grid, #featuredProfiles {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* RESPONSIVE FIX: Marketplace — 1 per row on mobile */
+  #marketplaceCards, .listings-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* RESPONSIVE FIX: Mentors — 1 per row on mobile */
+  .mentors-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* RESPONSIVE FIX: Showcase — 1 per row on mobile */
+  .showcase-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* RESPONSIVE FIX: Steps grid — 1 per row on mobile */
+  .steps-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* RESPONSIVE FIX: Book Now / Book Session full width */
+  .btn-primary, button[data-book-profile], button[data-book-mentor] {
+    width: 100% !important;
+    justify-content: center !important;
+  }
+
+  /* RESPONSIVE FIX: Filter pills horizontal scroll, no wrap */
+  .filter-controls, #filterBar, #categoryRow {
+    display: flex !important;
+    flex-wrap: nowrap !important;
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+    scrollbar-width: none !important;
+    gap: 0.5rem !important;
+    padding-bottom: 8px !important;
+  }
+
+  .filter-controls::-webkit-scrollbar,
+  #filterBar::-webkit-scrollbar,
+  #categoryRow::-webkit-scrollbar { display: none !important; }
+
+  .filter-pill, .mkt-pill {
+    flex-shrink: 0 !important;
+    white-space: nowrap !important;
+  }
+
+  /* RESPONSIVE FIX: Marketplace filter — stack buy/rent below pills */
+  .filter-section {
+    padding: 16px !important;
+    gap: 16px !important;
+  }
+
+  .filter-toggle {
+    flex-wrap: wrap !important;
+    gap: 16px !important;
+    padding-top: 16px !important;
+  }
+
+  /* RESPONSIVE FIX: Footer stacked and centered */
+  .site-footer-premium .footer-main {
+    flex-direction: column !important;
+    align-items: center !important;
+    text-align: center !important;
+    padding: 0 1rem 2rem !important;
+  }
+
+  .footer-brand {
+    align-items: center !important;
+    max-width: 100% !important;
+  }
+
+  .footer-links-col {
+    text-align: center !important;
+  }
+
+  .footer-links-col div {
+    align-items: center !important;
+  }
+
+  .footer-bottom {
+    flex-direction: column !important;
+    align-items: center !important;
+    text-align: center !important;
+    gap: 0.75rem !important;
+  }
+
+  .footer-social {
+    justify-content: center !important;
+    gap: 1rem !important;
+  }
+
+  .footer-social a {
+    font-size: 1.4rem !important;
+    width: 44px !important;
+    height: 44px !important;
+  }
+
+  /* RESPONSIVE FIX: Theme widget — smaller on mobile */
+  #theme-switcher {
+    bottom: 80px !important;
+    left: 12px !important;
+  }
+
+  .theme-toggle-btn {
+    font-size: 0.8rem !important;
+    padding: 8px 12px !important;
+  }
+
+  /* RESPONSIVE FIX: Back-to-top — above theme widget */
+  #backToTop {
+    bottom: 16px !important;
+    right: 12px !important;
+    width: 44px !important;
+    height: 44px !important;
+    font-size: 1rem !important;
+  }
+
+  /* RESPONSIVE FIX: Booking slate on mobile */
+  .slate-panel {
+    width: 96vw !important;
+    max-height: 92vh !important;
+    overflow-y: auto !important;
+    padding: 20px !important;
+  }
+
+  .slate-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  .slate-visual-container {
+    min-height: 240px !important;
+  }
+
+  .floating-item {
+    width: 60px !important;
+    height: 60px !important;
+  }
+
+  .item-0 { width: 70px !important; height: 70px !important; }
+  .item-1 { width: 56px !important; height: 56px !important; }
+  .item-2 { width: 52px !important; height: 52px !important; }
+
+  /* RESPONSIVE FIX: Mentor card layout on mobile */
+  .mentor-card-top {
+    flex-direction: column !important;
+  }
+
+  /* RESPONSIVE FIX: Section padding mobile */
+  .section, section.container, section {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    padding-top: 2rem !important;
+    padding-bottom: 2rem !important;
+  }
+}
+
+/* ───────────────────────────────────────────────────────────
+   SHARED — Grid Systems Applied to All Card Containers
+   ─────────────────────────────────────────────────────────── */
+
+/* RESPONSIVE FIX: Default grid — auto-fit responsive (fallback) */
+#allProfiles, #featuredProfiles, .profiles-grid {
+  display: grid !important;
+  gap: 1.5rem !important;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+}
+
+#marketplaceCards, .listings-grid {
+  display: grid !important;
+  gap: 1.5rem !important;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+}
+
+.mentors-grid {
+  display: grid !important;
+  gap: 1.5rem !important;
+  grid-template-columns: 1fr;
+}
+
+.steps-grid {
+  display: grid !important;
+  gap: 1.5rem !important;
+  grid-template-columns: repeat(4, 1fr);
+}
+
+/* RESPONSIVE FIX: Profile card consistent min-height */
+.profile-card {
+  min-height: 320px !important;
+  display: flex !important;
+  flex-direction: column !important;
+}
+
+/* RESPONSIVE FIX: Tags never overflow their card */
+.card-tags, .tag-row, .slate-tags, .mcard-tags {
+  flex-wrap: wrap !important;
+  gap: 0.4rem !important;
+  max-width: 100% !important;
+}
+
+/* RESPONSIVE FIX: All filter pill rows scrollable */
+.filter-controls, #filterBar {
+  display: flex !important;
+  align-items: center !important;
+  overflow-x: auto !important;
+  -webkit-overflow-scrolling: touch !important;
+  scrollbar-width: none !important;
+  gap: 0.5rem !important;
+}
+
+.filter-controls::-webkit-scrollbar,
+#filterBar::-webkit-scrollbar {
+  display: none !important;
+}
+
+.filter-pill, .mkt-pill {
+  flex-shrink: 0 !important;
+  white-space: nowrap !important;
+}
+
+/* RESPONSIVE FIX: Works preview gallery scrolls on mobile too */
+.works-preview {
+  scrollbar-width: none !important;
+}
+.works-preview::-webkit-scrollbar { display: none !important; }

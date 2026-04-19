@@ -120,8 +120,15 @@ body {
         <a href="mentor-booking.html">Mentor Booking</a>
         <a href="marketplace.html">Old Clothes</a>
     </div>
-    <button class="nav-hamburger" id="navHamburger">☰</button>
+    <button class="nav-hamburger" id="navHamburger" aria-label="Toggle menu">☰</button>
   </header>
+  <!-- RESPONSIVE FIX: Mobile dropdown nav -->
+  <nav class="nav-mobile-dropdown" id="navMobileDropdown">
+    <a href="index.html">Home</a>
+    <a href="profiles.html">Profiles</a>
+    <a href="mentor-booking.html">Mentor Booking</a>
+    <a href="marketplace.html">Old Clothes</a>
+  </nav>
 
   <main>
     <section class="hero-section">
@@ -380,6 +387,35 @@ document.querySelectorAll('a,button,.profile-card,.card').forEach(el=>{
   el.addEventListener('mouseenter',()=>{ ring.style.width='52px'; ring.style.height='52px'; ring.style.opacity='1'; });
   el.addEventListener('mouseleave',()=>{ ring.style.width='36px'; ring.style.height='36px'; ring.style.opacity='0.65'; });
 });
+/* RESPONSIVE FIX: Hamburger menu toggle */
+(function() {
+  const hamburger = document.getElementById('navHamburger');
+  const mobileNav = document.getElementById('navMobileDropdown');
+  if (hamburger && mobileNav) {
+    hamburger.addEventListener('click', function() {
+      mobileNav.classList.toggle('open');
+      hamburger.textContent = mobileNav.classList.contains('open') ? '✕' : '☰';
+    });
+    // Close on outside click
+    document.addEventListener('click', function(e) {
+      if (!hamburger.contains(e.target) && !mobileNav.contains(e.target)) {
+        mobileNav.classList.remove('open');
+        hamburger.textContent = '☰';
+      }
+    });
+  }
+  // Back to top
+  const backToTop = document.getElementById('backToTop');
+  if (backToTop) {
+    window.addEventListener('scroll', function() {
+      backToTop.style.opacity = window.scrollY > 300 ? '1' : '0';
+      backToTop.style.pointerEvents = window.scrollY > 300 ? 'auto' : 'none';
+    });
+    backToTop.addEventListener('click', function() {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  }
+})();
 </script>
 </body>
 </html>
