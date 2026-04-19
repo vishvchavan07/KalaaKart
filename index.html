@@ -1,12 +1,156 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <script>
+    (function() {
+      const t = localStorage.getItem('kk-theme') || 'warm';
+      document.documentElement.setAttribute('data-theme', t);
+    })();
+  </script>
+  <style>
+/* ─── THEME 1: WARM (default) ─── */
+[data-theme="warm"] {
+  --color-primary:        #E86C3A;
+  --color-primary-dark:   #C95A2A;
+  --color-primary-light:  #FFF0E8;
+  --color-secondary:      #C2185B;
+  --color-gradient:       linear-gradient(135deg, #E86C3A, #C2185B);
+
+  --color-bg:             #FFFFFF;
+  --color-bg-soft:        #FFF8F5;
+  --color-bg-card:        #FFFFFF;
+  --color-surface:        #FFF0E8;
+
+  --color-text-primary:   #1A1A1A;
+  --color-text-secondary: #666666;
+  --color-text-muted:     #999999;
+
+  --color-nav-bg:         rgba(255,255,255,0.95);
+  --color-footer-bg:      #1A1A2E;
+  --color-footer-text:    rgba(255,255,255,0.75);
+
+  --color-border:         rgba(0,0,0,0.08);
+  --color-shadow:         rgba(0,0,0,0.08);
+
+  --color-badge-buy-bg:   #1565C0;
+  --color-badge-buy-text: #FFFFFF;
+  --color-badge-rent-bg:  #6A1B9A;
+  --color-badge-rent-text:#FFFFFF;
+
+  --color-free-bg:        #E8F5E9;
+  --color-free-text:      #2E7D32;
+  --color-tag-bg:         #F3E5F5;
+  --color-tag-text:       #6A1B9A;
+
+  --color-overline:       #E86C3A;
+  --color-star:           #E86C3A;
+
+  --radius-card:          16px;
+  --shadow-card:          0 4px 20px rgba(0,0,0,0.08);
+  --shadow-card-hover:    0 12px 32px rgba(232,108,58,0.18);
+  --transition:           0.25s ease;
+}
+
+/* ─── THEME 2: COOL (blue-violet) ─── */
+[data-theme="cool"] {
+  --color-primary:        #5C6BC0;
+  --color-primary-dark:   #3949AB;
+  --color-primary-light:  #E8EAF6;
+  --color-secondary:      #7B1FA2;
+  --color-gradient:       linear-gradient(135deg, #5C6BC0, #7B1FA2);
+
+  --color-bg:             #F0F2FF;
+  --color-bg-soft:        #E8EAF6;
+  --color-bg-card:        #FFFFFF;
+  --color-surface:        #E8EAF6;
+
+  --color-text-primary:   #1A1A2E;
+  --color-text-secondary: #4A4A6A;
+  --color-text-muted:     #8888AA;
+
+  --color-nav-bg:         rgba(240,242,255,0.95);
+  --color-footer-bg:      #0D0D1A;
+  --color-footer-text:    rgba(255,255,255,0.75);
+
+  --color-border:         rgba(92,107,192,0.15);
+  --color-shadow:         rgba(92,107,192,0.12);
+
+  --color-badge-buy-bg:   #1565C0;
+  --color-badge-buy-text: #FFFFFF;
+  --color-badge-rent-bg:  #7B1FA2;
+  --color-badge-rent-text:#FFFFFF;
+
+  --color-free-bg:        #E3F2FD;
+  --color-free-text:      #1565C0;
+  --color-tag-bg:         #EDE7F6;
+  --color-tag-text:       #512DA8;
+
+  --color-overline:       #5C6BC0;
+  --color-star:           #5C6BC0;
+
+  --radius-card:          16px;
+  --shadow-card:          0 4px 20px rgba(92,107,192,0.10);
+  --shadow-card-hover:    0 12px 32px rgba(92,107,192,0.22);
+  --transition:           0.25s ease;
+}
+
+/* ─── THEME 3: SAGE (mint-green + off-white) ─── */
+[data-theme="sage"] {
+  --color-primary:        #2E7D6B;
+  --color-primary-dark:   #1B5E50;
+  --color-primary-light:  #E8F5F2;
+  --color-secondary:      #00897B;
+  --color-gradient:       linear-gradient(135deg, #2E7D6B, #00897B);
+
+  --color-bg:             #F7FAF9;
+  --color-bg-soft:        #EEF5F3;
+  --color-bg-card:        #FFFFFF;
+  --color-surface:        #E8F5F2;
+
+  --color-text-primary:   #1A2E2A;
+  --color-text-secondary: #4A6660;
+  --color-text-muted:     #8AA8A2;
+
+  --color-nav-bg:         rgba(247,250,249,0.95);
+  --color-footer-bg:      #0D1F1C;
+  --color-footer-text:    rgba(255,255,255,0.75);
+
+  --color-border:         rgba(46,125,107,0.12);
+  --color-shadow:         rgba(46,125,107,0.10);
+
+  --color-badge-buy-bg:   #1B5E50;
+  --color-badge-buy-text: #FFFFFF;
+  --color-badge-rent-bg:  #00695C;
+  --color-badge-rent-text:#FFFFFF;
+
+  --color-free-bg:        #E8F5E9;
+  --color-free-text:      #1B5E20;
+  --color-tag-bg:         #E0F2F1;
+  --color-tag-text:       #004D40;
+
+  --color-overline:       #2E7D6B;
+  --color-star:           #2E7D6B;
+
+  --radius-card:          16px;
+  --shadow-card:          0 4px 20px rgba(46,125,107,0.08);
+  --shadow-card-hover:    0 12px 32px rgba(46,125,107,0.20);
+  --transition:           0.25s ease;
+}
+  </style>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Kalaa Kart | AI in Action</title>
+  <title>Kalaa Kart — From Passion to Profession</title>
+  <meta name="description" content="Kalaa Kart is a student-powered platform for discovering campus talent, booking peer mentors, and buying affordable college wear.">
+  <link rel="icon" type="image/jpeg" href="assets/images/main_logo_final.jpeg">
+  <link rel="apple-touch-icon" href="assets/images/main_logo_final.jpeg">
+  <meta property="og:title" content="Kalaa Kart — From Passion to Profession">
+  <meta property="og:description" content="A student-powered platform for campus talent, peer mentoring, and affordable college wear.">
+  <meta property="og:image" content="https://kalaakart.vercel.app/assets/images/main_logo_final.jpeg">
+  <meta property="og:url" content="https://kalaakart.vercel.app">
+  <meta property="og:type" content="website">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Sora:wght@400;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="assets/css/styles.css">
 </head>
 <body data-page="home">
@@ -19,12 +163,19 @@
           <small>From Passion to Profession</small>
         </span>
       </a>
+      <button class="mobile-nav-toggle" id="mobileNavToggle" aria-label="Toggle Navigation">☰</button>
       <nav class="top-nav">
-        <a href="index.html" class="active">Home</a>
+        <a href="index.html">Home</a>
         <a href="profiles.html">Profiles</a>
         <a href="mentor-booking.html">Mentor Booking</a>
         <a href="marketplace.html">Old Clothes</a>
       </nav>
+    </div>
+    <div class="mobile-nav-menu" id="mobileNavMenu">
+      <a href="index.html">Home</a>
+      <a href="profiles.html">Profiles</a>
+      <a href="mentor-booking.html">Mentor Booking</a>
+      <a href="marketplace.html">Old Clothes</a>
     </div>
   </header>
 
@@ -34,38 +185,39 @@
         <div class="hero-topline">
           <div class="hero-brand-block">
             <img class="hero-logo-badge" src="assets/images/main_logo_final.jpeg" alt="Kalaa Kart logo">
-            <span class="eyebrow">AI In Action Competition Idea</span>
+            <span class="live-pill"><span class="live-dot"></span>✦ Now Live on Campus</span>
           </div>
           <p>The fastest way to turn student talent into real campus opportunities.</p>
         </div>
         <div class="hero-grid hero-grid-premium">
           <div class="hero-copy hero-copy-premium">
-            <h1>
-              Connect.
+            <h1 class="hero-headline-gradient hero-headline">
+              <span class="word">Connect.</span>
               <br>
-              Create.
+              <span class="word">Create.</span>
               <br>
-              Support your
-              <span>campus.</span>
+              <span class="word">Support</span>
+              <span class="word">your</span>
+              <span class="word">campus.</span>
             </h1>
             <p>
               Kalaa Kart is a student-powered platform where skills, mentoring, and campus essentials come together in one premium digital space. Students can discover talent, book real help, and support each other through creative services and affordable sharing.
             </p>
             <div class="hero-actions">
-              <a class="button button-primary" href="profiles.html">Explore Profiles</a>
-              <a class="button button-secondary" href="mentor-booking.html">View Mentor Booking</a>
+              <a class="button btn-warm-fill" href="profiles.html">Explore Profiles</a>
+              <a class="button btn-warm-outline" href="mentor-booking.html">View Mentor Booking</a>
             </div>
             <div class="hero-stats hero-stats-premium">
-              <article>
-                <strong>120+</strong>
+              <article class="stat-card">
+                <strong class="stat-number" data-target="120" data-suffix="+">0+</strong>
                 <span>student skills listed</span>
               </article>
-              <article>
-                <strong>48</strong>
+              <article class="stat-card">
+                <strong class="stat-number" data-target="48" data-suffix="">0</strong>
                 <span>services booked</span>
               </article>
-              <article>
-                <strong>32</strong>
+              <article class="stat-card">
+                <strong class="stat-number" data-target="32" data-suffix="">0</strong>
                 <span>mentor sessions</span>
               </article>
             </div>
@@ -76,33 +228,42 @@
             <div class="hero-spark hero-spark-three"></div>
             <img class="hero-feather" src="assets/images/hero-feather.svg" alt="Decorative premium feather illustration">
             <div class="mockup-card hero-floating-card">
-              <div class="mockup-chip">Campus Highlights</div>
-              <div class="mockup-item">
-                <button class="highlight-preview" type="button" data-work-src="assets/images/works/Phonecoverpainting.jpeg" data-work-title="Phone cover painting" data-work-owner="Starts at Rs 249">
-                  <img src="assets/images/works/Phonecoverpainting.jpeg" alt="Phone cover painting work">
-                </button>
-                <div>
-                  <strong>Phone cover painting</strong>
-                  <span>Starts at Rs 249</span>
+              <p class="showcase-overline">✦ STUDENT WORK</p>
+              <div class="showcase-grid">
+
+                <div class="showcase-card">
+                  <button class="highlight-preview showcase-btn" type="button" data-work-src="assets/images/works/Phonecoverpainting.jpeg" data-work-title="Phone cover painting" data-work-owner="Starts at Rs 249">
+                    <img src="assets/images/works/Phonecoverpainting.jpeg" alt="Phone cover painting work">
+                    <span class="showcase-price-pill">From ₹249</span>
+                    <span class="showcase-overlay">
+                      <strong>Phone cover painting</strong>
+                      <span class="overlay-sub">View Work →</span>
+                    </span>
+                  </button>
                 </div>
-              </div>
-              <div class="mockup-item">
-                <button class="highlight-preview" type="button" data-work-src="assets/images/works/Resinartkeychains.jpeg" data-work-title="Resin art keychains" data-work-owner="Starts at Rs 199">
-                  <img src="assets/images/works/Resinartkeychains.jpeg" alt="Resin art keychain work">
-                </button>
-                <div>
-                  <strong>Resin art keychains</strong>
-                  <span>Starts at Rs 199</span>
+
+                <div class="showcase-card">
+                  <button class="highlight-preview showcase-btn" type="button" data-work-src="assets/images/works/Resinartkeychains.jpeg" data-work-title="Resin art keychains" data-work-owner="Starts at Rs 199">
+                    <img src="assets/images/works/Resinartkeychains.jpeg" alt="Resin art keychain work">
+                    <span class="showcase-price-pill">From ₹199</span>
+                    <span class="showcase-overlay">
+                      <strong>Resin art keychains</strong>
+                      <span class="overlay-sub">View Work →</span>
+                    </span>
+                  </button>
                 </div>
-              </div>
-              <div class="mockup-item">
-                <button class="highlight-preview" type="button" data-work-src="assets/images/works/Handmadeknittedgifts.jpeg" data-work-title="Handmade knitted gifts" data-work-owner="Starts at Rs 199">
-                  <img src="assets/images/works/Handmadeknittedgifts.jpeg" alt="Handmade knitted gift work">
-                </button>
-                <div>
-                  <strong>Handmade knitted gifts</strong>
-                  <span>Starts at Rs 199</span>
+
+                <div class="showcase-card">
+                  <button class="highlight-preview showcase-btn" type="button" data-work-src="assets/images/works/Handmadeknittedgifts.jpeg" data-work-title="Handmade knitted gifts" data-work-owner="Starts at Rs 199">
+                    <img src="assets/images/works/Handmadeknittedgifts.jpeg" alt="Handmade knitted gift work">
+                    <span class="showcase-price-pill">From ₹199</span>
+                    <span class="showcase-overlay">
+                      <strong>Handmade knitted gifts</strong>
+                      <span class="overlay-sub">View Work →</span>
+                    </span>
+                  </button>
                 </div>
+
               </div>
             </div>
           </div>
@@ -111,20 +272,23 @@
     </section>
 
     <section class="container section section-dark">
-      <div class="section-heading">
-        <span class="eyebrow">Why This Works</span>
-        <h2>One platform, three student problems solved together.</h2>
+      <div class="section-heading section-heading-centered">
+        <p class="section-overline">✦ WHY THIS WORKS</p>
+        <h2 class="section-h2-bold">One platform, three student problems solved together.</h2>
       </div>
       <div class="pillars-grid">
-        <article class="info-card">
+        <article class="info-card pillar-card">
+          <div class="pillar-icon-wrap">🎨</div>
           <h3>Skill Marketplace</h3>
           <p>Students can showcase hobbies and talents like painting, calligraphy, tailoring, photography, editing, poetry, and more.</p>
         </article>
-        <article class="info-card">
+        <article class="info-card pillar-card">
+          <div class="pillar-icon-wrap">📚</div>
           <h3>Mentor Booking</h3>
           <p>Juniors can find seniors who teach exactly according to university syllabus, at fair prices or even for free.</p>
         </article>
-        <article class="info-card">
+        <article class="info-card pillar-card">
+          <div class="pillar-icon-wrap">♻️</div>
           <h3>Smart Reuse Corner</h3>
           <p>Old shirts, blazers, lab coats, and event outfits can be sold or rented, saving money and reducing waste on campus.</p>
         </article>
@@ -179,21 +343,357 @@
     </section>
   </main>
 
-  <footer class="site-footer">
-    <div class="container footer-shell">
-      <div>
-        <strong>Kalaa Kart</strong>
-        <p>Built as a frontend concept for the AI In Action college presentation competition.</p>
+  <footer class="site-footer-premium">
+    <div class="footer-main">
+      <div class="footer-brand">
+        <div class="footer-logo-row">
+          <img src="assets/images/main_logo_final.jpeg" alt="Kalaa Kart logo">
+          <strong>Kalaa Kart</strong>
+        </div>
+        <p class="footer-tagline">From Passion to Profession</p>
+        <p class="footer-desc">A student-powered platform for skills, mentoring, and campus essentials.</p>
       </div>
-      <div class="footer-links">
-        <a href="profiles.html">Profiles</a>
-        <a href="mentor-booking.html">Mentor Booking</a>
-        <a href="marketplace.html">Old Clothes</a>
+      <div class="footer-links-col">
+        <h4>Quick Links</h4>
+        <div>
+          <a href="index.html">Home</a>
+          <a href="profiles.html">Profiles</a>
+          <a href="mentor-booking.html">Mentor Booking</a>
+          <a href="marketplace.html">Old Clothes</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2025 Kalaa Kart. Made with ♥ for campus communities.</p>
+      <div class="footer-social">
+        <a href="#" aria-label="Instagram">📸</a>
+        <a href="#" aria-label="Twitter">𝕏</a>
+        <a href="#" aria-label="LinkedIn">💼</a>
       </div>
     </div>
   </footer>
 
   <script src="assets/js/data.js"></script>
   <script src="assets/js/main.js"></script>
+  <script>
+    (function () {
+      function animateCounter(el) {
+        const target = parseInt(el.dataset.target, 10);
+        const suffix = el.dataset.suffix || '';
+        const duration = 1400;
+        const step = 16;
+        const increment = target / (duration / step);
+        let current = 0;
+        const timer = setInterval(() => {
+          current += increment;
+          if (current >= target) {
+            current = target;
+            clearInterval(timer);
+          }
+          el.textContent = Math.floor(current) + suffix;
+        }, step);
+      }
+
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.querySelectorAll('.stat-number').forEach(animateCounter);
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.3 });
+
+      const statsRow = document.querySelector('.hero-stats-premium');
+      if (statsRow) observer.observe(statsRow);
+    })();
+  </script>
+  <button id="backToTop" aria-label="Back to top">↑</button>
+  <script>
+    (function() {
+      // 1. JS For Premium Polishes
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.style.opacity = '1';
+            entry.target.style.transform = 'translateY(0)';
+          }
+        });
+      }, { threshold: 0.1 });
+      document.querySelectorAll('.card, .profile-card, .mentor-card, .market-card, .stat-card, .showcase-card, .pillar-card, .impact-card, .banner-card, .pcard, .mcard, .lcard').forEach(card => {
+        card.style.opacity = '0';
+        card.style.transform = 'translateY(24px)';
+        card.style.transition = 'opacity 0.4s ease, transform 0.4s ease';
+        observer.observe(card);
+      });
+
+      const header = document.querySelector('.site-header');
+      window.addEventListener('scroll', () => {
+        if(header) header.classList.toggle('scrolled', window.scrollY > 60);
+      });
+
+      document.querySelectorAll('button, .button, a[class*="btn"], .pcard-book, .mcard-book, .lcard-btn, .sell-banner-btn').forEach(btn => {
+        btn.addEventListener('click', function(e) {
+          const ripple = document.createElement('span');
+          ripple.classList.add('ripple');
+          const rect = this.getBoundingClientRect();
+          const size = Math.max(rect.width, rect.height);
+          ripple.style.width = ripple.style.height = size + 'px';
+          ripple.style.left = (e.clientX - rect.left - size/2) + 'px';
+          ripple.style.top  = (e.clientY - rect.top  - size/2) + 'px';
+          this.appendChild(ripple);
+          setTimeout(() => ripple.remove(), 600);
+        });
+      });
+
+      const currentPage = window.location.pathname.split("/").pop() || 'index.html';
+      document.querySelectorAll("nav.top-nav a, .mobile-nav-menu a").forEach(link => {
+        const href = link.getAttribute("href");
+        if (href === currentPage || (currentPage === '' && href === 'index.html')) {
+          link.classList.add("nav-active");
+        }
+      });
+      const mobileToggle = document.getElementById('mobileNavToggle');
+      const mobileMenu = document.getElementById('mobileNavMenu');
+      if(mobileToggle && mobileMenu) {
+        mobileToggle.addEventListener('click', () => {
+          mobileMenu.classList.toggle('open');
+        });
+        mobileMenu.querySelectorAll('a').forEach(link => {
+          link.addEventListener('click', () => {
+            mobileMenu.classList.remove('open');
+          });
+        });
+      }
+      const btn = document.getElementById('backToTop');
+      if(btn) {
+        window.addEventListener('scroll', () => {
+          btn.style.opacity = window.scrollY > 300 ? '1' : '0';
+          btn.style.pointerEvents = window.scrollY > 300 ? 'auto' : 'none';
+        });
+        btn.addEventListener('click', () => {
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+      }
+    })();
+  </script>
+<div id="cursorGlow"></div>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const glow = document.getElementById('cursorGlow');
+  if (glow && window.innerWidth > 768) {
+    document.addEventListener('mousemove', (e) => {
+      glow.style.left = e.clientX + 'px';
+      glow.style.top  = e.clientY + 'px';
+      glow.style.opacity = '1';
+    });
+    document.addEventListener('mouseleave', () => {
+      glow.style.opacity = '0';
+    });
+    /* Burst on hover over buttons/cards */
+    document.querySelectorAll('button, article, .pcard, .mcard, .lcard, .card, .profile-card, nav a').forEach(el => {
+      el.addEventListener('mouseenter', () => {
+        glow.style.width  = '420px';
+        glow.style.height = '420px';
+        glow.style.background = `radial-gradient(circle, color-mix(in srgb, var(--color-primary) 13%, transparent) 0%, transparent 70%)`;
+      });
+      el.addEventListener('mouseleave', () => {
+        glow.style.width  = '300px';
+        glow.style.height = '300px';
+        glow.style.background = `radial-gradient(circle, color-mix(in srgb, var(--color-primary) 8%, transparent) 0%, transparent 70%)`;
+      });
+    });
+  }
+});
+</script>
+<div id="themeSwitcher">
+  <button id="themeToggleBtn" aria-label="Change theme">
+    🎨
+  </button>
+  <div id="themePalette" class="hidden">
+    <p class="palette-label">Choose Theme</p>
+
+    <button class="theme-option" data-theme="warm">
+      <span class="theme-swatch warm-swatch"></span>
+      <span class="theme-name">Warm</span>
+      <span class="theme-check" id="check-warm">✓</span>
+    </button>
+
+    <button class="theme-option" data-theme="cool">
+      <span class="theme-swatch cool-swatch"></span>
+      <span class="theme-name">Cool</span>
+      <span class="theme-check" id="check-cool">✓</span>
+    </button>
+
+    <button class="theme-option" data-theme="sage">
+      <span class="theme-swatch sage-swatch"></span>
+      <span class="theme-name">Sage</span>
+      <span class="theme-check" id="check-sage">✓</span>
+    </button>
+  </div>
+</div>
+
+<style>
+#themeSwitcher {
+  position: fixed;
+  bottom: 84px;
+  right: 24px;
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 8px;
+}
+
+#themeToggleBtn {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: var(--color-primary);
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+  box-shadow: 0 4px 16px var(--color-shadow);
+  transition: transform 0.2s ease, background 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+#themeToggleBtn:hover {
+  transform: scale(1.1);
+  background: var(--color-primary-dark);
+}
+
+#themePalette {
+  background: var(--color-bg-card);
+  border-radius: 16px;
+  padding: 16px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.15);
+  min-width: 160px;
+  border: 1px solid var(--color-border);
+  transition: all 0.3s ease;
+}
+#themePalette.hidden {
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(8px) scale(0.97);
+}
+#themePalette:not(.hidden) {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0) scale(1);
+}
+
+.palette-label {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--color-text-muted);
+  margin-bottom: 12px;
+}
+
+.theme-option {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid var(--color-border);
+  border-radius: 10px;
+  background: var(--color-bg-soft);
+  cursor: pointer;
+  margin-bottom: 8px;
+  transition: all 0.2s ease;
+}
+.theme-option:last-child { margin-bottom: 0; }
+.theme-option:hover {
+  border-color: var(--color-primary);
+  background: var(--color-primary-light);
+  transform: translateX(-2px);
+}
+.theme-option.active {
+  border-color: var(--color-primary);
+  background: var(--color-primary-light);
+}
+
+.theme-swatch {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  border: 2px solid rgba(0,0,0,0.08);
+}
+.warm-swatch {
+  background: linear-gradient(135deg, #E86C3A, #C2185B);
+}
+.cool-swatch {
+  background: linear-gradient(135deg, #5C6BC0, #7B1FA2);
+}
+.sage-swatch {
+  background: linear-gradient(135deg, #2E7D6B, #00897B);
+}
+
+.theme-name {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--color-text-primary);
+  flex: 1;
+}
+
+.theme-check {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--color-primary);
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+.theme-option.active .theme-check { opacity: 1; }
+</style>
+<script>
+  // Apply saved or default theme immediately
+  const savedTheme = localStorage.getItem('kk-theme') || 'warm';
+  document.documentElement.setAttribute('data-theme', savedTheme);
+
+  function applyTheme(theme) {
+    document.documentElement.setAttribute('data-theme', theme);
+    localStorage.setItem('kk-theme', theme);
+
+    // Update active states on buttons
+    document.querySelectorAll('.theme-option').forEach(btn => {
+      const isActive = btn.dataset.theme === theme;
+      btn.classList.toggle('active', isActive);
+      // Ensure the check icon is toggled appropriately
+      const checkIcon = btn.querySelector('.theme-check');
+      if(checkIcon) checkIcon.style.opacity = isActive ? '1' : '0';
+    });
+  }
+
+  // Set initial active state
+  document.addEventListener('DOMContentLoaded', () => {
+    applyTheme(savedTheme);
+
+    // Toggle palette open/close
+    const toggleBtn = document.getElementById('themeToggleBtn');
+    const palette   = document.getElementById('themePalette');
+
+    toggleBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      palette.classList.toggle('hidden');
+    });
+
+    // Close palette when clicking outside
+    document.addEventListener('click', () => {
+      palette.classList.add('hidden');
+    });
+    palette.addEventListener('click', e => e.stopPropagation());
+
+    // Theme option click
+    document.querySelectorAll('.theme-option').forEach(btn => {
+      btn.addEventListener('click', () => {
+        applyTheme(btn.dataset.theme);
+      });
+    });
+  });
+</script>
 </body>
 </html>

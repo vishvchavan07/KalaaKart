@@ -1,7 +1,7 @@
 :root {
   --bg: #f3f4f6;
   --surface: rgba(255, 255, 255, 0.92);
-  --surface-strong: #ffffff;
+  --surface-strong: var(--color-bg-card);
   --ink: #111827;
   --muted: #6b7280;
   --line: rgba(17, 24, 39, 0.09);
@@ -1246,18 +1246,13 @@ body {
 }
 
 .hero-frame {
-  position: relative;
-  overflow: hidden;
-  padding: 2.4rem 2.2rem 1.8rem;
-  border-radius: 0;
-  background:
-    radial-gradient(circle at 70% 40%, rgba(197, 43, 33, 0.22), transparent 18%),
-    radial-gradient(circle at 55% 30%, rgba(255, 175, 76, 0.1), transparent 10%),
-    linear-gradient(180deg, #250605 0%, #140202 100%);
-  border: 1px solid rgba(255, 255, 255, 0.06);
-  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.32);
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
 }
-
+.hero-frame::before {
+  display: none !important;
+}
 .hero-frame::before {
   content: "";
   position: absolute;
@@ -1582,4 +1577,967 @@ body {
   .hero-logo-badge {
     width: min(220px, 78vw);
   }
+}
+
+/* ─── 1. Now Live Pill Badge ─────────────────────────────────────── */
+.live-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.38rem 0.88rem;
+  border-radius: 999px;
+  font-size: 0.74rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  background: rgba(232, 108, 58, 0.14);
+  border: 1px solid rgba(232, 108, 58, 0.32);
+  color: #f0a878;
+  font-family: var(--font-body);
+}
+
+.live-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--color-primary);
+  box-shadow: 0 0 0 0 rgba(232, 108, 58, 0.6);
+  animation: livePulse 2s ease-in-out infinite;
+  flex-shrink: 0;
+}
+
+@keyframes livePulse {
+  0%   { box-shadow: 0 0 0 0   rgba(232, 108, 58, 0.6); }
+  70%  { box-shadow: 0 0 0 7px rgba(232, 108, 58, 0);   }
+  100% { box-shadow: 0 0 0 0   rgba(232, 108, 58, 0);   }
+}
+
+/* ─── 2. Gradient Headline ───────────────────────────────────────── */
+.hero-headline-gradient {
+  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  color: transparent;
+}
+
+.hero-headline-gradient span {
+  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ─── 3. Warm CTA Buttons ────────────────────────────────────────── */
+.btn-warm-fill {
+  background: var(--color-primary);
+  color: var(--color-bg-card);
+  border: 2px solid var(--color-primary);
+  box-shadow: 0 10px 28px rgba(232, 108, 58, 0.28);
+}
+
+.btn-warm-fill:hover {
+  background: #d45e2c;
+  border-color: #d45e2c;
+  transform: translateY(-2px);
+  box-shadow: 0 16px 36px rgba(232, 108, 58, 0.38);
+}
+
+.btn-warm-outline {
+  background: transparent;
+  color: var(--color-primary);
+  border: 2px solid var(--color-primary);
+}
+
+.btn-warm-outline:hover {
+  background: var(--color-primary);
+  color: var(--color-bg-card);
+  transform: translateY(-2px);
+  box-shadow: 0 12px 28px rgba(232, 108, 58, 0.28);
+}
+
+/* ─── 4. Stat Cards ──────────────────────────────────────────────── */
+.stat-card {
+  background: rgba(232, 108, 58, 0.06) !important;
+  border: 1px solid rgba(232, 108, 58, 0.18) !important;
+  border-radius: var(--radius-md);
+  padding: 1rem 1.1rem;
+  transition: transform 0.22s ease, box-shadow 0.22s ease;
+}
+
+.stat-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 14px 32px rgba(232, 108, 58, 0.16);
+}
+
+.stat-card strong {
+  display: block;
+  font-family: var(--font-display);
+  font-size: 1.48rem;
+  font-weight: 800;
+  margin-bottom: 0.2rem;
+  color: var(--color-primary) !important;
+  letter-spacing: -0.03em;
+}
+
+.stat-card span {
+  color: rgba(247, 239, 232, 0.68) !important;
+  font-size: 0.82rem;
+  font-family: var(--font-body);
+}
+
+/* ─── 5. Feather Float Animation ─────────────────────────────────── */
+@keyframes featherFloat {
+  0%   { transform: translateY(0px); }
+  50%  { transform: translateY(-12px); }
+  100% { transform: translateY(0px); }
+}
+
+.hero-feather {
+  animation: featherFloat 4s ease-in-out infinite;
+}
+
+/* ─── 6. Hero Left Radial Atmosphere Glow ────────────────────────── */
+.hero-copy-premium::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: -10%;
+  width: 500px;
+  height: 500px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(232, 108, 58, 0.08) 0%, transparent 70%);
+  transform: translateY(-50%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.hero-copy-premium > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   SECTION A — Campus Highlights Showcase Cards
+   ═══════════════════════════════════════════════════════════════ */
+
+.showcase-overline {
+  margin: 0 0 0.55rem;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(247, 239, 232, 0.48);
+  font-family: var(--font-body);
+}
+
+.showcase-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.65rem;
+  margin-top: 0.75rem;
+}
+
+.showcase-card {
+  border-radius: 16px;
+  overflow: hidden;
+  position: relative;
+}
+
+.showcase-btn {
+  position: relative;
+  display: block;
+  width: 100%;
+  border-radius: 16px;
+  overflow: hidden;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+  aspect-ratio: 3 / 4;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.showcase-btn img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  border-radius: 16px;
+  transition: transform 0.25s ease;
+}
+
+.showcase-btn:hover {
+  transform: scale(1.03);
+  box-shadow: 0 20px 48px rgba(0, 0, 0, 0.42);
+}
+
+.showcase-btn:hover img {
+  transform: scale(1.06);
+}
+
+.showcase-price-pill {
+  position: absolute;
+  top: 0.55rem;
+  right: 0.55rem;
+  display: inline-flex;
+  align-items: center;
+  padding: 0.28rem 0.62rem;
+  border-radius: 999px;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  background: var(--color-primary);
+  color: var(--color-bg-card);
+  font-family: var(--font-body);
+  z-index: 2;
+  pointer-events: none;
+  box-shadow: 0 4px 14px rgba(232, 108, 58, 0.44);
+}
+
+.showcase-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.18rem;
+  padding: 0.8rem 0.7rem 0.65rem;
+  background: linear-gradient(to top, rgba(10, 0, 0, 0.88) 0%, rgba(10, 0, 0, 0.4) 65%, transparent 100%);
+  transform: translateY(100%);
+  transition: transform 0.25s ease;
+  pointer-events: none;
+  border-radius: 0 0 16px 16px;
+  z-index: 2;
+}
+
+.showcase-btn:hover .showcase-overlay,
+.showcase-btn:focus-visible .showcase-overlay {
+  transform: translateY(0);
+}
+
+.showcase-overlay strong {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: #f5eee7;
+  font-family: var(--font-body);
+  line-height: 1.3;
+}
+
+.overlay-sub {
+  font-size: 0.68rem;
+  color: var(--color-primary);
+  font-weight: 600;
+  font-family: var(--font-body);
+  letter-spacing: 0.02em;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   SECTION B — Why This Works Pillar Cards
+   ═══════════════════════════════════════════════════════════════ */
+
+.section-heading-centered {
+  text-align: center;
+}
+
+.section-overline {
+  margin: 0 0 0.5rem;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(247, 239, 232, 0.45);
+  font-family: var(--font-body);
+}
+
+.section-h2-bold {
+  font-size: clamp(1.55rem, 2.6vw, 2.1rem) !important;
+  font-weight: 800 !important;
+  letter-spacing: -0.04em;
+  margin: 0.4rem auto 0;
+  max-width: 560px;
+}
+
+.pillar-icon-wrap {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: rgba(232, 108, 58, 0.12);
+  border: 1.5px solid rgba(232, 108, 58, 0.28);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.55rem;
+  margin-bottom: 1rem;
+  flex-shrink: 0;
+}
+
+.pillar-card {
+  border-left: 3px solid var(--color-primary) !important;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  padding: 1.4rem 1.35rem !important;
+}
+
+.pillar-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 14px 40px rgba(0, 0, 0, 0.28) !important;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   RESPONSIVE
+   ═══════════════════════════════════════════════════════════════ */
+
+@media (max-width: 640px) {
+  .showcase-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .showcase-btn {
+    aspect-ratio: 16 / 9;
+  }
+
+  .section-h2-bold {
+    font-size: clamp(1.35rem, 6vw, 1.7rem) !important;
+  }
+}
+
+/* --- FIX 1: ACTIVE NAV --- */
+.nav-active {
+  color: var(--color-primary) !important;
+  font-weight: 600;
+  border-bottom: 2px solid var(--color-primary);
+  padding-bottom: 2px;
+}
+
+/* --- FIX 2: MOBILE NAV --- */
+.mobile-nav-toggle {
+  display: none;
+  background: none;
+  border: none;
+  color: var(--color-primary);
+  font-size: 28px;
+  cursor: pointer;
+  width: 40px;
+  height: 40px;
+  align-items: center;
+  justify-content: center;
+}
+.mobile-nav-menu {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  background: var(--color-bg-card);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+  overflow: hidden;
+  max-height: 0;
+  transition: max-height 0.3s ease;
+  z-index: 999;
+}
+.mobile-nav-menu.open {
+  max-height: 300px;
+}
+.mobile-nav-menu a {
+  height: 48px;
+  display: flex;
+  align-items: center;
+  padding: 0 1.5rem;
+  color: #333;
+  text-decoration: none;
+  font-family: var(--font-body);
+  border-bottom: 1px solid rgba(0,0,0,0.05);
+}
+.mobile-nav-menu a:last-child {
+  border-bottom: none;
+}
+@media (max-width: 768px) {
+  .top-nav { display: none !important; }
+  .mobile-nav-toggle { display: flex; }
+}
+
+/* --- FIX 3: NEW FOOTER --- */
+.site-footer-premium {
+  background: var(--color-footer-bg);
+  color: var(--color-bg-card);
+  padding: 48px 0 0;
+  font-family: var(--font-body);
+}
+.site-footer-premium * {
+  box-sizing: border-box;
+}
+.site-footer-premium .footer-main {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 2rem;
+  padding: 0 1.5rem 3rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+.footer-brand {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  max-width: 300px;
+}
+.footer-logo-row {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+}
+.footer-logo-row img {
+  height: 36px;
+  border-radius: 8px;
+  object-fit: cover;
+}
+.footer-brand strong {
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--color-bg-card);
+}
+.footer-tagline {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--color-primary);
+  margin: 0;
+}
+.footer-desc {
+  font-size: 0.85rem;
+  color: rgba(255,255,255,0.7);
+  line-height: 1.5;
+  margin: 0;
+}
+.footer-links-col h4 {
+  color: var(--color-primary);
+  font-family: var(--font-display);
+  font-size: 0.9rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  margin: 0 0 1.2rem;
+}
+.footer-links-col div {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+.footer-links-col a {
+  color: rgba(255,255,255,0.7);
+  text-decoration: none;
+  font-size: 0.9rem;
+  transition: color 0.2s ease;
+}
+.footer-links-col a:hover {
+  color: var(--color-bg-card);
+}
+.footer-bottom {
+  border-top: 1px solid rgba(255,255,255,0.1);
+  padding: 16px 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+.footer-bottom p {
+  color: rgba(255,255,255,0.4);
+  font-size: 0.8rem;
+  margin: 0;
+}
+.footer-social {
+  display: flex;
+  gap: 0.6rem;
+}
+.footer-social a {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.1);
+  color: var(--color-bg-card);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  font-size: 1rem;
+  transition: background 0.2s ease;
+}
+.footer-social a:hover {
+  background: var(--color-primary);
+}
+
+/* --- FIX 4: BACK TO TOP --- */
+#backToTop {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: var(--color-primary);
+  color: var(--color-bg-card);
+  border: none;
+  font-size: 1.2rem;
+  cursor: pointer;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease, background 0.2s ease, transform 0.2s ease;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 16px rgba(232,108,58,0.3);
+}
+#backToTop:hover {
+  background: var(--color-primary-dark);
+  transform: scale(1.1);
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   PREMIUM POLISH TOUCHES
+   ═══════════════════════════════════════════════════════════════ */
+
+/* TOUCH 1: PAGE LOAD FADE-IN ANIMATION */
+@keyframes fadeSlideUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+main, .hero, .page-header, .page-hero, .hero-section {
+  animation: fadeSlideUp 0.5s ease forwards;
+}
+
+/* TOUCH 3: NAVBAR SCROLL EFFECT */
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  transition: box-shadow 0.3s ease, backdrop-filter 0.3s ease, background 0.3s ease;
+}
+.site-header.scrolled {
+  box-shadow: 0 4px 24px rgba(0,0,0,0.4) !important;
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px) !important;
+  background: rgba(22, 5, 5, 0.95);
+}
+
+/* TOUCH 4: BUTTON CLICK RIPPLE EFFECT */
+button, .button, a[class*="btn"], .pcard-book, .mcard-book, .lcard-btn, .sell-banner-btn {
+  position: relative;
+  overflow: hidden;
+}
+.ripple {
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.35);
+  transform: scale(0);
+  animation: rippleAnim 0.5s linear;
+  pointer-events: none;
+}
+@keyframes rippleAnim {
+  to { transform: scale(4); opacity: 0; }
+}
+
+/* TOUCH 7: SMOOTH SCROLL GLOBALLY */
+html { 
+  scroll-behavior: smooth; 
+}
+
+/* TOUCH 8: SELECTION COLOR BRANDING */
+::selection {
+  background: var(--color-primary);
+  color: var(--color-bg-card);
+}
+
+/* TOUCH 10: FONT UPGRADE TO PLUS JAKARTA SANS */
+body, h1, h2, h3, h4, p, a, span, div, strong, small, button, input, select, textarea {
+  font-family: 'Plus Jakarta Sans', sans-serif !important;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   PREMIUM THEME ENFORCEMENT OVERRIDES
+   Ensures the var() color system maps flawlessly across the platform
+   ═══════════════════════════════════════════════════════════════ */
+
+body {
+  background: var(--color-bg) !important;
+  color: var(--color-text-primary) !important;
+}
+
+main, section, header {
+  background: transparent;
+}
+
+/* Force light mode readability on all general typography */
+h1, h2, h3, h4, h5, h6, strong, .hero-copy h1, .page-hero h1 {
+  color: var(--color-text-primary) !important;
+}
+
+p, .hero-copy p, .page-hero p, .info-card p, .impact-card p, .profile-card p, .mentor-card p, .market-card p, .banner-card p, .mini-note p {
+  color: var(--color-text-secondary) !important;
+}
+
+/* Force Cards Base Colors */
+article, .card, .profile-card, .mentor-card, .market-card, .stat-card, .showcase-card, .pillar-card, .impact-card, .banner-card, .pcard, .mcard, .lcard, .meta-card, .work-gallery, .sample-work {
+  background: var(--color-bg-card) !important;
+  border: 1px solid var(--color-border) !important;
+  box-shadow: var(--shadow-card) !important;
+}
+
+/* Interactions */
+article:hover, .card:hover, .profile-card:hover, .mentor-card:hover, .market-card:hover, .pcard:hover, .mcard:hover, .lcard:hover {
+  box-shadow: var(--shadow-card-hover) !important;
+}
+
+/* Navigation System Enforcements */
+.site-header {
+  background: var(--color-nav-bg);
+}
+.site-header.scrolled {
+  background: var(--color-nav-bg) !important;
+}
+.top-nav a, .mobile-nav-menu a {
+  color: var(--color-text-primary) !important;
+}
+.top-nav a.nav-active, .mobile-nav-menu a.nav-active {
+  color: var(--color-primary) !important;
+  border-bottom-color: var(--color-primary) !important;
+}
+.mobile-nav-toggle {
+  color: var(--color-text-primary) !important;
+}
+
+/* Tags and Pills */
+.tag {
+  background: var(--color-tag-bg) !important;
+  color: var(--color-tag-text) !important;
+  border: none !important;
+}
+
+/* Theme Footer Overrides */
+.site-footer-premium {
+  background: var(--color-footer-bg) !important;
+}
+.site-footer-premium p, .site-footer-premium a, .site-footer-premium span, .site-footer-premium h4 {
+  color: var(--color-footer-text) !important;
+}
+.footer-logo-row strong {
+  color: #fff !important; /* Footers are always dark per the variable spec */
+}
+
+/* Primary Button Gradients Enforced Globably */
+.button-primary, .btn-primary, [class*="action-book"], .sell-banner-btn {
+  background: var(--color-gradient) !important;
+  color: #FFFFFF !important;
+  border: none !important;
+}
+
+/* Secondary Actions */
+.button-secondary {
+  background: var(--color-bg-soft) !important;
+  color: var(--color-text-primary) !important;
+  border: 1px solid var(--color-border) !important;
+}
+
+/* Overlines & Labels */
+.eyebrow, .section-overline {
+  color: var(--color-overline) !important;
+}
+
+/* Review Stars Native Coloration */
+.review-chip, .slate-rating {
+  color: var(--color-star) !important;
+}
+
+/* Form Dropdowns & Clean Inputs (For filters) */
+select, input {
+  background: var(--color-bg-card) !important;
+  color: var(--color-text-primary) !important;
+  border-color: var(--color-border) !important;
+}
+html {
+  transition: background-color 0.4s ease, color 0.4s ease;
+}
+*, *::before, *::after {
+  transition: background-color 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   PREMIUM HOVER AND GLOW EFFECTS (ALL THEMES)
+   ═══════════════════════════════════════════════════════════════ */
+
+/* EFFECT 1 — PRIMARY BUTTONS */
+.btn-primary, .button-primary, button.book-now, button.book-session, .pcard-book, .mcard-book {
+  position: relative;
+  overflow: hidden;
+  background: var(--color-primary) !important;
+  color: #fff !important;
+  border: none !important;
+  cursor: pointer;
+  z-index: 1; /* z-index > 0 to allow glowing pseudo element underneath */
+  transition: transform 0.25s ease, box-shadow 0.25s ease !important;
+}
+
+.button-primary::before, .btn-primary::before, .pcard-book::before, .mcard-book::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--color-gradient);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: -1;
+  border-radius: inherit;
+}
+.button-primary:hover::before, .btn-primary:hover::before, .pcard-book:hover::before, .mcard-book:hover::before { opacity: 1; }
+
+.button-primary:hover, .btn-primary:hover, .pcard-book:hover, .mcard-book:hover {
+  transform: translateY(-3px) scale(1.02);
+  box-shadow:
+    0 8px 24px color-mix(in srgb, var(--color-primary) 45%, transparent),
+    0 0 0 3px color-mix(in srgb, var(--color-primary) 20%, transparent) !important;
+}
+.button-primary:active, .btn-primary:active, .pcard-book:active, .mcard-book:active {
+  transform: translateY(0) scale(0.98);
+  box-shadow: 0 2px 8px color-mix(in srgb, var(--color-primary) 30%, transparent) !important;
+}
+
+/* EFFECT 2 — OUTLINE BUTTONS */
+.btn-outline, .button-secondary, button.contact-seller, .lcard-btn {
+  position: relative;
+  overflow: hidden;
+  background: transparent !important;
+  border: 1.5px solid var(--color-primary) !important;
+  color: var(--color-primary) !important;
+  cursor: pointer;
+  z-index: 1;
+  transition: color 0.3s ease, transform 0.25s ease, box-shadow 0.25s ease !important;
+}
+
+.btn-outline::after, .button-secondary::after, .lcard-btn::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--color-primary);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: -1;
+  border-radius: inherit;
+}
+.btn-outline:hover::after, .button-secondary:hover::after, .lcard-btn:hover::after { transform: scaleX(1); }
+.btn-outline:hover, .button-secondary:hover, .lcard-btn:hover {
+  color: #fff !important;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px color-mix(in srgb, var(--color-primary) 35%, transparent) !important;
+}
+
+/* EFFECT 3 — NAV LINKS */
+.top-nav a, .mobile-nav-menu a {
+  position: relative;
+  transition: color 0.2s ease !important;
+  border-bottom: none !important;
+}
+.top-nav a::after, .mobile-nav-menu a::after {
+  content: '';
+  position: absolute;
+  bottom: -3px;
+  left: 50%;
+  transform: translateX(-50%) scaleX(0);
+  width: 100%;
+  height: 2px;
+  background: var(--color-primary);
+  border-radius: 2px;
+  transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.top-nav a:hover, .mobile-nav-menu a:hover, .top-nav a.nav-active, .mobile-nav-menu a.nav-active { color: var(--color-primary) !important; }
+.top-nav a:hover::after, .mobile-nav-menu a:hover::after, .top-nav a.nav-active::after, .mobile-nav-menu a.nav-active::after { transform: translateX(-50%) scaleX(1); }
+
+/* EFFECT 4 — CARDS */
+article, .card, .profile-card, .mentor-card, .listing-card, .feature-card, .highlight-card, .pcard, .mcard, .lcard {
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s ease !important;
+  will-change: transform;
+  position: relative;
+  overflow: visible;
+}
+
+article:hover, .card:hover, .pcard:hover, .mcard:hover, .lcard:hover {
+  transform: translateY(-6px) scale(1.01) !important;
+  box-shadow: var(--shadow-card-hover), 0 0 0 1px color-mix(in srgb, var(--color-primary) 15%, transparent) !important;
+}
+
+article::before, .card::before, .pcard::before, .mcard::before, .lcard::before {
+  content: '';
+  position: absolute;
+  top: -1px; left: -1px; right: -1px;
+  height: 3px;
+  background: var(--color-gradient);
+  border-radius: var(--radius-card) var(--radius-card) 0 0;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.4s ease;
+  z-index: 2;
+}
+
+article:hover::before, .card:hover::before, .pcard:hover::before, .mcard:hover::before, .lcard:hover::before {
+  transform: scaleX(1);
+}
+
+/* EFFECT 5 — FILTER PILLS */
+.filter-pill, .category-pill, button[class*="filter"] {
+  position: relative;
+  overflow: hidden;
+  transition: background 0.25s ease, color 0.25s ease, transform 0.2s ease, box-shadow 0.25s ease !important;
+  cursor: pointer;
+}
+
+.filter-pill:hover:not(.active), .category-pill:hover:not(.active) {
+  background: var(--color-primary-light) !important;
+  color: var(--color-primary) !important;
+  transform: translateY(-1px);
+  box-shadow: 0 3px 10px color-mix(in srgb, var(--color-primary) 20%, transparent);
+}
+
+.filter-pill.active, .category-pill.active {
+  background: var(--color-primary) !important;
+  color: #fff !important;
+  box-shadow: 0 4px 14px color-mix(in srgb, var(--color-primary) 40%, transparent) !important;
+}
+
+.filter-pill.active::before, .category-pill.active::before {
+  content: '●';
+  font-size: 6px;
+  margin-right: 5px;
+  opacity: 0.7;
+  vertical-align: middle;
+}
+
+/* EFFECT 6 — THEME SWITCHER */
+#themeToggleBtn {
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s ease, background 0.3s ease !important;
+}
+#themeToggleBtn:hover {
+  transform: scale(1.15) rotate(20deg);
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--color-primary) 20%, transparent), 0 0 20px color-mix(in srgb, var(--color-primary) 40%, transparent) !important;
+}
+
+/* EFFECT 7 — BACK TO TOP */
+#backToTop {
+  transition: opacity 0.3s ease, transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s ease, background 0.3s ease !important;
+}
+#backToTop:hover {
+  transform: translateY(-4px) scale(1.1) !important;
+  background: var(--color-primary-dark) !important;
+  box-shadow: 0 8px 24px color-mix(in srgb, var(--color-primary) 50%, transparent), 0 0 0 3px color-mix(in srgb, var(--color-primary) 20%, transparent) !important;
+}
+
+/* EFFECT 8 — STAR RATINGS */
+.stars span, .star {
+  display: inline-block;
+  transition: transform 0.2s ease;
+}
+article:hover .stars span:nth-child(1) { transition-delay: 0.00s; transform: scale(1.3); }
+article:hover .stars span:nth-child(2) { transition-delay: 0.04s; transform: scale(1.3); }
+article:hover .stars span:nth-child(3) { transition-delay: 0.08s; transform: scale(1.3); }
+article:hover .stars span:nth-child(4) { transition-delay: 0.12s; transform: scale(1.3); }
+article:hover .stars span:nth-child(5) { transition-delay: 0.16s; transform: scale(1.3); }
+
+/* EFFECT 9 — LOGO */
+.brand {
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), filter 0.3s ease;
+  display: inline-block;
+}
+.brand:hover {
+  transform: scale(1.04) rotate(-2deg);
+  filter: drop-shadow(0 4px 8px color-mix(in srgb, var(--color-primary) 40%, transparent));
+}
+
+/* EFFECT 10 — SELL BANNER CTA */
+.sell-banner-btn {
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s ease, background 0.3s ease, color 0.3s ease !important;
+}
+.sell-banner-btn:hover {
+  transform: translateY(-3px) scale(1.04) !important;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.2), 0 0 0 3px rgba(255,255,255,0.3) !important;
+}
+
+/* EFFECT 11 — GLOW CURSOR */
+#cursorGlow {
+  position: fixed;
+  width: 300px;
+  height: 300px;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 0;
+  background: radial-gradient(circle, color-mix(in srgb, var(--color-primary) 8%, transparent) 0%, transparent 70%);
+  transform: translate(-50%, -50%);
+  transition: opacity 0.3s ease, width 0.3s ease, height 0.3s ease;
+  opacity: 0;
+}
+
+body, nav, header, .navbar, .site-header {
+  transition: background-color 0.4s ease;
+}
+
+/* HERO ANIMATIONS */
+.hero-headline {
+  overflow: visible;
+}
+.hero-headline .word {
+  display: inline-block;
+  opacity: 0;
+  transform: scale(0.6) translateY(16px);
+  animation: wordGrow 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+.hero-headline .word:nth-of-type(1) { animation-delay: 0.10s; }
+.hero-headline .word:nth-of-type(2) { animation-delay: 0.22s; }
+.hero-headline .word:nth-of-type(3) { animation-delay: 0.34s; }
+.hero-headline .word:nth-of-type(4) { animation-delay: 0.44s; }
+.hero-headline .word:nth-of-type(5) { animation-delay: 0.54s; }
+
+@keyframes wordGrow {
+  0% {
+    opacity: 0;
+    transform: scale(0.6) translateY(16px);
+    filter: blur(4px);
+  }
+  60% {
+    opacity: 1;
+    filter: blur(0px);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+    filter: blur(0px);
+  }
+}
+
+.hero-subtitle, .hero-subtext, .hero p, .hero-copy p {
+  opacity: 0;
+  animation: fadeSlideUp 0.5s ease 0.7s forwards;
+}
+
+.hero-cta, .hero-buttons, .hero .buttons, .hero-actions {
+  opacity: 0;
+  animation: fadeSlideUp 0.5s ease 0.85s forwards;
+}
+
+.hero-stats, .stats-row {
+  opacity: 0;
+  animation: fadeSlideUp 0.5s ease 1.0s forwards;
+}
+
+@keyframes fadeSlideUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* FINAL PREMIUM Polish: RESET MIDDLE CARD STATE */
+.pillars-grid article.pillar-card:nth-of-type(2) {
+  transform: none !important;
+  box-shadow: var(--shadow-card) !important;
+  background: var(--color-bg-card) !important;
 }

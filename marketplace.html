@@ -1,13 +1,515 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <script>
+    (function() {
+      const t = localStorage.getItem('kk-theme') || 'warm';
+      document.documentElement.setAttribute('data-theme', t);
+    })();
+  </script>
+  <style>
+/* ─── THEME 1: WARM (default) ─── */
+[data-theme="warm"] {
+  --color-primary:        #E86C3A;
+  --color-primary-dark:   #C95A2A;
+  --color-primary-light:  #FFF0E8;
+  --color-secondary:      #C2185B;
+  --color-gradient:       linear-gradient(135deg, #E86C3A, #C2185B);
+
+  --color-bg:             #FFFFFF;
+  --color-bg-soft:        #FFF8F5;
+  --color-bg-card:        #FFFFFF;
+  --color-surface:        #FFF0E8;
+
+  --color-text-primary:   #1A1A1A;
+  --color-text-secondary: #666666;
+  --color-text-muted:     #999999;
+
+  --color-nav-bg:         rgba(255,255,255,0.95);
+  --color-footer-bg:      #1A1A2E;
+  --color-footer-text:    rgba(255,255,255,0.75);
+
+  --color-border:         rgba(0,0,0,0.08);
+  --color-shadow:         rgba(0,0,0,0.08);
+
+  --color-badge-buy-bg:   #1565C0;
+  --color-badge-buy-text: #FFFFFF;
+  --color-badge-rent-bg:  #6A1B9A;
+  --color-badge-rent-text:#FFFFFF;
+
+  --color-free-bg:        #E8F5E9;
+  --color-free-text:      #2E7D32;
+  --color-tag-bg:         #F3E5F5;
+  --color-tag-text:       #6A1B9A;
+
+  --color-overline:       #E86C3A;
+  --color-star:           #E86C3A;
+
+  --radius-card:          16px;
+  --shadow-card:          0 4px 20px rgba(0,0,0,0.08);
+  --shadow-card-hover:    0 12px 32px rgba(232,108,58,0.18);
+  --transition:           0.25s ease;
+}
+
+/* ─── THEME 2: COOL (blue-violet) ─── */
+[data-theme="cool"] {
+  --color-primary:        #5C6BC0;
+  --color-primary-dark:   #3949AB;
+  --color-primary-light:  #E8EAF6;
+  --color-secondary:      #7B1FA2;
+  --color-gradient:       linear-gradient(135deg, #5C6BC0, #7B1FA2);
+
+  --color-bg:             #F0F2FF;
+  --color-bg-soft:        #E8EAF6;
+  --color-bg-card:        #FFFFFF;
+  --color-surface:        #E8EAF6;
+
+  --color-text-primary:   #1A1A2E;
+  --color-text-secondary: #4A4A6A;
+  --color-text-muted:     #8888AA;
+
+  --color-nav-bg:         rgba(240,242,255,0.95);
+  --color-footer-bg:      #0D0D1A;
+  --color-footer-text:    rgba(255,255,255,0.75);
+
+  --color-border:         rgba(92,107,192,0.15);
+  --color-shadow:         rgba(92,107,192,0.12);
+
+  --color-badge-buy-bg:   #1565C0;
+  --color-badge-buy-text: #FFFFFF;
+  --color-badge-rent-bg:  #7B1FA2;
+  --color-badge-rent-text:#FFFFFF;
+
+  --color-free-bg:        #E3F2FD;
+  --color-free-text:      #1565C0;
+  --color-tag-bg:         #EDE7F6;
+  --color-tag-text:       #512DA8;
+
+  --color-overline:       #5C6BC0;
+  --color-star:           #5C6BC0;
+
+  --radius-card:          16px;
+  --shadow-card:          0 4px 20px rgba(92,107,192,0.10);
+  --shadow-card-hover:    0 12px 32px rgba(92,107,192,0.22);
+  --transition:           0.25s ease;
+}
+
+/* ─── THEME 3: SAGE (mint-green + off-white) ─── */
+[data-theme="sage"] {
+  --color-primary:        #2E7D6B;
+  --color-primary-dark:   #1B5E50;
+  --color-primary-light:  #E8F5F2;
+  --color-secondary:      #00897B;
+  --color-gradient:       linear-gradient(135deg, #2E7D6B, #00897B);
+
+  --color-bg:             #F7FAF9;
+  --color-bg-soft:        #EEF5F3;
+  --color-bg-card:        #FFFFFF;
+  --color-surface:        #E8F5F2;
+
+  --color-text-primary:   #1A2E2A;
+  --color-text-secondary: #4A6660;
+  --color-text-muted:     #8AA8A2;
+
+  --color-nav-bg:         rgba(247,250,249,0.95);
+  --color-footer-bg:      #0D1F1C;
+  --color-footer-text:    rgba(255,255,255,0.75);
+
+  --color-border:         rgba(46,125,107,0.12);
+  --color-shadow:         rgba(46,125,107,0.10);
+
+  --color-badge-buy-bg:   #1B5E50;
+  --color-badge-buy-text: #FFFFFF;
+  --color-badge-rent-bg:  #00695C;
+  --color-badge-rent-text:#FFFFFF;
+
+  --color-free-bg:        #E8F5E9;
+  --color-free-text:      #1B5E20;
+  --color-tag-bg:         #E0F2F1;
+  --color-tag-text:       #004D40;
+
+  --color-overline:       #2E7D6B;
+  --color-star:           #2E7D6B;
+
+  --radius-card:          16px;
+  --shadow-card:          0 4px 20px rgba(46,125,107,0.08);
+  --shadow-card-hover:    0 12px 32px rgba(46,125,107,0.20);
+  --transition:           0.25s ease;
+}
+  </style>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Old Clothes | Kalaa Kart</title>
+  <title>Campus Marketplace — Kalaa Kart</title>
+  <meta name="description" content="Buy or rent affordable campus wear — blazers, lab coats, kurta sets, and more. Listed by students, for students.">
+  <link rel="icon" type="image/jpeg" href="assets/images/main_logo_final.jpeg">
+  <link rel="apple-touch-icon" href="assets/images/main_logo_final.jpeg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Sora:wght@400;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="assets/css/styles.css">
+  <style>
+
+    /* ══════════════════════════════════════════════
+       PAGE HERO
+    ══════════════════════════════════════════════ */
+    .market-page-hero {
+      text-align: center;
+      padding: 2rem 1.5rem 1.6rem;
+    }
+    .market-page-hero h1 { max-width: 22ch; margin: 0.5rem auto 0.8rem; }
+    .market-page-hero p  { max-width: 46ch; margin: 0 auto; }
+
+    .page-overline {
+      margin: 0 0 0.45rem;
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: rgba(247,239,232,0.4);
+      font-family: var(--font-body);
+    }
+
+    /* ══════════════════════════════════════════════
+       CONTROLS BAR
+    ══════════════════════════════════════════════ */
+    .market-controls {
+      display: flex;
+      flex-direction: column;
+      gap: 0.7rem;
+      margin: 1.6rem 0 0.4rem;
+      padding: 0.9rem 1rem;
+      background: rgba(31,7,7,0.92);
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 18px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.14);
+    }
+
+    /* Row 1 — category pills */
+    .market-category-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      align-items: center;
+    }
+
+    /* Row 2 — type toggles + sort */
+    .market-type-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      align-items: center;
+    }
+
+    .market-sort {
+      margin-left: auto;
+      display: flex;
+      align-items: center;
+      gap: 0.45rem;
+      font-size: 0.8rem;
+      color: rgba(247,239,232,0.55);
+      font-family: var(--font-body);
+      flex-shrink: 0;
+    }
+
+    .market-sort select {
+      appearance: none;
+      -webkit-appearance: none;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 10px;
+      color: rgba(247,239,232,0.82);
+      font-family: var(--font-body);
+      font-size: 0.8rem;
+      padding: 0.38rem 1.9rem 0.38rem 0.7rem;
+      cursor: pointer;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='rgba(247,239,232,0.6)' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 0.55rem center;
+    }
+
+    .market-sort select option { background: #1a0505; color: #f5eee7; }
+
+    /* Shared filter pill */
+    .mkt-pill {
+      cursor: pointer;
+      transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+      background: rgba(255,255,255,0.06);
+      color: rgba(247,239,232,0.72);
+      border: 1px solid rgba(255,255,255,0.08);
+      padding: 0.46rem 0.9rem;
+      border-radius: 999px;
+      font-size: 0.82rem;
+      font-weight: 500;
+      font-family: var(--font-body);
+    }
+
+    .mkt-pill.active {
+      background: var(--color-primary) !important;
+      color: #fff !important;
+      border-color: transparent !important;
+    }
+
+    /* ══════════════════════════════════════════════
+       LISTING CARDS GRID
+    ══════════════════════════════════════════════ */
+    .listings-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 1.25rem;
+      padding: 0.6rem 0 2rem;
+    }
+
+    @media (max-width: 960px) { .listings-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+    @media (max-width: 480px) { .listings-grid { grid-template-columns: 1fr; } }
+
+    .lcard {
+      background: linear-gradient(180deg, rgba(42,10,10,0.94), rgba(22,5,5,0.97));
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.22);
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+      position: relative;
+    }
+
+    .lcard:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 18px 44px rgba(0,0,0,0.38);
+    }
+
+    .lcard[hidden] { display: none; }
+
+    /* Image area */
+    .lcard-image {
+      position: relative;
+      height: 180px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 64px;
+      flex-shrink: 0;
+      overflow: hidden;
+    }
+
+    /* Type badge — top left */
+    .lcard-type-badge {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-size: 0.65rem;
+      font-weight: 800;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      font-family: var(--font-body);
+      z-index: 2;
+      line-height: 1;
+    }
+
+    .badge-buy  { background: #1565C0; color: #fff; }
+    .badge-rent { background: #6A1B9A; color: #fff; }
+    .badge-both {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+
+    /* Condition pill — top right */
+    .lcard-condition {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      padding: 0.24rem 0.6rem;
+      border-radius: 999px;
+      font-size: 0.66rem;
+      font-weight: 700;
+      font-family: var(--font-body);
+      z-index: 2;
+    }
+
+    .cond-new  { background: rgba(232,245,233,0.92); color: #2E7D32; }
+    .cond-good { background: rgba(255,253,231,0.92); color: #F57F17; }
+    .cond-used { background: rgba(238,238,238,0.88); color: #616161; }
+
+    /* Card body */
+    .lcard-body {
+      padding: 0.95rem 1rem 0.9rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.55rem;
+      flex: 1;
+    }
+
+    .lcard-name {
+      font-family: var(--font-display);
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: #f5eee7;
+      margin: 0;
+      letter-spacing: -0.01em;
+      line-height: 1.25;
+    }
+
+    .lcard-meta {
+      font-size: 0.75rem;
+      color: rgba(247,239,232,0.45);
+      font-family: var(--font-body);
+    }
+
+    /* Seller row */
+    .lcard-seller {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .lcard-seller-initial {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: var(--color-primary);
+      color: #fff;
+      font-size: 11px;
+      font-weight: 700;
+      font-family: var(--font-body);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .lcard-seller-info {
+      display: flex;
+      flex-direction: column;
+      gap: 0.08rem;
+    }
+
+    .lcard-seller-name {
+      font-size: 0.76rem;
+      font-weight: 600;
+      color: rgba(247,239,232,0.72);
+      font-family: var(--font-body);
+    }
+
+    .lcard-seller-stars {
+      font-size: 0.68rem;
+      color: var(--color-primary);
+    }
+
+    /* Price block */
+    .lcard-price {
+      display: flex;
+      flex-direction: column;
+      gap: 0.15rem;
+      margin-top: auto;
+    }
+
+    .lcard-buy-price {
+      font-family: var(--font-display);
+      font-size: 1.05rem;
+      font-weight: 800;
+      color: var(--color-primary);
+      letter-spacing: -0.02em;
+    }
+
+    .lcard-rent-price {
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: #81C784;
+      font-family: var(--font-body);
+    }
+
+    /* Contact button */
+    .lcard-btn {
+      display: block;
+      width: 100%;
+      padding: 0.58rem 1rem;
+      border-radius: 999px;
+      border: 1.5px solid var(--color-primary);
+      background: transparent;
+      color: var(--color-primary);
+      font-size: 0.82rem;
+      font-weight: 700;
+      font-family: var(--font-body);
+      cursor: pointer;
+      transition: background 0.2s ease, color 0.2s ease;
+      text-align: center;
+      text-decoration: none;
+      margin-top: 0.7rem;
+    }
+
+    .lcard-btn:hover {
+      background: var(--color-primary);
+      color: #fff;
+    }
+
+    /* ══════════════════════════════════════════════
+       CTA BANNER
+    ══════════════════════════════════════════════ */
+    .sell-banner {
+      margin: 0.5rem 0 2.5rem;
+      padding: 2.4rem 2rem;
+      border-radius: 20px;
+      background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 100%);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+      box-shadow: 0 16px 48px rgba(232,108,58,0.3);
+    }
+
+    .sell-banner-copy { display: flex; flex-direction: column; gap: 0.35rem; }
+
+    .sell-banner h2 {
+      font-family: var(--font-display);
+      font-size: clamp(1.25rem, 2.5vw, 1.8rem);
+      font-weight: 800;
+      color: #fff;
+      margin: 0;
+      letter-spacing: -0.03em;
+    }
+
+    .sell-banner p {
+      font-size: 0.9rem;
+      color: rgba(255,255,255,0.82);
+      margin: 0;
+      font-family: var(--font-body);
+      max-width: 42ch;
+    }
+
+    .sell-banner-btn {
+      display: inline-flex;
+      align-items: center;
+      padding: 0.72rem 1.5rem;
+      border-radius: 999px;
+      border: 0;
+      background: #fff;
+      color: var(--color-primary);
+      font-size: 0.9rem;
+      font-weight: 800;
+      font-family: var(--font-body);
+      cursor: pointer;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      text-decoration: none;
+      white-space: nowrap;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.14);
+      flex-shrink: 0;
+    }
+
+    .sell-banner-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 14px 32px rgba(0,0,0,0.22);
+    }
+
+    @media (max-width: 600px) {
+      .sell-banner { flex-direction: column; text-align: center; align-items: flex-start; }
+    }
+
+  </style>
 </head>
 <body data-page="marketplace">
   <header class="site-header">
@@ -19,55 +521,792 @@
           <small>From Passion to Profession</small>
         </span>
       </a>
+      <button class="mobile-nav-toggle" id="mobileNavToggle" aria-label="Toggle Navigation">☰</button>
       <nav class="top-nav">
         <a href="index.html">Home</a>
         <a href="profiles.html">Profiles</a>
         <a href="mentor-booking.html">Mentor Booking</a>
-        <a href="marketplace.html" class="active">Old Clothes</a>
+        <a href="marketplace.html">Old Clothes</a>
       </nav>
+    </div>
+    <div class="mobile-nav-menu" id="mobileNavMenu">
+      <a href="index.html">Home</a>
+      <a href="profiles.html">Profiles</a>
+      <a href="mentor-booking.html">Mentor Booking</a>
+      <a href="marketplace.html">Old Clothes</a>
     </div>
   </header>
 
   <main class="container page-main">
-    <section class="page-hero page-hero-premium market-hero">
-      <span class="eyebrow">Old Clothes Buy Or Rent</span>
+
+    <!-- ── SECTION A: Page Header ─────────────────────────────── -->
+    <section class="page-hero page-hero-premium market-page-hero">
+      <p class="page-overline">✦ SMART REUSE CORNER</p>
       <h1>Give old campus wear a second life.</h1>
-      <p>Students can sell or rent blazers, shirts, kurta sets, lab coats, and event outfits at much cheaper prices. This makes campus life more affordable and sustainable.</p>
+      <p>Shop affordable campus wear — listed by students, for students.</p>
     </section>
 
-    <section class="market-insights">
-      <article class="info-card">
-        <h3>Suggested base prices</h3>
-        <p>Shirt: Rs 250, blazer: Rs 700, lab coat: Rs 300, kurta set: Rs 450, one-day rental from Rs 99.</p>
-      </article>
-      <article class="info-card">
-        <h3>Useful filters</h3>
-        <p>Size, department, condition, rental or buy, price, seller rating, and delivery in campus.</p>
-      </article>
-      <article class="info-card">
-        <h3>Why students will like it</h3>
-        <p>Affordable options, less waste, easy access before events, and more value from items already inside campus.</p>
-      </article>
-    </section>
+    <!-- ── SECTION B: Controls Bar ────────────────────────────── -->
+    <div class="market-controls" id="marketControls">
 
-    <section id="marketplaceCards" class="market-grid"></section>
+      <!-- Row 1: Category filters -->
+      <div class="market-category-row" id="categoryRow">
+        <button class="mkt-pill active" data-category="all">All</button>
+        <button class="mkt-pill" data-category="Blazers">Blazers</button>
+        <button class="mkt-pill" data-category="Shirts">Shirts</button>
+        <button class="mkt-pill" data-category="Lab Coats">Lab Coats</button>
+        <button class="mkt-pill" data-category="Kurta Sets">Kurta Sets</button>
+        <button class="mkt-pill" data-category="Event Wear">Event Wear</button>
+      </div>
+
+      <!-- Row 2: Type toggles + Sort -->
+      <div class="market-type-row">
+        <button class="mkt-pill active" id="buyToggle" data-type="buy">🛒 Buy</button>
+        <button class="mkt-pill active" id="rentToggle" data-type="rent">🔄 Rent</button>
+
+        <div class="market-sort">
+          <span>Sort by:</span>
+          <select id="sortSelect" aria-label="Sort listings">
+            <option value="low">Price: Low to High</option>
+            <option value="high">Price: High to Low</option>
+            <option value="newest">Newest First</option>
+          </select>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ── SECTION C: Listing Cards ──────────────────────────── -->
+    <div class="listings-grid" id="listingsGrid">
+
+      <!-- 1. College Blazer (Navy) — Buy + Rent -->
+      <article class="lcard"
+        data-category="Blazers"
+        data-type="both"
+        data-buy-price="700"
+        data-order="1">
+        <div class="lcard-image" style="background:#1A237E;">
+          <span class="lcard-type-badge badge-both">
+            <span class="badge-buy">BUY</span>
+            <span class="badge-rent">RENT</span>
+          </span>
+          <span class="lcard-condition cond-new">Like New</span>
+          🧥
+        </div>
+        <div class="lcard-body">
+          <h2 class="lcard-name">College Blazer (Navy)</h2>
+          <p class="lcard-meta">Size 40 &middot; Engineering</p>
+          <div class="lcard-seller">
+            <div class="lcard-seller-initial">R</div>
+            <div class="lcard-seller-info">
+              <span class="lcard-seller-name">Rahul M.</span>
+              <span class="lcard-seller-stars">★★★★★ <span style="color:rgba(247,239,232,0.4);font-size:0.65rem;">4.7</span></span>
+            </div>
+          </div>
+          <div class="lcard-price">
+            <span class="lcard-buy-price">₹700</span>
+            <span class="lcard-rent-price">or ₹99/day to rent</span>
+          </div>
+          <a href="#" class="lcard-btn">Contact Seller</a>
+        </div>
+      </article>
+
+      <!-- 2. White Formal Shirt — Buy -->
+      <article class="lcard"
+        data-category="Shirts"
+        data-type="buy"
+        data-buy-price="250"
+        data-order="2">
+        <div class="lcard-image" style="background:#E3F2FD;">
+          <span class="lcard-type-badge badge-buy">BUY</span>
+          <span class="lcard-condition cond-good">Good</span>
+          👔
+        </div>
+        <div class="lcard-body">
+          <h2 class="lcard-name">White Formal Shirt</h2>
+          <p class="lcard-meta">Size M &middot; Any Dept</p>
+          <div class="lcard-seller">
+            <div class="lcard-seller-initial">P</div>
+            <div class="lcard-seller-info">
+              <span class="lcard-seller-name">Priya S.</span>
+              <span class="lcard-seller-stars">★★★★★ <span style="color:rgba(247,239,232,0.4);font-size:0.65rem;">4.5</span></span>
+            </div>
+          </div>
+          <div class="lcard-price">
+            <span class="lcard-buy-price">₹250</span>
+          </div>
+          <a href="#" class="lcard-btn">Contact Seller</a>
+        </div>
+      </article>
+
+      <!-- 3. Lab Coat (Full Sleeve) — Buy + Rent -->
+      <article class="lcard"
+        data-category="Lab Coats"
+        data-type="both"
+        data-buy-price="300"
+        data-order="3">
+        <div class="lcard-image" style="background:#ECEFF1;">
+          <span class="lcard-type-badge badge-both">
+            <span class="badge-buy">BUY</span>
+            <span class="badge-rent">RENT</span>
+          </span>
+          <span class="lcard-condition cond-good">Good</span>
+          🥼
+        </div>
+        <div class="lcard-body">
+          <h2 class="lcard-name">Lab Coat (Full Sleeve)</h2>
+          <p class="lcard-meta">Size L &middot; Science &amp; Tech</p>
+          <div class="lcard-seller">
+            <div class="lcard-seller-initial">M</div>
+            <div class="lcard-seller-info">
+              <span class="lcard-seller-name">Meera J.</span>
+              <span class="lcard-seller-stars">★★★★★ <span style="color:rgba(247,239,232,0.4);font-size:0.65rem;">4.9</span></span>
+            </div>
+          </div>
+          <div class="lcard-price">
+            <span class="lcard-buy-price">₹300</span>
+            <span class="lcard-rent-price">or ₹49/day to rent</span>
+          </div>
+          <a href="#" class="lcard-btn">Contact Seller</a>
+        </div>
+      </article>
+
+      <!-- 4. Men's Kurta Set — Rent -->
+      <article class="lcard"
+        data-category="Kurta Sets"
+        data-type="rent"
+        data-buy-price="149"
+        data-order="4">
+        <div class="lcard-image" style="background:#FFF8E1;">
+          <span class="lcard-type-badge badge-rent">RENT</span>
+          <span class="lcard-condition cond-new">Like New</span>
+          👘
+        </div>
+        <div class="lcard-body">
+          <h2 class="lcard-name">Men's Kurta Set (Cream)</h2>
+          <p class="lcard-meta">Size XL &middot; Any Dept</p>
+          <div class="lcard-seller">
+            <div class="lcard-seller-initial">A</div>
+            <div class="lcard-seller-info">
+              <span class="lcard-seller-name">Arjun P.</span>
+              <span class="lcard-seller-stars">★★★★★ <span style="color:rgba(247,239,232,0.4);font-size:0.65rem;">4.6</span></span>
+            </div>
+          </div>
+          <div class="lcard-price">
+            <span class="lcard-rent-price" style="font-size:1rem;font-weight:800;color:#81C784;">₹149/day</span>
+          </div>
+          <a href="#" class="lcard-btn">Contact Seller</a>
+        </div>
+      </article>
+
+      <!-- 5. Women's Ethnic Dress — Rent -->
+      <article class="lcard"
+        data-category="Event Wear"
+        data-type="rent"
+        data-buy-price="199"
+        data-order="5">
+        <div class="lcard-image" style="background:#FCE4EC;">
+          <span class="lcard-type-badge badge-rent">RENT</span>
+          <span class="lcard-condition cond-new">Like New</span>
+          👗
+        </div>
+        <div class="lcard-body">
+          <h2 class="lcard-name">Women's Ethnic Dress</h2>
+          <p class="lcard-meta">Size S &middot; Any Dept</p>
+          <div class="lcard-seller">
+            <div class="lcard-seller-initial">S</div>
+            <div class="lcard-seller-info">
+              <span class="lcard-seller-name">Sneha K.</span>
+              <span class="lcard-seller-stars">★★★★★ <span style="color:rgba(247,239,232,0.4);font-size:0.65rem;">5.0</span></span>
+            </div>
+          </div>
+          <div class="lcard-price">
+            <span class="lcard-rent-price" style="font-size:1rem;font-weight:800;color:#81C784;">₹199/day</span>
+          </div>
+          <a href="#" class="lcard-btn">Contact Seller</a>
+        </div>
+      </article>
+
+      <!-- 6. Black Blazer (Slim Fit) — Buy -->
+      <article class="lcard"
+        data-category="Blazers"
+        data-type="buy"
+        data-buy-price="499"
+        data-order="6">
+        <div class="lcard-image" style="background:#212121;">
+          <span class="lcard-type-badge badge-buy">BUY</span>
+          <span class="lcard-condition cond-used">Used</span>
+          🧥
+        </div>
+        <div class="lcard-body">
+          <h2 class="lcard-name">Black Blazer (Slim Fit)</h2>
+          <p class="lcard-meta">Size 38 &middot; MBA / Management</p>
+          <div class="lcard-seller">
+            <div class="lcard-seller-initial">K</div>
+            <div class="lcard-seller-info">
+              <span class="lcard-seller-name">Karan M.</span>
+              <span class="lcard-seller-stars">★★★★ <span style="color:rgba(247,239,232,0.4);font-size:0.65rem;">4.4</span></span>
+            </div>
+          </div>
+          <div class="lcard-price">
+            <span class="lcard-buy-price">₹499</span>
+          </div>
+          <a href="#" class="lcard-btn">Contact Seller</a>
+        </div>
+      </article>
+
+      <!-- 7. Striped Formal Shirt — Buy -->
+      <article class="lcard"
+        data-category="Shirts"
+        data-type="buy"
+        data-buy-price="299"
+        data-order="7">
+        <div class="lcard-image" style="background:#E8EAF6;">
+          <span class="lcard-type-badge badge-buy">BUY</span>
+          <span class="lcard-condition cond-new">Like New</span>
+          👔
+        </div>
+        <div class="lcard-body">
+          <h2 class="lcard-name">Striped Formal Shirt</h2>
+          <p class="lcard-meta">Size L &middot; Any Dept</p>
+          <div class="lcard-seller">
+            <div class="lcard-seller-initial">D</div>
+            <div class="lcard-seller-info">
+              <span class="lcard-seller-name">Dev K.</span>
+              <span class="lcard-seller-stars">★★★★★ <span style="color:rgba(247,239,232,0.4);font-size:0.65rem;">4.7</span></span>
+            </div>
+          </div>
+          <div class="lcard-price">
+            <span class="lcard-buy-price">₹299</span>
+          </div>
+          <a href="#" class="lcard-btn">Contact Seller</a>
+        </div>
+      </article>
+
+      <!-- 8. Lab Coat (Half Sleeve) — Buy -->
+      <article class="lcard"
+        data-category="Lab Coats"
+        data-type="buy"
+        data-buy-price="250"
+        data-order="8">
+        <div class="lcard-image" style="background:#F1F8E9;">
+          <span class="lcard-type-badge badge-buy">BUY</span>
+          <span class="lcard-condition cond-good">Good</span>
+          🥼
+        </div>
+        <div class="lcard-body">
+          <h2 class="lcard-name">Lab Coat (Half Sleeve)</h2>
+          <p class="lcard-meta">Size M &middot; Pharmacy &amp; Biotech</p>
+          <div class="lcard-seller">
+            <div class="lcard-seller-initial">T</div>
+            <div class="lcard-seller-info">
+              <span class="lcard-seller-name">Tanvi S.</span>
+              <span class="lcard-seller-stars">★★★★★ <span style="color:rgba(247,239,232,0.4);font-size:0.65rem;">4.8</span></span>
+            </div>
+          </div>
+          <div class="lcard-price">
+            <span class="lcard-buy-price">₹250</span>
+          </div>
+          <a href="#" class="lcard-btn">Contact Seller</a>
+        </div>
+      </article>
+
+      <!-- 9. Sherwani Set — Rent -->
+      <article class="lcard"
+        data-category="Event Wear"
+        data-type="rent"
+        data-buy-price="299"
+        data-order="9">
+        <div class="lcard-image" style="background:#4A148C;">
+          <span class="lcard-type-badge badge-rent">RENT</span>
+          <span class="lcard-condition cond-new">Like New</span>
+          🎩
+        </div>
+        <div class="lcard-body">
+          <h2 class="lcard-name">Sherwani Set</h2>
+          <p class="lcard-meta">Size 40 &middot; Any Dept</p>
+          <div class="lcard-seller">
+            <div class="lcard-seller-initial">A</div>
+            <div class="lcard-seller-info">
+              <span class="lcard-seller-name">Aditya V.</span>
+              <span class="lcard-seller-stars">★★★★★ <span style="color:rgba(247,239,232,0.4);font-size:0.65rem;">4.9</span></span>
+            </div>
+          </div>
+          <div class="lcard-price">
+            <span class="lcard-rent-price" style="font-size:1rem;font-weight:800;color:#81C784;">₹299/day</span>
+          </div>
+          <a href="#" class="lcard-btn">Contact Seller</a>
+        </div>
+      </article>
+
+      <!-- 10. Cotton Kurta (Blue) — Buy + Rent -->
+      <article class="lcard"
+        data-category="Kurta Sets"
+        data-type="both"
+        data-buy-price="349"
+        data-order="10">
+        <div class="lcard-image" style="background:#1565C0;">
+          <span class="lcard-type-badge badge-both">
+            <span class="badge-buy">BUY</span>
+            <span class="badge-rent">RENT</span>
+          </span>
+          <span class="lcard-condition cond-good">Good</span>
+          👘
+        </div>
+        <div class="lcard-body">
+          <h2 class="lcard-name">Cotton Kurta (Blue)</h2>
+          <p class="lcard-meta">Size M &middot; Any Dept</p>
+          <div class="lcard-seller">
+            <div class="lcard-seller-initial">R</div>
+            <div class="lcard-seller-info">
+              <span class="lcard-seller-name">Riya N.</span>
+              <span class="lcard-seller-stars">★★★★★ <span style="color:rgba(247,239,232,0.4);font-size:0.65rem;">4.6</span></span>
+            </div>
+          </div>
+          <div class="lcard-price">
+            <span class="lcard-buy-price">₹349</span>
+            <span class="lcard-rent-price">or ₹79/day to rent</span>
+          </div>
+          <a href="#" class="lcard-btn">Contact Seller</a>
+        </div>
+      </article>
+
+    </div><!-- /listings-grid -->
+
+    <!-- ── SECTION D: Sell CTA Banner ────────────────────────── -->
+    <div class="sell-banner">
+      <div class="sell-banner-copy">
+        <h2>Got clothes collecting dust?</h2>
+        <p>List your item in under 2 minutes and earn from what you don't use.</p>
+      </div>
+      <a href="#" class="sell-banner-btn">List an Item →</a>
+    </div>
+
   </main>
 
-  <footer class="site-footer">
-    <div class="container footer-shell">
-      <div>
-        <strong>Kalaa Kart</strong>
-        <p>Smart reuse for a budget-friendly and eco-aware campus community.</p>
+  <footer class="site-footer-premium">
+    <div class="footer-main">
+      <div class="footer-brand">
+        <div class="footer-logo-row">
+          <img src="assets/images/main_logo_final.jpeg" alt="Kalaa Kart logo">
+          <strong>Kalaa Kart</strong>
+        </div>
+        <p class="footer-tagline">From Passion to Profession</p>
+        <p class="footer-desc">A student-powered platform for skills, mentoring, and campus essentials.</p>
       </div>
-      <div class="footer-links">
-        <a href="index.html">Home</a>
-        <a href="profiles.html">Profiles</a>
-        <a href="mentor-booking.html">Mentors</a>
+      <div class="footer-links-col">
+        <h4>Quick Links</h4>
+        <div>
+          <a href="index.html">Home</a>
+          <a href="profiles.html">Profiles</a>
+          <a href="mentor-booking.html">Mentor Booking</a>
+          <a href="marketplace.html">Old Clothes</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2025 Kalaa Kart. Made with ♥ for campus communities.</p>
+      <div class="footer-social">
+        <a href="#" aria-label="Instagram">📸</a>
+        <a href="#" aria-label="Twitter">𝕏</a>
+        <a href="#" aria-label="LinkedIn">💼</a>
       </div>
     </div>
   </footer>
 
   <script src="assets/js/data.js"></script>
   <script src="assets/js/main.js"></script>
+  <script>
+    (function () {
+      const categoryPills = document.querySelectorAll('#categoryRow .mkt-pill');
+      const buyToggle     = document.getElementById('buyToggle');
+      const rentToggle    = document.getElementById('rentToggle');
+      const sortSelect    = document.getElementById('sortSelect');
+      const grid          = document.getElementById('listingsGrid');
+      const allCards      = Array.from(grid.querySelectorAll('.lcard'));
+
+      /* ── helpers ── */
+      function getActiveCategory() {
+        return document.querySelector('#categoryRow .mkt-pill.active').dataset.category;
+      }
+
+      function applyFilters() {
+        const cat      = getActiveCategory();
+        const showBuy  = buyToggle.classList.contains('active');
+        const showRent = rentToggle.classList.contains('active');
+
+        allCards.forEach(card => {
+          const catMatch  = cat === 'all' || card.dataset.category === cat;
+          const cardType  = card.dataset.type; // 'buy' | 'rent' | 'both'
+          const typeMatch =
+            (showBuy  && (cardType === 'buy'  || cardType === 'both')) ||
+            (showRent && (cardType === 'rent' || cardType === 'both'));
+
+          if (catMatch && typeMatch) {
+            card.removeAttribute('hidden');
+          } else {
+            card.setAttribute('hidden', '');
+          }
+        });
+
+        applySort();
+      }
+
+      function applySort() {
+        const mode    = sortSelect.value;
+        const visible = allCards.filter(c => !c.hasAttribute('hidden'));
+
+        visible.sort((a, b) => {
+          if (mode === 'low')    return +a.dataset.buyPrice - +b.dataset.buyPrice;
+          if (mode === 'high')   return +b.dataset.buyPrice - +a.dataset.buyPrice;
+          if (mode === 'newest') return +a.dataset.order - +b.dataset.order;
+          return 0;
+        });
+
+        // re-append in sorted order (hidden ones ignored)
+        visible.forEach(card => grid.appendChild(card));
+      }
+
+      /* ── category pills ── */
+      categoryPills.forEach(pill => {
+        pill.addEventListener('click', () => {
+          categoryPills.forEach(p => p.classList.remove('active'));
+          pill.classList.add('active');
+          applyFilters();
+        });
+      });
+
+      /* ── buy/rent toggles: independent ── */
+      [buyToggle, rentToggle].forEach(btn => {
+        btn.addEventListener('click', () => {
+          // always keep at least one active
+          const other  = btn === buyToggle ? rentToggle : buyToggle;
+          const bothOn = btn.classList.contains('active') && other.classList.contains('active');
+          if (btn.classList.contains('active') && !bothOn) return; // prevent both off
+          btn.classList.toggle('active');
+          applyFilters();
+        });
+      });
+
+      /* ── sort ── */
+      sortSelect.addEventListener('change', applySort);
+
+    })();
+  </script>
+  <button id="backToTop" aria-label="Back to top">↑</button>
+  <script>
+    (function() {
+      // 1. JS For Premium Polishes
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.style.opacity = '1';
+            entry.target.style.transform = 'translateY(0)';
+          }
+        });
+      }, { threshold: 0.1 });
+      document.querySelectorAll('.card, .profile-card, .mentor-card, .market-card, .stat-card, .showcase-card, .pillar-card, .impact-card, .banner-card, .pcard, .mcard, .lcard').forEach(card => {
+        card.style.opacity = '0';
+        card.style.transform = 'translateY(24px)';
+        card.style.transition = 'opacity 0.4s ease, transform 0.4s ease';
+        observer.observe(card);
+      });
+
+      const header = document.querySelector('.site-header');
+      window.addEventListener('scroll', () => {
+        if(header) header.classList.toggle('scrolled', window.scrollY > 60);
+      });
+
+      document.querySelectorAll('button, .button, a[class*="btn"], .pcard-book, .mcard-book, .lcard-btn, .sell-banner-btn').forEach(btn => {
+        btn.addEventListener('click', function(e) {
+          const ripple = document.createElement('span');
+          ripple.classList.add('ripple');
+          const rect = this.getBoundingClientRect();
+          const size = Math.max(rect.width, rect.height);
+          ripple.style.width = ripple.style.height = size + 'px';
+          ripple.style.left = (e.clientX - rect.left - size/2) + 'px';
+          ripple.style.top  = (e.clientY - rect.top  - size/2) + 'px';
+          this.appendChild(ripple);
+          setTimeout(() => ripple.remove(), 600);
+        });
+      });
+
+      // 2. Empty State Injections for Filters
+      const grids = document.querySelectorAll('.profiles-grid, .mentors-grid, .listings-grid');
+      grids.forEach(grid => {
+        const emptyState = document.createElement('div');
+        emptyState.id = 'emptyState';
+        emptyState.style.cssText = 'display:none; text-align:center; padding: 64px 24px; color: #999; grid-column: 1 / -1; width: 100%;';
+        emptyState.innerHTML = `
+          <div style="font-size:48px; margin-bottom:12px;">🔍</div>
+          <p style="font-size:18px; font-weight:600; color:#dfdfdf;">No results found</p>
+          <p style="margin-top:8px;">Try a different filter or check back later.</p>
+        `;
+        grid.appendChild(emptyState);
+        
+        document.body.addEventListener('click', () => {
+          setTimeout(() => {
+            const cards = grid.querySelectorAll('.pcard, .mcard, .lcard');
+            let visible = 0;
+            cards.forEach(c => {
+               if(c.style.display !== 'none') visible++;
+            });
+            if(cards.length > 0) {
+               emptyState.style.display = visible === 0 ? 'block' : 'none';
+            }
+          }, 50);
+        });
+      });
+
+      const currentPage = window.location.pathname.split("/").pop() || 'index.html';
+      document.querySelectorAll("nav.top-nav a, .mobile-nav-menu a").forEach(link => {
+        const href = link.getAttribute("href");
+        if (href === currentPage || (currentPage === '' && href === 'index.html')) {
+          link.classList.add("nav-active");
+        }
+      });
+      const mobileToggle = document.getElementById('mobileNavToggle');
+      const mobileMenu = document.getElementById('mobileNavMenu');
+      if(mobileToggle && mobileMenu) {
+        mobileToggle.addEventListener('click', () => {
+          mobileMenu.classList.toggle('open');
+        });
+        mobileMenu.querySelectorAll('a').forEach(link => {
+          link.addEventListener('click', () => {
+            mobileMenu.classList.remove('open');
+          });
+        });
+      }
+      const btn = document.getElementById('backToTop');
+      if(btn) {
+        window.addEventListener('scroll', () => {
+          btn.style.opacity = window.scrollY > 300 ? '1' : '0';
+          btn.style.pointerEvents = window.scrollY > 300 ? 'auto' : 'none';
+        });
+        btn.addEventListener('click', () => {
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+      }
+    })();
+  </script>
+<div id="cursorGlow"></div>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const glow = document.getElementById('cursorGlow');
+  if (glow && window.innerWidth > 768) {
+    document.addEventListener('mousemove', (e) => {
+      glow.style.left = e.clientX + 'px';
+      glow.style.top  = e.clientY + 'px';
+      glow.style.opacity = '1';
+    });
+    document.addEventListener('mouseleave', () => {
+      glow.style.opacity = '0';
+    });
+    /* Burst on hover over buttons/cards */
+    document.querySelectorAll('button, article, .pcard, .mcard, .lcard, .card, .profile-card, nav a').forEach(el => {
+      el.addEventListener('mouseenter', () => {
+        glow.style.width  = '420px';
+        glow.style.height = '420px';
+        glow.style.background = `radial-gradient(circle, color-mix(in srgb, var(--color-primary) 13%, transparent) 0%, transparent 70%)`;
+      });
+      el.addEventListener('mouseleave', () => {
+        glow.style.width  = '300px';
+        glow.style.height = '300px';
+        glow.style.background = `radial-gradient(circle, color-mix(in srgb, var(--color-primary) 8%, transparent) 0%, transparent 70%)`;
+      });
+    });
+  }
+});
+</script>
+<div id="themeSwitcher">
+  <button id="themeToggleBtn" aria-label="Change theme">
+    🎨
+  </button>
+  <div id="themePalette" class="hidden">
+    <p class="palette-label">Choose Theme</p>
+
+    <button class="theme-option" data-theme="warm">
+      <span class="theme-swatch warm-swatch"></span>
+      <span class="theme-name">Warm</span>
+      <span class="theme-check" id="check-warm">✓</span>
+    </button>
+
+    <button class="theme-option" data-theme="cool">
+      <span class="theme-swatch cool-swatch"></span>
+      <span class="theme-name">Cool</span>
+      <span class="theme-check" id="check-cool">✓</span>
+    </button>
+
+    <button class="theme-option" data-theme="sage">
+      <span class="theme-swatch sage-swatch"></span>
+      <span class="theme-name">Sage</span>
+      <span class="theme-check" id="check-sage">✓</span>
+    </button>
+  </div>
+</div>
+
+<style>
+#themeSwitcher {
+  position: fixed;
+  bottom: 84px;
+  right: 24px;
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 8px;
+}
+
+#themeToggleBtn {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: var(--color-primary);
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+  box-shadow: 0 4px 16px var(--color-shadow);
+  transition: transform 0.2s ease, background 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+#themeToggleBtn:hover {
+  transform: scale(1.1);
+  background: var(--color-primary-dark);
+}
+
+#themePalette {
+  background: var(--color-bg-card);
+  border-radius: 16px;
+  padding: 16px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.15);
+  min-width: 160px;
+  border: 1px solid var(--color-border);
+  transition: all 0.3s ease;
+}
+#themePalette.hidden {
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(8px) scale(0.97);
+}
+#themePalette:not(.hidden) {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0) scale(1);
+}
+
+.palette-label {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--color-text-muted);
+  margin-bottom: 12px;
+}
+
+.theme-option {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid var(--color-border);
+  border-radius: 10px;
+  background: var(--color-bg-soft);
+  cursor: pointer;
+  margin-bottom: 8px;
+  transition: all 0.2s ease;
+}
+.theme-option:last-child { margin-bottom: 0; }
+.theme-option:hover {
+  border-color: var(--color-primary);
+  background: var(--color-primary-light);
+  transform: translateX(-2px);
+}
+.theme-option.active {
+  border-color: var(--color-primary);
+  background: var(--color-primary-light);
+}
+
+.theme-swatch {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  border: 2px solid rgba(0,0,0,0.08);
+}
+.warm-swatch {
+  background: linear-gradient(135deg, #E86C3A, #C2185B);
+}
+.cool-swatch {
+  background: linear-gradient(135deg, #5C6BC0, #7B1FA2);
+}
+.sage-swatch {
+  background: linear-gradient(135deg, #2E7D6B, #00897B);
+}
+
+.theme-name {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--color-text-primary);
+  flex: 1;
+}
+
+.theme-check {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--color-primary);
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+.theme-option.active .theme-check { opacity: 1; }
+</style>
+<script>
+  // Apply saved or default theme immediately
+  const savedTheme = localStorage.getItem('kk-theme') || 'warm';
+  document.documentElement.setAttribute('data-theme', savedTheme);
+
+  function applyTheme(theme) {
+    document.documentElement.setAttribute('data-theme', theme);
+    localStorage.setItem('kk-theme', theme);
+
+    // Update active states on buttons
+    document.querySelectorAll('.theme-option').forEach(btn => {
+      const isActive = btn.dataset.theme === theme;
+      btn.classList.toggle('active', isActive);
+      // Ensure the check icon is toggled appropriately
+      const checkIcon = btn.querySelector('.theme-check');
+      if(checkIcon) checkIcon.style.opacity = isActive ? '1' : '0';
+    });
+  }
+
+  // Set initial active state
+  document.addEventListener('DOMContentLoaded', () => {
+    applyTheme(savedTheme);
+
+    // Toggle palette open/close
+    const toggleBtn = document.getElementById('themeToggleBtn');
+    const palette   = document.getElementById('themePalette');
+
+    toggleBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      palette.classList.toggle('hidden');
+    });
+
+    // Close palette when clicking outside
+    document.addEventListener('click', () => {
+      palette.classList.add('hidden');
+    });
+    palette.addEventListener('click', e => e.stopPropagation());
+
+    // Theme option click
+    document.querySelectorAll('.theme-option').forEach(btn => {
+      btn.addEventListener('click', () => {
+        applyTheme(btn.dataset.theme);
+      });
+    });
+  });
+</script>
 </body>
 </html>
