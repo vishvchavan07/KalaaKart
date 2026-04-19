@@ -56,7 +56,7 @@
     <div class="card-tags" style="display:flex; gap:6px; flex-wrap:wrap; margin-bottom:20px;">
         ${hobbyTags}
     </div>
-    <button class="button btn-primary" data-book-profile="${profile.id}" style="width:100%; padding:14px 20px; font-weight:700; border-radius:10px;">Book Now</button>
+    <a href="#" class="button btn-primary wa-cta" data-name="${profile.name}" data-service="${profile.title}" data-price="${profile.price}" style="display:block; text-align:center; text-decoration:none; width:100%; padding:14px 20px; font-weight:700; border-radius:10px;">Book Now</a>
   </div>
 </div>`;
   }
@@ -88,7 +88,7 @@
                 <span style="font-weight:800; font-size:1.1rem; color:var(--text-primary);">${mentor.rating}</span>
                 <span style="font-size:0.9rem; color:var(--text-secondary);">Expert Mentor</span>
               </div>
-              <button class="button btn-primary" data-book-mentor="${index}" style="padding:12px 32px; font-weight:700; border-radius:12px; font-size:1rem;">Book session</button>
+              <a href="#" class="button btn-primary wa-cta" data-name="${mentor.name}" data-service="${mentor.subject} Mentoring" data-price="${mentor.price}" style="display:block; text-align:center; text-decoration:none; padding:12px 32px; font-weight:700; border-radius:12px; font-size:1rem;">Book Session</a>
             </div>
           </div>
         </div>
@@ -108,7 +108,7 @@
           <span class="tag">${item.size}</span>
         </div>
         <p>${item.seller}</p>
-        <button class="button button-secondary" data-book-item="${index}" style="width:100%; margin-top:12px;">View details</button>
+        <a href="#" class="button button-secondary wa-cta" data-name="${item.seller}" data-service="${item.name}" data-price="${item.buyPrice ? 'Buy Rs '+item.buyPrice : 'Rent Rs '+item.rentPrice}" style="display:block; text-align:center; text-decoration:none; width:100%; margin-top:12px;">Contact Seller</a>
       </article>
     `;
   }
@@ -581,3 +581,47 @@ window.toggleThemePanel = function() {
 
 const savedLocalTheme = localStorage.getItem('kk-theme') || 'dark-cold';
 setTheme(savedLocalTheme);
+
+
+  // WA.ME GENERATOR
+  function buildWALink(name, service, price) {
+    const msg = encodeURIComponent(
+      `Hi ${name}! I found you on Kalaa Kart.\n` +
+      `I'm interested in: ${service}\n` +
+      `Quoted price: ${price}\n` +
+      `Can we connect?`
+    );
+    return `https://wa.me/919999999999?text=${msg}`;
+  }
+
+  function initWACtas() {
+    document.querySelectorAll('.wa-cta').forEach(btn => {
+      let card = btn.closest('.profile-card, .mentor-card, .market-card, .showcase-card') || btn;
+      let name = card.getAttribute('data-name') || btn.getAttribute('data-name') || 'Creator';
+      let service = card.getAttribute('data-service') || btn.getAttribute('data-service') || 'Your Service';
+      let price = card.getAttribute('data-price') || btn.getAttribute('data-price') || 'Discussed price';
+      
+      if (btn.tagName.toLowerCase() === 'a') {
+        btn.href = buildWALink(name, service, price);
+        btn.target = "_blank";
+        btn.rel = "noopener";
+      } else {
+        btn.addEventListener('click', (e) => {
+          e.preventDefault();
+          window.open(buildWALink(name, service, price), '_blank');
+        });
+      }
+    });
+  }
+  
+  // Call initWACtas periodically to catch dynamic renders or just hook into render functions
+  // Actually, we'll override the render functions to call initWACtas
+  const origRenderMentors = window.renderMentors;
+  const origRenderMarket = window.renderMarket;
+  const origRenderProfiles = window.renderProfiles;
+  
+  // Simple listener for dynamic changes
+  const observer = new MutationObserver((mutations) => {
+      initWACtas();
+  });
+  observer.observe(document.body, { childList: true, subtree: true });
