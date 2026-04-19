@@ -1,10 +1,15 @@
 window.campusCircleData = {
   featuredProfiles: [
     {
+      id: "gauri",
       name: "Gauri Gandre",
       title: "Paint & Drawing Artist",
-      image: "assets/images/avatars/gauri.svg",
+      image: "assets/images/profiles/gauriprofilepicture.jpeg",
       price: "Phone cover art from Rs 249",
+      email: "gauri.gandre@kalaakart.in",
+      location: "Arts corner, main campus",
+      responseTime: "Usually replies in 2 hours",
+      priceRange: { min: 249, max: 899, defaultValue: 449, step: 50 },
       rating: "4.9",
       reviews: 36,
       works: 42,
@@ -19,10 +24,15 @@ window.campusCircleData = {
       note: "Popular for custom painted accessories, devotional art, and detailed portrait sketches."
     },
     {
+      id: "aditi",
       name: "Aditi",
       title: "Knitting & Handmade Wool Crafts",
       image: "assets/images/avatars/aditi.svg",
       price: "Handmade gifts from Rs 199",
+      email: "aditi.crafts@kalaakart.in",
+      location: "Hostel craft club",
+      responseTime: "Usually replies by evening",
+      priceRange: { min: 199, max: 799, defaultValue: 349, step: 50 },
       rating: "4.8",
       reviews: 27,
       works: 34,
@@ -37,10 +47,15 @@ window.campusCircleData = {
       note: "Best suited for handmade charms, crochet flowers, bows, and small custom gift pieces."
     },
     {
+      id: "pratiksha",
       name: "Pratiksha",
       title: "Resin Artist & Keychain Maker",
       image: "assets/images/avatars/rutuja.svg",
       price: "Custom resin art from Rs 199",
+      email: "pratiksha.resin@kalaakart.in",
+      location: "Design studio table",
+      responseTime: "Usually replies in 3 hours",
+      priceRange: { min: 199, max: 999, defaultValue: 399, step: 50 },
       rating: "4.9",
       reviews: 31,
       works: 39,
@@ -55,10 +70,15 @@ window.campusCircleData = {
       note: "Strong choice for personalized keychains, resin keepsakes, and customized letter gifts."
     },
     {
+      id: "sanika",
       name: "Sanika",
       title: "Mandala & Pen Art Illustrator",
       image: "assets/images/avatars/neha.svg",
       price: "Pen art from Rs 179",
+      email: "sanika.illustrates@kalaakart.in",
+      location: "Library drawing zone",
+      responseTime: "Usually replies in 1 day",
+      priceRange: { min: 179, max: 1199, defaultValue: 499, step: 50 },
       rating: "4.8",
       reviews: 22,
       works: 33,
@@ -71,6 +91,52 @@ window.campusCircleData = {
       ],
       review: "\"Her line work is very precise and the final drawing looks elegant and professional.\"",
       note: "Ideal for mandala drawings, pen art commissions, devotional designs, and decorative custom sketches."
+    },
+    {
+      id: "vishv",
+      name: "Vishv Chavan",
+      title: "Poetry & Shayari Writer",
+      image: "assets/images/profiles/vishvprofilepicture.jpeg",
+      price: "Custom shayari from Rs 149",
+      email: "vishv.words@kalaakart.in",
+      location: "Literature club desk",
+      responseTime: "Usually replies in 4 hours",
+      priceRange: { min: 149, max: 699, defaultValue: 299, step: 50 },
+      rating: "4.7",
+      reviews: 24,
+      works: 43,
+      bio: "Vishv writes personal poems and shayari for birthdays, farewells, crush notes, and special occasions. His writing style is emotional, simple, and memorable.",
+      hobbies: ["Poetry", "Shayari", "Letter writing", "Open mic"],
+      gallery: [
+        { title: "Personalized Shayari Note", src: "assets/images/works/vishv-work.svg" },
+        { title: "Farewell Poem Card", src: "assets/images/works/vishv-work-2.svg" },
+        { title: "Romantic Shayari Letter", src: "assets/images/works/vishv-work-3.svg" }
+      ],
+      review: "\"He wrote a farewell shayari for my friend and everyone loved it.\"",
+      note: "Strong choice for personalized lines, event scripts, dedication notes, and emotional message writing."
+    },
+    {
+      id: "samyak",
+      name: "Samyak Misal",
+      title: "Video Editor & Portrait Photographer",
+      image: "assets/images/profiles/samyakprofilepicture.jpeg",
+      price: "Premium edits from Rs 699",
+      email: "samyak.media@kalaakart.in",
+      location: "Media lab, second floor",
+      responseTime: "Usually replies in 1 hour",
+      priceRange: { min: 699, max: 2499, defaultValue: 1199, step: 100 },
+      rating: "5.0",
+      reviews: 41,
+      works: 72,
+      bio: "Samyak edits polished personalized videos with sharp transitions, music sync, and clean storytelling. He also clicks standout portrait photos for profiles, events, and memories.",
+      hobbies: ["Video editing", "Photography", "Portrait shoots", "Reels"],
+      gallery: [
+        { title: "Street Moment Video Frame", src: "assets/images/real-works/samyak_work_1.jpeg" },
+        { title: "Personal Edit Still", src: "assets/images/real-works/samyak_work_2.jpeg" },
+        { title: "Cinematic Portrait Capture", src: "assets/images/real-works/samyak_work3.jpeg" }
+      ],
+      review: "\"The birthday edit looked professional and he delivered faster than expected.\"",
+      note: "Ideal for birthday edits, college event recap videos, cinematic portraits, and social media packages."
     }
   ],
   extraProfiles: [],
