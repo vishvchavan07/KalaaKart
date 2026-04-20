@@ -39,9 +39,9 @@ window.campusCircleData = {
       bio: "Vishv writes personal poems and shayari for birthdays, farewells, crush notes, and special occasions. His writing style is emotional, simple, and memorable.",
       hobbies: ["Poetry", "Shayari", "Letter writing", "Open mic"],
       gallery: [
-        { title: "Personalized Shayari Note", src: "assets/images/works/vishv-work.svg" },
-        { title: "Farewell Poem Card", src: "assets/images/works/vishv-work-2.svg" },
-        { title: "Romantic Shayari Letter", src: "assets/images/works/vishv-work-3.svg" }
+        { title: "Personalized Shayari Note", src: "assets/images/works/vishv_work1.jpeg" },
+        { title: "Farewell Poem Card", src: "assets/images/works/vishv_work2.jpeg" },
+        { title: "Romantic Shayari Letter", src: "assets/images/works/vishv_work3.jpeg" }
       ],
       review: "\"He wrote a farewell shayari for my friend and everyone loved it.\"",
       note: "Strong choice for personalized lines, event scripts, dedication notes, and emotional message writing."
