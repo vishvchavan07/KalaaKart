@@ -81,7 +81,7 @@ body {
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="assets/css/styles.css">
+  <link rel="stylesheet" href="assets/css/styles.css?v=3">
 </head>
 <body data-page="mentors">
   <div id="cursor-dot"></div>
@@ -97,6 +97,8 @@ body {
         <a href="profiles.html">Profiles</a>
         <a href="mentor-booking.html">Mentor Booking</a>
         <a href="marketplace.html">Old Clothes</a>
+        <a href="sell-item.html" class="nav-btn-pill btn-outline">Sell / Rent Clothing</a>
+        <a href="create-profile.html" class="nav-btn-pill btn-solid">Create Your Profile</a>
     </div>
     <button class="nav-hamburger" id="navHamburger" aria-label="Toggle menu">☰</button>
   </header>
@@ -106,6 +108,8 @@ body {
     <a href="profiles.html">Profiles</a>
     <a href="mentor-booking.html">Mentor Booking</a>
     <a href="marketplace.html">Old Clothes</a>
+    <a href="sell-item.html" style="color:var(--accent);">Sell / Rent Clothing</a>
+    <a href="create-profile.html" style="color:var(--accent);font-weight:700;">Create Your Profile</a>
   </nav>
 
 
@@ -122,8 +126,8 @@ body {
     </section>
 
     <!-- FILTER BAR -->
-    <section class="container filter-section">
-      <div class="filter-controls" id="mentorFilterBar">
+    <section class="container filter-section" style="display:flex; flex-direction:column; gap:16px; align-items:center;">
+      <div class="filter-controls" id="mentorFilterBar" style="justify-content:center;">
         <button class="filter-pill active" data-filter="all">All Subjects</button>
         <button class="filter-pill" data-filter="Physics">Physics</button>
         <button class="filter-pill" data-filter="Mathematics">Mathematics</button>

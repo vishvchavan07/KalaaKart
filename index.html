@@ -101,7 +101,7 @@ body {
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="assets/css/styles.css">
+  <link rel="stylesheet" href="assets/css/styles.css?v=3">
 </head>
 <body data-page="home">
 <div id="cursor-dot"></div>
@@ -119,6 +119,8 @@ body {
         <a href="profiles.html">Profiles</a>
         <a href="mentor-booking.html">Mentor Booking</a>
         <a href="marketplace.html">Old Clothes</a>
+        <a href="sell-item.html" class="nav-btn-pill btn-outline">Sell / Rent Clothing</a>
+        <a href="create-profile.html" class="nav-btn-pill btn-solid">Create Your Profile</a>
     </div>
     <button class="nav-hamburger" id="navHamburger" aria-label="Toggle menu">☰</button>
   </header>
@@ -128,6 +130,8 @@ body {
     <a href="profiles.html">Profiles</a>
     <a href="mentor-booking.html">Mentor Booking</a>
     <a href="marketplace.html">Old Clothes</a>
+    <a href="sell-item.html" style="color:var(--accent);">Sell / Rent Clothing</a>
+    <a href="create-profile.html" style="color:var(--accent);font-weight:700;">Create Your Profile</a>
   </nav>
 
   <main>
@@ -247,6 +251,18 @@ body {
       </div>
     </section>
 
+    <div class="container skill-spotlight" style="background:var(--surface); border:1px solid var(--border); border-radius:20px; padding:24px 32px; display:flex; align-items:center; justify-content:space-between; margin-bottom:32px;">
+      <div>
+        <p class="showcase-overline" style="margin-bottom:8px; display:block;">✦ CREATOR SPOTLIGHT</p>
+        <div class="spotlight-text-anim" style="transition:opacity 0.3s ease;">
+          <h3 class="spotlight-name" style="margin:0; font-size:1.8rem; font-weight:800; letter-spacing:-0.02em;">Gauri Gandre</h3>
+          <p class="spotlight-title" style="margin:4px 0 12px; font-size:1.1rem; color:var(--text-secondary);">Paint & Drawing Artist</p>
+          <span class="spotlight-price tag" style="background:var(--accent); color:#fff; border:none;">From ₹249</span>
+        </div>
+      </div>
+      <img class="spotlight-image" src="assets/images/profiles/gauriprofilepicture.jpeg" alt="Spotlight creator" style="width:100px; height:100px; border-radius:50%; object-fit:cover; border:3px solid var(--accent); padding:3px; background:var(--card-bg); transition:opacity 0.3s ease; box-shadow:var(--shadow);">
+    </div>
+
     <section class="container section section-dark">
       <div class="section-heading inline-heading">
         <div>
@@ -256,6 +272,7 @@ body {
         <a class="text-link" href="profiles.html">See all profiles</a>
       </div>
       <div id="featuredProfiles" class="card-grid"></div>
+
     </section>
 
     <section class="container section showcase-section section-dark">
@@ -385,15 +402,7 @@ function setTheme(t) {
 }
 (function(){ setTheme(localStorage.getItem('kk-theme') || 'dark-cold'); })();
 
-const dot = document.getElementById('cursor-dot');
-const ring = document.getElementById('cursor-ring');
-let rx=0,ry=0,dx=0,dy=0;
-document.addEventListener('mousemove', e => { dx=e.clientX; dy=e.clientY; dot.style.left=dx+'px'; dot.style.top=dy+'px'; });
-(function loop(){ rx+=(dx-rx)*0.12; ry+=(dy-ry)*0.12; ring.style.left=rx+'px'; ring.style.top=ry+'px'; requestAnimationFrame(loop); })();
-document.querySelectorAll('a,button,.profile-card,.card').forEach(el=>{
-  el.addEventListener('mouseenter',()=>{ ring.style.width='52px'; ring.style.height='52px'; ring.style.opacity='1'; });
-  el.addEventListener('mouseleave',()=>{ ring.style.width='36px'; ring.style.height='36px'; ring.style.opacity='0.65'; });
-});
+
 /* RESPONSIVE FIX: Hamburger menu toggle */
 (function() {
   const hamburger = document.getElementById('navHamburger');

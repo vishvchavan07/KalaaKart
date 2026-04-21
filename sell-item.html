@@ -1,0 +1,653 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark-cold">
+<head>
+    <script>
+    (function() {
+      const t = localStorage.getItem('kk-theme') || 'dark-cold';
+      document.documentElement.setAttribute('data-theme', t);
+    })();
+  </script>
+  <style>
+:root, html[data-theme="dark-cold"] {
+  --bg: #0D0F1A; --surface: #13162A; --nav-bg: rgba(13,15,26,0.85);
+  --card-bg: #181C35; --card-top-bg: #1E2340;
+  --card-top-text: #E8EAFF; --card-top-muted: #8890C4;
+  --text-primary: #E8EAFF; --text-secondary: #9AA0CC;
+  --accent: #7C6EF5; --border: rgba(124,110,245,0.18);
+  --tag-bg: rgba(124,110,245,0.15); --tag-text: #A99BFF;
+  --cursor-color: #7C6EF5; --shadow: 0 4px 24px rgba(124,110,245,0.15);
+}
+html[data-theme="dark-warm"] {
+  --bg: #120A05; --surface: #1C1108; --nav-bg: rgba(18,10,5,0.88);
+  --card-bg: #231508; --card-top-bg: #3B1F0A;
+  --card-top-text: #FFE8CC; --card-top-muted: #C49A6A;
+  --text-primary: #FFE8CC; --text-secondary: #BF8D5A;
+  --accent: #E8832A; --border: rgba(232,131,42,0.20);
+  --tag-bg: rgba(232,131,42,0.14); --tag-text: #FFBA78;
+  --cursor-color: #E8832A; --shadow: 0 4px 24px rgba(232,131,42,0.18);
+}
+html[data-theme="light-pro"] {
+  --bg: #F7F8FC; --surface: #FFFFFF; --nav-bg: rgba(247,248,252,0.92);
+  --card-bg: #FFFFFF; --card-top-bg: #1A1A2E;
+  --card-top-text: #F0F0FF; --card-top-muted: #9090BB;
+  --text-primary: #1A1A2E; --text-secondary: #555577;
+  --accent: #5046E5; --border: rgba(80,70,229,0.14);
+  --tag-bg: rgba(80,70,229,0.08); --tag-text: #5046E5;
+  --cursor-color: #5046E5; --shadow: 0 4px 20px rgba(0,0,0,0.08);
+}
+
+body {
+  background: var(--bg);
+  color: var(--text-primary);
+  cursor: none;
+  transition: background 0.35s, color 0.35s;
+}
+
+#cursor-dot {
+  position: fixed; width: 8px; height: 8px;
+  background: var(--cursor-color); border-radius: 50%;
+  pointer-events: none; z-index: 99999;
+  transform: translate(-50%, -50%);
+  transition: background 0.3s;
+}
+#cursor-ring {
+  position: fixed; width: 36px; height: 36px;
+  border: 2px solid var(--cursor-color); border-radius: 50%;
+  pointer-events: none; z-index: 99998;
+  transform: translate(-50%, -50%);
+  opacity: 0.65; transition: width 0.2s, height 0.2s, border-color 0.3s;
+}
+
+#theme-switcher { position:fixed; bottom:24px; left:24px; z-index:9000; }
+.theme-toggle-btn { background:var(--accent); color:#fff; border:none; border-radius:50px; padding:10px 18px; font-size:14px; font-weight:600; cursor:none; box-shadow:var(--shadow); }
+.theme-panel { display:none; flex-direction:column; gap:8px; background:var(--surface); border:1px solid var(--border); border-radius:14px; padding:12px; margin-bottom:10px; box-shadow:var(--shadow); }
+.theme-panel.open { display:flex; }
+.theme-opt { display:flex; align-items:center; gap:10px; background:none; border:1px solid transparent; border-radius:10px; padding:8px 12px; cursor:none; color:var(--text-primary); font-size:14px; font-weight:500; transition:border-color 0.2s, background 0.2s; }
+.theme-opt:hover, .theme-opt.active { border-color:var(--accent); background:var(--tag-bg); }
+.theme-opt.active::after { content:'✓'; margin-left:auto; color:var(--accent); font-weight:700; }
+.swatch { width:26px; height:26px; border-radius:7px; display:inline-block; flex-shrink:0; }
+
+.form-container {
+    max-width: 800px;
+    margin: 40px auto;
+    padding: 30px;
+    background: var(--surface);
+    border-radius: 20px;
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow);
+}
+.form-container h2 {
+    margin-top: 0;
+    margin-bottom: 20px;
+    font-size: 2rem;
+}
+.form-group {
+    margin-bottom: 20px;
+}
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+.form-group label .optional {
+    color: var(--text-secondary);
+    font-size: 0.85rem;
+    font-weight: normal;
+}
+.form-group input[type="text"],
+.form-group input[type="email"],
+.form-group input[type="tel"],
+.form-group input[type="number"],
+.form-group select,
+.form-group textarea {
+    width: 100%;
+    padding: 12px;
+    border-radius: 10px;
+    border: 1px solid var(--border);
+    background: var(--card-bg);
+    color: var(--text-primary);
+    font-family: inherit;
+    outline: none;
+    transition: border-color 0.3s;
+    box-sizing: border-box;
+}
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    border-color: var(--accent);
+}
+.form-row {
+    display: flex;
+    gap: 20px;
+}
+.form-row .form-group {
+    flex: 1;
+}
+
+/* Radio pills */
+.pill-radio-group {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+.pill-radio-group label {
+    display: inline-flex;
+    align-items: center;
+    background: var(--card-bg);
+    color: var(--text-secondary);
+    padding: 8px 16px;
+    border-radius: 50px;
+    cursor: pointer;
+    font-weight: 500;
+    border: 1px solid var(--border);
+    transition: all 0.2s;
+    margin-bottom: 0;
+}
+.pill-radio-group input[type="radio"] {
+    display: none;
+}
+.pill-radio-group input[type="radio"]:checked + span {
+    color: var(--tag-text);
+}
+.pill-radio-group label:has(input:checked) {
+    background: var(--tag-bg);
+    border-color: var(--accent);
+}
+
+.gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+}
+.img-preview-box {
+    width: 100%;
+    height: 180px;
+    background: var(--card-bg);
+    border: 1px dashed var(--border);
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    position: relative;
+    cursor: pointer;
+    color: var(--text-secondary);
+    text-align: center;
+    padding: 10px;
+    box-sizing: border-box;
+}
+.img-preview-box input[type="file"] {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    cursor: pointer;
+}
+.img-preview-box img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 1;
+    display: none;
+}
+.img-preview-box.has-img img {
+    display: block;
+}
+
+.submit-btn {
+    width: 100%;
+    padding: 15px;
+    background: var(--accent);
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    font-size: 1.1rem;
+    font-weight: 700;
+    cursor: pointer;
+    margin-top: 20px;
+    transition: transform 0.2s;
+}
+.submit-btn:hover {
+    transform: translateY(-2px);
+}
+.char-counter {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    text-align: right;
+    margin-top: 5px;
+}
+
+.toast {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: var(--accent);
+    color: #fff;
+    padding: 15px 25px;
+    border-radius: 10px;
+    box-shadow: var(--shadow);
+    transform: translateY(100px);
+    opacity: 0;
+    transition: all 0.3s;
+    z-index: 10000;
+}
+.toast.show {
+    transform: translateY(0);
+    opacity: 1;
+}
+
+.error-msg {
+    color: #ff4d4d;
+    font-size: 0.85rem;
+    margin-top: 5px;
+    display: none;
+}
+.has-error input, .has-error textarea, .has-error select {
+    border-color: #ff4d4d !important;
+}
+.has-error .error-msg {
+    display: block;
+}
+
+#priceBuyContainer, #priceRentContainer {
+    display: none;
+}
+
+@media(max-width: 600px) {
+    .form-row { flex-direction: column; gap: 0; }
+    .gallery-grid { grid-template-columns: 1fr; }
+}
+</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sell / Rent Item — Kalaa Kart</title>
+  <link rel="icon" type="image/jpeg" href="assets/images/main_logo_final.jpeg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/styles.css?v=3">
+</head>
+<body data-page="sell-item">
+  <div id="cursor-dot"></div>
+  <div id="cursor-ring"></div>
+
+  <header class="navbar">
+    <a class="nav-brand" href="index.html">
+        <img src="assets/images/main_logo_final.jpeg" alt="Kalaa Kart logo">
+        <span>Kalaa Kart</span>
+    </a>
+    <div class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="profiles.html">Profiles</a>
+        <a href="mentor-booking.html">Mentor Booking</a>
+        <a href="marketplace.html">Old Clothes</a>
+        <a href="sell-item.html" class="nav-btn-pill btn-outline">Sell / Rent Clothing</a>
+        <a href="create-profile.html" class="nav-btn-pill btn-solid">Create Your Profile</a>
+    </div>
+    <button class="nav-hamburger" id="navHamburger" aria-label="Toggle menu">☰</button>
+  </header>
+  <nav class="nav-mobile-dropdown" id="navMobileDropdown">
+    <a href="index.html">Home</a>
+    <a href="profiles.html">Profiles</a>
+    <a href="mentor-booking.html">Mentor Booking</a>
+    <a href="marketplace.html">Old Clothes</a>
+    <a href="sell-item.html" style="color:var(--accent);">Sell / Rent Clothing</a>
+    <a href="create-profile.html" style="color:var(--accent);font-weight:700;">Create Your Profile</a>
+  </nav>
+
+  <main>
+    <section class="page-hero">
+      <div class="container hero-frame">
+        <h1 class="hero-headline">List an Item</h1>
+        <p class="hero-subtext">Sell or rent your college wear, gear, and essentials.</p>
+      </div>
+    </section>
+
+    <div class="container form-container">
+        <form id="sellItemForm">
+            <div class="form-group required-group">
+                <label>Item Name</label>
+                <input type="text" id="itemName" placeholder="E.g. College Blazer" required>
+                <div class="error-msg">Item Name is required</div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group required-group">
+                    <label>Category</label>
+                    <select id="category" required>
+                        <option value="">Select...</option>
+                        <option value="formals">Formals</option>
+                        <option value="lab">Lab Gear</option>
+                        <option value="fest">Fest Wear</option>
+                    </select>
+                    <div class="error-msg">Category is required</div>
+                </div>
+                <div class="form-group required-group">
+                    <label>Size</label>
+                    <select id="size" required>
+                        <option value="">Select...</option>
+                        <option value="XS">XS</option>
+                        <option value="S">S</option>
+                        <option value="M">M</option>
+                        <option value="L">L</option>
+                        <option value="XL">XL</option>
+                        <option value="XXL">XXL</option>
+                        <option value="NA">Not Applicable</option>
+                    </select>
+                    <div class="error-msg">Size is required</div>
+                </div>
+            </div>
+
+            <div class="form-group required-group">
+                <label>Condition</label>
+                <select id="condition" required>
+                    <option value="">Select...</option>
+                    <option value="Like New">Like New</option>
+                    <option value="Good">Good</option>
+                    <option value="Fair">Fair</option>
+                </select>
+                <div class="error-msg">Condition is required</div>
+            </div>
+
+            <div class="form-group required-group">
+                <label>Description</label>
+                <textarea id="description" rows="3" maxlength="200" placeholder="Describe the item, how old it is, etc." required></textarea>
+                <div class="char-counter"><span id="descCount">0</span> / 200</div>
+                <div class="error-msg">Description is required</div>
+            </div>
+
+            <div class="form-group">
+                <label>Listing Type</label>
+                <div class="pill-radio-group">
+                    <label><input type="radio" name="listingType" value="Sell Only"><span>Sell Only</span></label>
+                    <label><input type="radio" name="listingType" value="Rent Only"><span>Rent Only</span></label>
+                    <label><input type="radio" name="listingType" value="Both"><span>Both</span></label>
+                </div>
+                <div class="error-msg" id="listingTypeError">Select a listing type</div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group" id="priceBuyContainer">
+                    <label>Buy Price (₹)</label>
+                    <input type="number" id="priceBuy" placeholder="E.g. 500" min="0">
+                    <div class="error-msg">Enter a buy price</div>
+                </div>
+                <div class="form-group" id="priceRentContainer">
+                    <label>Rent Price / Day (₹)</label>
+                    <input type="number" id="priceRent" placeholder="E.g. 100" min="0">
+                    <div class="error-msg">Enter a rent price</div>
+                </div>
+            </div>
+            
+            <div class="form-group" style="margin-top: -5px; margin-bottom: 25px;">
+                <label style="display:inline-flex;align-items:center;cursor:pointer;font-weight:normal;">
+                    <input type="checkbox" id="negotiable" style="width:auto;margin-right:8px;"> Negotiable
+                </label>
+            </div>
+
+            <div class="form-group">
+                <label>Item Photos</label>
+                <div class="gallery-grid">
+                    <div class="img-preview-box">
+                        <span>Main Photo<br><small>(Required)</small></span>
+                        <input type="file" class="gallery-upload" id="mainPhotoInput" accept="image/*">
+                        <img src="" alt="Main Image Preview">
+                    </div>
+                    <div class="img-preview-box">
+                        <span>Second Angle<br><small>(Optional)</small></span>
+                        <input type="file" class="gallery-upload" accept="image/*">
+                        <img src="" alt="Second Image Preview">
+                    </div>
+                </div>
+                <div class="error-msg" id="photoError">Main photo is required</div>
+            </div>
+
+            <hr style="border:0;border-top:1px solid var(--border);margin:30px 0;">
+
+            <div class="form-row">
+                <div class="form-group required-group">
+                    <label>Seller Name</label>
+                    <input type="text" id="sellerName" placeholder="E.g. Arjun Sharma" required>
+                    <div class="error-msg">Seller Name is required</div>
+                </div>
+                <div class="form-group required-group">
+                    <label>Year</label>
+                    <select id="sellerYear" required>
+                        <option value="">Select Year...</option>
+                        <option value="First Year">First Year</option>
+                        <option value="Second Year">Second Year</option>
+                        <option value="Third Year">Third Year</option>
+                        <option value="Final Year">Final Year</option>
+                    </select>
+                    <div class="error-msg">Year is required</div>
+                </div>
+            </div>
+
+            <div class="form-group required-group">
+                <label>Contact Email</label>
+                <input type="email" id="contactEmail" placeholder="E.g. arjun@campus.edu" required>
+                <div class="error-msg">Email is required</div>
+            </div>
+
+            <button type="submit" class="submit-btn" id="submitBtn">List Item</button>
+        </form>
+    </div>
+  </main>
+
+  <footer class="site-footer-premium">
+    <div class="footer-bottom" style="border-top:none; padding-top:20px;">
+      <p style="text-align:center;">© 2025 Kalaa Kart. Made with ♥ for campus communities.</p>
+    </div>
+  </footer>
+
+  <div id="theme-switcher">
+    <button class="theme-toggle-btn" onclick="document.getElementById('theme-panel').classList.toggle('open')">🎨 Theme</button>
+    <div class="theme-panel" id="theme-panel">
+      <button class="theme-opt" data-theme="dark-cold" onclick="setTheme('dark-cold')"><span class="swatch" style="background:linear-gradient(135deg,#0D0F1A,#7C6EF5)"></span>Dark Cold</button>
+      <button class="theme-opt" data-theme="dark-warm" onclick="setTheme('dark-warm')"><span class="swatch" style="background:linear-gradient(135deg,#120A05,#E8832A)"></span>Dark Warm</button>
+      <button class="theme-opt" data-theme="light-pro" onclick="setTheme('light-pro')"><span class="swatch" style="background:linear-gradient(135deg,#F7F8FC,#5046E5)"></span>Light Pro</button>
+    </div>
+  </div>
+
+  <div class="toast" id="successToast">Item listed! Redirecting...</div>
+  <button id="backToTop" aria-label="Back to top">↑</button>
+
+<script>
+function setTheme(t) {
+  document.documentElement.setAttribute('data-theme', t);
+  localStorage.setItem('kk-theme', t);
+  document.querySelectorAll('.theme-opt').forEach(b => b.classList.toggle('active', b.dataset.theme === t));
+}
+(function(){ setTheme(localStorage.getItem('kk-theme') || 'dark-cold'); })();
+
+
+
+(function() {
+  const hamburger = document.getElementById('navHamburger');
+  const mobileNav = document.getElementById('navMobileDropdown');
+  if (hamburger && mobileNav) {
+    hamburger.addEventListener('click', function() {
+      mobileNav.classList.toggle('open');
+      hamburger.textContent = mobileNav.classList.contains('open') ? '✕' : '☰';
+    });
+    document.addEventListener('click', function(e) {
+      if (!hamburger.contains(e.target) && !mobileNav.contains(e.target)) {
+        mobileNav.classList.remove('open');
+        hamburger.textContent = '☰';
+      }
+    });
+  }
+
+  const backToTop = document.getElementById('backToTop');
+  if (backToTop) {
+    window.addEventListener('scroll', function() {
+      backToTop.style.opacity = window.scrollY > 300 ? '1' : '0';
+      backToTop.style.pointerEvents = window.scrollY > 300 ? 'auto' : 'none';
+    });
+    backToTop.addEventListener('click', function() {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  }
+})();
+
+// Character counters
+document.getElementById('description').addEventListener('input', function() {
+    document.getElementById('descCount').textContent = this.value.length;
+});
+
+// Listing type logic
+const radios = document.querySelectorAll('input[name="listingType"]');
+const buyC = document.getElementById('priceBuyContainer');
+const rentC = document.getElementById('priceRentContainer');
+
+radios.forEach(r => {
+    r.addEventListener('change', function() {
+        document.getElementById('listingTypeError').style.display = 'none';
+        const v = this.value;
+        if(v === 'Sell Only') {
+            buyC.style.display = 'block';
+            rentC.style.display = 'none';
+        } else if(v === 'Rent Only') {
+            buyC.style.display = 'none';
+            rentC.style.display = 'block';
+        } else {
+            buyC.style.display = 'block';
+            rentC.style.display = 'block';
+        }
+    });
+});
+
+// Helpers to encode image
+function encodeImageFileAsURL(element, callback) {
+  var file = element.files[0];
+  if (!file) return callback(null);
+  var reader = new FileReader();
+  reader.onloadend = function() {
+    callback(reader.result);
+  }
+  reader.readAsDataURL(file);
+}
+
+// Gallery photo previews
+document.querySelectorAll('.gallery-upload').forEach(el => {
+    el.addEventListener('change', function() {
+        let box = this.parentElement;
+        let img = box.querySelector('img');
+        encodeImageFileAsURL(this, function(res) {
+            if(res){
+                img.src = res;
+                box.classList.add('has-img');
+                document.getElementById('photoError').style.display = 'none';
+            } else {
+                box.classList.remove('has-img');
+            }
+        });
+    });
+});
+
+// Form Submit
+document.getElementById('sellItemForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    let isValid = true;
+    
+    // Clear simple errors
+    document.querySelectorAll('.has-error').forEach(el => el.classList.remove('has-error'));
+    
+    // Validate required fields
+    ['itemName', 'category', 'size', 'condition', 'description', 'sellerName', 'sellerYear', 'contactEmail'].forEach(id => {
+        let el = document.getElementById(id);
+        if(!el.value.trim()) {
+            el.parentElement.classList.add('has-error');
+            isValid = false;
+        }
+    });
+
+    // Validate Listing Type
+    let listingType = document.querySelector('input[name="listingType"]:checked');
+    if(!listingType) {
+        document.getElementById('listingTypeError').style.display = 'block';
+        isValid = false;
+    } else {
+        // Validate respective prices
+        if (['Sell Only', 'Both'].includes(listingType.value)) {
+            let pb = document.getElementById('priceBuy');
+            if(!pb.value) { pb.parentElement.classList.add('has-error'); isValid = false; }
+        }
+        if (['Rent Only', 'Both'].includes(listingType.value)) {
+            let pr = document.getElementById('priceRent');
+            if(!pr.value) { pr.parentElement.classList.add('has-error'); isValid = false; }
+        }
+    }
+
+    // Validate Main Photo
+    let mainImg = document.getElementById('mainPhotoInput').parentElement.querySelector('img');
+    if(!mainImg.src || !mainImg.src.startsWith('data:')) {
+        document.getElementById('photoError').style.display = 'block';
+        isValid = false;
+    }
+
+    if(!isValid) {
+        let el = document.querySelector('.has-error') || document.getElementById('listingTypeError') || document.getElementById('photoError');
+        if (el) window.scrollTo({ top: el.offsetTop - 100, behavior: 'smooth' });
+        return;
+    }
+
+    let bPrice = document.getElementById('priceBuy').value;
+    let rPrice = document.getElementById('priceRent').value;
+    
+    let priceStr = "";
+    let altStr = "";
+    
+    if (listingType.value === 'Sell Only') {
+        priceStr = "Buy at ₹" + bPrice;
+    } else if (listingType.value === 'Rent Only') {
+        priceStr = "Rent at ₹" + rPrice + " per day";
+    } else { // Both
+        priceStr = "Buy at ₹" + bPrice;
+        altStr = "Rent at ₹" + rPrice + " per day";
+    }
+
+    let itemData = {
+        name: document.getElementById('itemName').value.trim(),
+        image: mainImg.src,
+        description: document.getElementById('description').value.trim(),
+        price: priceStr,
+        alternate: altStr,
+        seller: document.getElementById('sellerName').value.trim(),
+        sellerYear: document.getElementById('sellerYear').value,
+        sellerContact: document.getElementById('contactEmail').value.trim(),
+        size: document.getElementById('size').value,
+        condition: document.getElementById('condition').value,
+        negotiable: document.getElementById('negotiable').checked,
+        listingType: listingType.value,
+        category: document.getElementById('category').value,
+        type: "apparel",
+        buyPrice: bPrice ? Number(bPrice) : null,
+        rentPrice: rPrice ? Number(rPrice) : null,
+        isUserListing: true
+    };
+
+    // Save to local storage
+    let existingListings = [];
+    try {
+        existingListings = JSON.parse(localStorage.getItem('kk_user_listings')) || [];
+    } catch(err) {
+        existingListings = [];
+    }
+    existingListings.push(itemData);
+    localStorage.setItem('kk_user_listings', JSON.stringify(existingListings));
+
+    // Show toast
+    let toast = document.getElementById('successToast');
+    toast.classList.add('show');
+    
+    setTimeout(() => {
+        window.location.href = 'marketplace.html';
+    }, 1500);
+});
+</script>
+</body>
+</html>

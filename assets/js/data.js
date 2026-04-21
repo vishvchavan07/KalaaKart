@@ -148,6 +148,7 @@ window.campusCircleData = {
       price: "Rs 149 / session",
       rating: "4.9",
       freeOption: "Matches your syllabus",
+      availableDays: ["Mon","Wed","Fri"],
       image: "https://api.dicebear.com/7.x/thumbs/svg?seed=Aditya",
       description: "Cleared SPPU Physics with 9.2 CGPA — I'll help you do the same. Handles Doubt Solving, Exam Revision."
     },
@@ -158,6 +159,7 @@ window.campusCircleData = {
       price: "Rs 199 / hour",
       rating: "4.8",
       freeOption: "Free draft available",
+      availableDays: ["Tue","Thu","Sat"],
       image: "https://api.dicebear.com/7.x/thumbs/svg?seed=Riya",
       description: "Specializes in C++ and Data Structures. Will help you clear all lab practicals and assignments."
     },
@@ -168,6 +170,7 @@ window.campusCircleData = {
       price: "Rs 150 / session",
       rating: "5.0",
       freeOption: "First session free",
+      availableDays: ["Mon","Tue","Thu"],
       image: "https://api.dicebear.com/7.x/thumbs/svg?seed=Samyak",
       description: "Master of integration and differentiation. I provide step-by-step notes for all M1/M2 topics."
     },
@@ -178,6 +181,7 @@ window.campusCircleData = {
       price: "Rs 249 / session",
       rating: "4.7",
       freeOption: "Drafting sheets included",
+      availableDays: ["Wed","Fri","Sat"],
       image: "https://api.dicebear.com/7.x/thumbs/svg?seed=Pratiksha",
       description: "Struggling with projections? I'll help you master Engineering Graphics with easy shortcuts."
     },
@@ -188,6 +192,7 @@ window.campusCircleData = {
       price: "Rs 199 / session",
       rating: "4.9",
       freeOption: "Group discounts",
+      availableDays: ["Mon","Wed","Sat"],
       image: "https://api.dicebear.com/7.x/thumbs/svg?seed=Ishan",
       description: "Expert in M3 and Signal Processing. Simplified methods for complex university problems."
     },
@@ -198,6 +203,7 @@ window.campusCircleData = {
       price: "Free",
       rating: "4.6",
       freeOption: "Completely Free",
+      availableDays: ["Tue","Thu","Fri"],
       image: "https://api.dicebear.com/7.x/thumbs/svg?seed=Ananya",
       description: "Passionate about Basic Electronics. Helping juniors for free as part of the peer club."
     }

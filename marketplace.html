@@ -81,7 +81,7 @@ body {
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="assets/css/styles.css">
+  <link rel="stylesheet" href="assets/css/styles.css?v=3">
 </head>
 <body data-page="marketplace">
   <div id="cursor-dot"></div>
@@ -96,6 +96,8 @@ body {
         <a href="profiles.html">Profiles</a>
         <a href="mentor-booking.html">Mentor Booking</a>
         <a href="marketplace.html">Old Clothes</a>
+        <a href="sell-item.html" class="nav-btn-pill btn-outline">Sell / Rent Clothing</a>
+        <a href="create-profile.html" class="nav-btn-pill btn-solid">Create Your Profile</a>
     </div>
     <button class="nav-hamburger" id="navHamburger" aria-label="Toggle menu">☰</button>
   </header>
@@ -105,6 +107,8 @@ body {
     <a href="profiles.html">Profiles</a>
     <a href="mentor-booking.html">Mentor Booking</a>
     <a href="marketplace.html">Old Clothes</a>
+    <a href="sell-item.html" style="color:var(--accent);">Sell / Rent Clothing</a>
+    <a href="create-profile.html" style="color:var(--accent);font-weight:700;">Create Your Profile</a>
   </nav>
 
   <main>
@@ -116,8 +120,8 @@ body {
       </div>
     </section>
 
-    <section class="container filter-section">
-      <div class="filter-controls" id="categoryRow">
+    <section class="container filter-section" style="display:flex; flex-direction:column; gap:16px; align-items:center;">
+      <div class="filter-controls" id="categoryRow" style="justify-content:center; width:100%;">
         <button class="mkt-pill active" data-category="all">All Items</button>
         <button class="mkt-pill" data-category="formals">Formals</button>
         <button class="mkt-pill" data-category="lab">Lab Gear</button>
@@ -127,12 +131,13 @@ body {
         <label><input type="checkbox" id="buyToggle" class="active" checked> <span>Buy</span></label>
         <label><input type="checkbox" id="rentToggle" class="active" checked> <span>Rent</span></label>
       </div>
-      <div class="filter-toggle" style="margin-left: auto;">
+      <div class="filter-toggle" style="display: flex; gap: 15px; align-items: center; justify-content:center;">
         <select id="sortSelect">
           <option value="newest">Newest Listed</option>
           <option value="low">Price: Low to High</option>
           <option value="high">Price: High to Low</option>
         </select>
+        <a href="sell-item.html" style="background:var(--accent); color:#fff; border-radius:8px; padding:6px 16px; font-weight:700; font-size:0.9rem;" class="button">Sell / Rent Item</a>
       </div>
     </section>
 
