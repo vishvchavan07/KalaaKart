@@ -440,6 +440,23 @@
     new MutationObserver(initTilt).observe(document.body, { childList: true, subtree: true });
   });
 
+  // Global Hamburger Navigation
+  const burger = document.getElementById('navHamburger');
+  const mobileNav = document.getElementById('navMobileDropdown');
+  if (burger && mobileNav) {
+    burger.addEventListener('click', () => {
+      mobileNav.classList.toggle('active');
+      burger.textContent = mobileNav.classList.contains('active') ? '✕' : '☰';
+    });
+    // Close on link click
+    mobileNav.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        mobileNav.classList.remove('active');
+        burger.textContent = '☰';
+      });
+    });
+  }
+
   // Theme & Reset demo helper
   const footer = document.querySelector(".site-footer-premium");
   if(footer && (userProfilesCount > 0 || userListingsCount > 0)) {
