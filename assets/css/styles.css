@@ -5806,20 +5806,22 @@ body.page-exit {
 /* Physics-based Fall Down Animation */
 @keyframes gravityFall {
   0% {
-    transform: translate(-50%, -50%) translateY(0) rotate(0deg);
+    transform: translateY(0) rotate(0deg);
     opacity: 1;
   }
-  30% {
-    transform: translate(-50%, -50%) translateY(-20px) rotate(-2deg);
+  15% {
+    /* Slight anticipation hop */
+    transform: translateY(-20px) rotate(-2deg);
   }
   100% {
-    transform: translate(-50%, -50%) translateY(120vh) rotate(15deg);
-    opacity: 0.8;
+    /* Falling with gravity acceleration */
+    transform: translateY(100vh) rotate(15deg);
+    opacity: 0.5;
   }
 }
 
 .onboarding-card.fall-down {
-  animation: gravityFall 0.8s cubic-bezier(0.55, 0.055, 0.675, 0.19) forwards !important;
+  animation: gravityFall 0.9s cubic-bezier(0.5, 0.05, 1, 0.5) forwards !important;
   pointer-events: none;
 }
 
