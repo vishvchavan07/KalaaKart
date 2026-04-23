@@ -501,9 +501,35 @@ window.closeOnboarding = function() {
 
   document.getElementById("orderForm")?.addEventListener("submit", (e) => {
     e.preventDefault();
-    const sub = `Custom Order Request for ${currentProfile?.name}`;
-    const body = `Description: ${document.getElementById("orderDesc").value}\nDeadline: ${document.getElementById("orderDeadline").value}\nFrom: ${document.getElementById("orderName").value} (${document.getElementById("orderEmail").value})\nBudget: ${document.getElementById("orderBudget").value}`;
+    const creatorName = currentProfile?.name || "Creator";
+    const creatorTitle = currentProfile?.title || "Work";
+    const applicantName = document.getElementById("orderName").value;
+    const projectDesc = document.getElementById("orderDesc").value;
+    const budget = document.getElementById("orderBudget").value;
+    const deadline = document.getElementById("orderDeadline").value;
+
+    const sub = `Booking Request for ${creatorName} — KalaaKart`;
+    
+    const body = `Hi ${creatorName},
+
+I am interested in your ${creatorTitle}.
+
+Applicant Name: ${applicantName}
+I want to create: ${projectDesc}
+Budget: ${budget}
+Deadline: ${deadline}
+
+I am requesting a time to contact you regarding this. I am very interested in your work!
+
+Sent via KalaaKart Marketplace`;
+
+    // Direct mailto trigger
     window.location.href = `mailto:${currentProfile?.email}?subject=${encodeURIComponent(sub)}&body=${encodeURIComponent(body)}`;
+    
+    // Close the modals immediately
+    document.querySelector(".request-modal").classList.remove("is-open");
+    document.querySelector(".booking-slate").classList.remove("is-open");
+    document.body.classList.remove("lightbox-open");
   });
 
   // 6. ONBOARDING & CURSOR
