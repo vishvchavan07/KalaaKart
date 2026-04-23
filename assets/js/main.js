@@ -97,16 +97,16 @@ window.closeOnboarding = function() {
   const onboarding = document.getElementById('onboardingOverlay');
   if(!onboarding) return;
   const card = onboarding.querySelector('.onboarding-card');
-  if(card) card.classList.add('fall-down');
   
-  onboarding.style.opacity = '0';
-  onboarding.style.pointerEvents = 'none';
-  // localStorage.setItem('kk_onboarded', 'true'); // Removed to show on every reload
+  if(card) card.classList.add('fall-down');
+  onboarding.classList.add('fade-out');
+  
+  localStorage.setItem('kk_onboarded', 'true');
   
   setTimeout(() => {
     onboarding.remove();
     document.body.style.overflow = 'auto';
-  }, 700);
+  }, 1200); // Wait for animation to finish
 };
 
 (function () {
