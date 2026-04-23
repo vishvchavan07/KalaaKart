@@ -403,24 +403,6 @@ window.closeOnboarding = function() {
     </section>`;
   document.body.appendChild(bookingSlate);
 
-  const requestModal = document.createElement("div");
-  requestModal.className = "request-modal";
-  requestModal.innerHTML = `
-    <button class="request-backdrop"></button>
-    <div class="request-panel">
-      <button class="request-close">×</button>
-      <h2>Request Custom Order</h2>
-      <form id="orderForm" style="display:flex; flex-direction:column; gap:16px; margin-top:20px;">
-        <textarea id="orderDesc" placeholder="What do you need?" required style="min-height:100px; padding:12px; border-radius:12px; border:1px solid var(--border); background:var(--surface); color:var(--text-primary);"></textarea>
-        <input type="date" id="orderDeadline" required style="padding:12px; border-radius:12px; border:1px solid var(--border); background:var(--surface); color:var(--text-primary);">
-        <input type="text" id="orderName" placeholder="E.g. Rohan Gupta" required style="padding:12px; border-radius:12px; border:1px solid var(--border); background:var(--surface); color:var(--text-primary);">
-        <input type="email" id="orderEmail" placeholder="E.g. rohan@gmail.com" required style="padding:12px; border-radius:12px; border:1px solid var(--border); background:var(--surface); color:var(--text-primary);">
-        <input type="text" id="orderBudget" readonly style="padding:12px; border-radius:12px; border:1.5px solid var(--accent); background:var(--surface); color:var(--accent); font-weight:800;">
-        <button type="submit" class="button btn-primary" style="padding:16px;">Submit Request</button>
-      </form>
-    </div>`;
-  document.body.appendChild(requestModal);
-
   let currentProfile = null;
 
   function openBookingSlate(id) {
@@ -480,8 +462,25 @@ window.closeOnboarding = function() {
 
     const reqBtn = e.target.closest(".slate-request-btn");
     if(reqBtn) {
-      document.getElementById("orderBudget").value = bookingSlate.querySelector(".slider-value").textContent;
-      requestModal.classList.add("is-open");
+      const creatorName = currentProfile?.name || "Creator";
+      const budget = bookingSlate.querySelector(".slider-value").textContent;
+
+      const sub = `Project Interest: ${creatorName} — KalaaKart`;
+      
+      const body = `Hi ${creatorName},
+
+I absolutely love your work and I'm interested in purchasing your services! I found your profile on the KalaaKart student marketplace.
+
+My budget for this project is around ${budget}. 
+
+I would love to discuss the details and how we can collaborate. Looking forward to your response!
+
+Sent via KalaaKart Marketplace`;
+
+      window.location.href = `mailto:${currentProfile?.email}?subject=${encodeURIComponent(sub)}&body=${encodeURIComponent(body)}`;
+      
+      bookingSlate.classList.remove("is-open");
+      document.body.classList.remove("lightbox-open");
       return;
     }
 
@@ -496,40 +495,6 @@ window.closeOnboarding = function() {
 
     if(e.target.closest(".lightbox-close, .lightbox-backdrop")) { lightbox.classList.remove("is-open"); document.body.classList.remove("lightbox-open"); }
     if(e.target.closest(".slate-close, .slate-backdrop")) { bookingSlate.classList.remove("is-open"); document.body.classList.remove("lightbox-open"); }
-    if(e.target.closest(".request-close, .request-backdrop")) { requestModal.classList.remove("is-open"); }
-  });
-
-  document.getElementById("orderForm")?.addEventListener("submit", (e) => {
-    e.preventDefault();
-    const creatorName = currentProfile?.name || "Creator";
-    const creatorTitle = currentProfile?.title || "Work";
-    const applicantName = document.getElementById("orderName").value;
-    const projectDesc = document.getElementById("orderDesc").value;
-    const budget = document.getElementById("orderBudget").value;
-    const deadline = document.getElementById("orderDeadline").value;
-
-    const sub = `Booking Request for ${creatorName} — KalaaKart`;
-    
-    const body = `Hi ${creatorName},
-
-I am interested in your ${creatorTitle}.
-
-Applicant Name: ${applicantName}
-I want to create: ${projectDesc}
-Budget: ${budget}
-Deadline: ${deadline}
-
-I am requesting a time to contact you regarding this. I am very interested in your work!
-
-Sent via KalaaKart Marketplace`;
-
-    // Direct mailto trigger
-    window.location.href = `mailto:${currentProfile?.email}?subject=${encodeURIComponent(sub)}&body=${encodeURIComponent(body)}`;
-    
-    // Close the modals immediately
-    document.querySelector(".request-modal").classList.remove("is-open");
-    document.querySelector(".booking-slate").classList.remove("is-open");
-    document.body.classList.remove("lightbox-open");
   });
 
   // 6. ONBOARDING & CURSOR
