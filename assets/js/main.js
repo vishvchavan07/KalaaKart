@@ -101,7 +101,7 @@ window.closeOnboarding = function() {
   
   onboarding.style.opacity = '0';
   onboarding.style.pointerEvents = 'none';
-  localStorage.setItem('kk_onboarded', 'true');
+  // localStorage.setItem('kk_onboarded', 'true'); // Removed to show on every reload
   
   setTimeout(() => {
     onboarding.remove();
@@ -509,13 +509,11 @@ window.closeOnboarding = function() {
   // 6. ONBOARDING & CURSOR
   const onboarding = document.getElementById('onboardingOverlay');
   if(onboarding) {
-    const hasOnboarded = localStorage.getItem('kk_onboarded');
-    if(!hasOnboarded) {
-      setTimeout(() => {
-        onboarding.classList.add('active');
-        document.body.style.overflow = 'hidden';
-      }, 1200);
-    }
+    // Show on every reload as requested
+    setTimeout(() => {
+      onboarding.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }, 1200);
   }
 
   // Premium Smooth Antigravity Cursor
