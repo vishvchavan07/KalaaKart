@@ -4535,13 +4535,13 @@ nav, .navbar, header {
 #allProfiles, #featuredProfiles, .profiles-grid {
   display: grid !important;
   gap: 2rem !important;
-  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(min(320px, 100%), 1fr));
 }
 
 #marketplaceCards, .listings-grid {
   display: grid !important;
   gap: 2rem !important;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(min(300px, 100%), 1fr));
 }
 
 .market-card {

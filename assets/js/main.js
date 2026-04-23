@@ -180,25 +180,19 @@ window.closeOnboarding = function() {
   function mentorCard(mentor, index) {
     return `
       <article class="mentor-card" data-mentor-id="${index}">
-        <div style="display:flex; gap:20px; flex-wrap:wrap;">
-          <img src="${mentor.image}" style="width:84px; height:84px; border-radius:18px; object-fit:cover; border:2px solid var(--accent); padding:3px;" alt="${mentor.name}">
-          <div style="flex:1; min-width:200px;">
-            <div style="display:flex; justify-content:space-between;">
-              <div>
-                <h3 style="margin:0;">${mentor.name}</h3>
-                <p style="color:var(--accent); font-weight:700;">${mentor.subject} • ${mentor.mode}</p>
-              </div>
-              <div style="text-align:right;">
-                <div style="font-weight:800;">${mentor.price}</div>
-                <small style="opacity:0.6;">${mentor.freeOption}</small>
-              </div>
-            </div>
-            <p style="margin:16px 0; opacity:0.9;">${mentor.description}</p>
-            <div style="display:flex; justify-content:space-between; align-items:center; border-top:1px solid var(--border); padding-top:16px;">
-              <div>${renderStars(mentor.rating)}</div>
-              <button class="button btn-primary" data-book-mentor="${index}">Book Session</button>
-            </div>
+        <img src="${mentor.image}" class="mentor-avatar" style="border-radius:18px; object-fit:cover; border:2px solid var(--accent); padding:3px;" alt="${mentor.name}">
+        <div class="mentor-info">
+          <h3 style="margin:0;">${mentor.name}</h3>
+          <p style="color:var(--accent); font-weight:700; font-size:14px; margin:4px 0;">${mentor.subject} • ${mentor.mode}</p>
+          <p style="margin:12px 0; font-size:14px; line-height:1.5; opacity:0.8;">${mentor.description}</p>
+          <div>${renderStars(mentor.rating)}</div>
+        </div>
+        <div class="mentor-actions">
+          <div style="text-align:right;">
+            <div style="font-weight:800; font-size:1.1rem;">${mentor.price}</div>
+            <small style="opacity:0.6; display:block; margin-top:4px;">${mentor.freeOption}</small>
           </div>
+          <button class="button btn-primary" data-book-mentor="${index}" style="width:100%; margin-top:12px;">Book Session</button>
         </div>
       </article>
     `;
