@@ -22,6 +22,20 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="assets/css/styles.css?v=3">
+  <style>
+    [data-theme="dark-cold"] { --bg:#0D0F1A; --accent:#7C6EF5; --text-primary:#E8EAFF; }
+    [data-theme="dark-warm"] { --bg:#120A05; --accent:#E8832A; --text-primary:#FFE8CC; }
+    [data-theme="light-pro"] { --bg:#F7F8FC; --accent:#5046E5; --text-primary:#1A1A2E; }
+    [data-theme="sakura"] { --bg:#12080A; --accent:#FF78A5; --text-primary:#FFE0E9; }
+    [data-theme="midnight-ink"] { --bg:#040406; --accent:#5C5CFF; --text-primary:#EEEEFF; }
+    [data-theme="stone-gold"] { --bg:#0F0E0C; --accent:#D4AF37; --text-primary:#F5EDD6; }
+    [data-theme="cyber-campus"] { --bg:#020205; --accent:#00F2FF; --text-primary:#00F2FF; }
+    [data-theme="vintage-vinyl"] { --bg:#F2E8D5; --accent:#D95D39; --text-primary:#2E2E2E; }
+    [data-theme="emerald-forest"] { --bg:#0A1A12; --accent:#4CAF50; --text-primary:#E8F5E9; }
+    [data-theme="ocean-abyss"] { --bg:#010B13; --accent:#00BCD4; --text-primary:#E0F7FA; }
+    [data-theme="sunset-mirage"] { --bg:#1A0B2E; --accent:#FF4E50; --text-primary:#F9D423; }
+    [data-theme="parchment-quill"] { --bg:#D6C6B0; --accent:#8B4513; --text-primary:#2C1E1E; }
+  </style>
 </head>
 <body data-page="mentors">
   <div id="cursor-dot"></div>
@@ -29,27 +43,26 @@
   
 <header class="navbar">
     <a class="nav-brand" href="index.html">
-        <img src="assets/images/main_logo_final.jpeg" alt="Kalaa Kart logo">
-        <span>Kalaa Kart</span>
+        <img src="assets/images/kalaakart_logo.png" alt="Kalaa Kart logo" style="height: 45px; width: auto; object-fit: contain;">
     </a>
     <div class="nav-links">
-        <a href="index.html">Home</a>
-        <a href="profiles.html">Profiles</a>
-        <a href="mentor-booking.html">Mentor Booking</a>
-        <a href="marketplace.html">Old Clothes</a>
-        <a href="sell-item.html" class="nav-btn-pill btn-outline">Sell / Rent Clothing</a>
-        <a href="create-profile.html" class="nav-btn-pill btn-solid">Create Your Profile</a>
+        <a href="index.html">HOME</a>
+        <a href="profiles.html">PROFILES</a>
+        <a href="mentor-booking.html">MENTOR BOOKING</a>
+        <a href="marketplace.html">REUSE SECTION</a>
+        <a href="login.html">LOG IN</a>
+        <a href="create-profile.html">SIGN UP</a>
     </div>
     <button class="nav-hamburger" id="navHamburger" aria-label="Toggle menu">☰</button>
   </header>
   <!-- RESPONSIVE FIX: Mobile dropdown nav -->
   <nav class="nav-mobile-dropdown" id="navMobileDropdown">
-    <a href="index.html">Home</a>
-    <a href="profiles.html">Profiles</a>
-    <a href="mentor-booking.html">Mentor Booking</a>
-    <a href="marketplace.html">Old Clothes</a>
-    <a href="sell-item.html" style="color:var(--accent);">Sell / Rent Clothing</a>
-    <a href="create-profile.html" style="color:var(--accent);font-weight:700;">Create Your Profile</a>
+    <a href="index.html">HOME</a>
+    <a href="profiles.html">PROFILES</a>
+    <a href="mentor-booking.html">MENTOR BOOKING</a>
+    <a href="marketplace.html">REUSE SECTION</a>
+    <a href="login.html" style="color:var(--accent);">LOG IN</a>
+    <a href="create-profile.html" style="color:var(--accent);font-weight:700;">SIGN UP</a>
   </nav>
 
 
@@ -125,8 +138,7 @@
     <div class="footer-main">
       <div class="footer-brand">
         <div class="footer-logo-row">
-          <img src="assets/images/main_logo_final.jpeg" alt="Kalaa Kart logo" loading="lazy">
-          <strong>Kalaa Kart</strong>
+          <img src="assets/images/kalaakart_logo.png" alt="Kalaa Kart logo" loading="lazy" style="height: 40px; width: auto;">
         </div>
         <p class="footer-tagline">From Passion to Profession</p>
         <p class="footer-desc">A student-powered platform for skills, mentoring, and campus essentials.</p>
@@ -134,10 +146,10 @@
       <div class="footer-links-col">
         <h4>Quick Links</h4>
         <div>
-          <a href="index.html">Home</a>
-          <a href="profiles.html">Profiles</a>
-          <a href="mentor-booking.html">Mentor Booking</a>
-          <a href="marketplace.html">Old Clothes</a>
+          <a href="index.html">HOME</a>
+          <a href="profiles.html">PROFILES</a>
+          <a href="mentor-booking.html">MENTOR BOOKING</a>
+          <a href="marketplace.html">REUSE SECTION</a>
         </div>
       </div>
     </div>
@@ -164,5 +176,22 @@
 
   
 
+  <div id="theme-switcher">
+    <button class="theme-toggle-btn" onclick="document.getElementById('theme-panel').classList.toggle('open')">🎨 Theme</button>
+    <div class="theme-panel" id="theme-panel">
+      <button class="theme-opt" data-theme="dark-cold" onclick="setTheme('dark-cold')"><span class="swatch" style="background:linear-gradient(135deg,#0D0F1A,#7C6EF5)"></span>Dark Cold</button>
+      <button class="theme-opt" data-theme="dark-warm" onclick="setTheme('dark-warm')"><span class="swatch" style="background:linear-gradient(135deg,#120A05,#E8832A)"></span>Dark Warm</button>
+      <button class="theme-opt" data-theme="light-pro" onclick="setTheme('light-pro')"><span class="swatch" style="background:linear-gradient(135deg,#F7F8FC,#5046E5)"></span>Light Pro</button>
+      <button class="theme-opt" data-theme="sakura" onclick="setTheme('sakura')"><span class="swatch" style="background:linear-gradient(135deg,#12080A,#FF78A5)"></span>Sakura</button>
+      <button class="theme-opt" data-theme="midnight-ink" onclick="setTheme('midnight-ink')"><span class="swatch" style="background:linear-gradient(135deg,#040406,#5C5CFF)"></span>Midnight Ink</button>
+      <button class="theme-opt" data-theme="stone-gold" onclick="setTheme('stone-gold')"><span class="swatch" style="background:linear-gradient(135deg,#0F0E0C,#D4AF37)"></span>Stone & Gold</button>
+      <button class="theme-opt" data-theme="cyber-campus" onclick="setTheme('cyber-campus')"><span class="swatch" style="background:linear-gradient(135deg,#020205,#00F2FF)"></span>Cyber Campus</button>
+      <button class="theme-opt" data-theme="vintage-vinyl" onclick="setTheme('vintage-vinyl')"><span class="swatch" style="background:linear-gradient(135deg,#F2E8D5,#D95D39)"></span>Vintage Vinyl</button>
+      <button class="theme-opt" data-theme="emerald-forest" onclick="setTheme('emerald-forest')"><span class="swatch" style="background:linear-gradient(135deg,#0A1A12,#4CAF50)"></span>Emerald Forest</button>
+      <button class="theme-opt" data-theme="ocean-abyss" onclick="setTheme('ocean-abyss')"><span class="swatch" style="background:linear-gradient(135deg,#010B13,#00BCD4)"></span>Ocean Abyss</button>
+      <button class="theme-opt" data-theme="sunset-mirage" onclick="setTheme('sunset-mirage')"><span class="swatch" style="background:linear-gradient(135deg,#1A0B2E,#FF4E50)"></span>Sunset Mirage</button>
+      <button class="theme-opt" data-theme="parchment-quill" onclick="setTheme('parchment-quill')"><span class="swatch" style="background:linear-gradient(135deg,#D6C6B0,#8B4513)"></span>Parchment & Quill</button>
+    </div>
+  </div>
 </body>
 </html>

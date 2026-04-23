@@ -47,29 +47,6 @@ window.campusCircleData = {
       note: "Strong choice for personalized lines, event scripts, dedication notes, and emotional message writing."
     },
     {
-      id: "samyak",
-      name: "Samyak Misal",
-      title: "Video Editor & Portrait Photographer",
-      image: "assets/images/profiles/samyakprofilepicture.jpeg",
-      price: "Premium edits from Rs 699",
-      email: "samyak.media@kalaakart.in",
-      location: "Media lab, second floor",
-      responseTime: "Usually replies in 1 hour",
-      priceRange: { min: 699, max: 2499, defaultValue: 1199, step: 100 },
-      rating: "5.0",
-      reviews: 41,
-      works: 72,
-      bio: "Samyak edits polished personalized videos with sharp transitions, music sync, and clean storytelling. He also clicks standout portrait photos for profiles, events, and memories.",
-      hobbies: ["Video editing", "Photography", "Portrait shoots", "Reels"],
-      gallery: [
-        { title: "Street Moment Video Frame", src: "assets/images/real-works/samyak_work_1.jpeg" },
-        { title: "Personal Edit Still", src: "assets/images/real-works/samyak_work_2.jpeg" },
-        { title: "Cinematic Portrait Capture", src: "assets/images/real-works/samyak_work3.jpeg" }
-      ],
-      review: "\"The birthday edit looked professional and he delivered faster than expected.\"",
-      note: "Ideal for birthday edits, college event recap videos, cinematic portraits, and social media packages."
-    },
-    {
       id: "aditi",
       name: "Aditi",
       title: "Knitting & Handmade Wool Crafts",
@@ -91,6 +68,31 @@ window.campusCircleData = {
       ],
       review: "\"The crochet pieces looked super neat and made such a cute personalized gift.\"",
       note: "Best suited for handmade charms, crochet flowers, bows, and small custom gift pieces."
+    }
+  ],
+  extraProfiles: [
+    {
+      id: "samyak",
+      name: "Samyak Misal",
+      title: "Video Editor & Portrait Photographer",
+      image: "assets/images/profiles/samyakprofilepicture.jpeg",
+      price: "Premium edits from Rs 699",
+      email: "samyak.media@kalaakart.in",
+      location: "Media lab, second floor",
+      responseTime: "Usually replies in 1 hour",
+      priceRange: { min: 699, max: 2499, defaultValue: 1199, step: 100 },
+      rating: "5.0",
+      reviews: 41,
+      works: 72,
+      bio: "Samyak edits polished personalized videos with sharp transitions, music sync, and clean storytelling. He also clicks standout portrait photos for profiles, events, and memories.",
+      hobbies: ["Video editing", "Photography", "Portrait shoots", "Reels"],
+      gallery: [
+        { title: "Street Moment Video Frame", src: "assets/images/real-works/samyak_work_1.jpeg" },
+        { title: "Personal Edit Still", src: "assets/images/real-works/samyak_work_2.jpeg" },
+        { title: "Cinematic Portrait Capture", src: "assets/images/real-works/samyak_work3.jpeg" }
+      ],
+      review: "\"The birthday edit looked professional and he delivered faster than expected.\"",
+      note: "Ideal for birthday edits, college event recap videos, cinematic portraits, and social media packages."
     },
     {
       id: "pratiksha",
@@ -139,7 +141,6 @@ window.campusCircleData = {
       note: "Ideal for mandala drawings, pen art commissions, devotional designs, and decorative custom sketches."
     }
   ],
-  extraProfiles: [],
   mentors: [
     {
       name: "Aditya Verma",
@@ -209,57 +210,65 @@ window.campusCircleData = {
     }
   ],
   marketplace: [
-    { // FIX: Added category + type for filter/sort logic
+    {
       name: "College Blazer",
-      image: "assets/images/works/blazer-item.svg",
-      description: "Well-kept formal blazer, worn only for two events. Good for presentations and placement drives.",
-      price: "Buy at Rs 700",
+      description: "Well-kept formal blazer, worn only for two events at MITAOE. Good for presentations and placement drives.",
+      price: "Rs 700",
       alternate: "Rent at Rs 149 per day",
-      seller: "Listed by Aarav, final year",
-      size: "Size M",
-      category: "formals",
-      type: "both",
-      buyPrice: 700,
-      rentPrice: 149
+      image: "assets/images/works/blazer.png",
+      seller: "Aarav, final year",
+      category: "clothing",
+      size: "M"
     },
-    { // FIX: Added category + type for filter/sort logic
+    {
       name: "Lab Coat",
-      image: "assets/images/works/labcoat-item.svg",
-      description: "Clean lab coat with good stitching, suitable for pharmacy or chemistry practicals.",
-      price: "Buy at Rs 300",
+      description: "Clean lab coat with MITAOE logo stitching, suitable for pharmacy or chemistry practicals.",
+      price: "Rs 300",
       alternate: "Rent at Rs 99 per week",
-      seller: "Listed by Pooja, second year",
-      size: "Size L",
-      category: "lab",
-      type: "both",
-      buyPrice: 300,
-      rentPrice: 99
+      image: "assets/images/works/labcoat.png",
+      seller: "Pooja, second year",
+      category: "clothing",
+      size: "L"
     },
-    { // FIX: Added category + type for filter/sort logic
+    {
       name: "White College Shirt",
-      image: "assets/images/works/shirt-item.svg",
       description: "Plain white shirt in excellent condition, useful for uniform days and presentation events.",
       price: "Buy at Rs 250",
       alternate: "Rent at Rs 79 per day",
-      seller: "Listed by Karan, first year",
+      image: "assets/images/works/shirt.png",
+      seller: "Karan, first year",
       size: "Size M",
-      category: "formals",
-      type: "both",
-      buyPrice: 250,
-      rentPrice: 79
+      category: "formals"
     },
-    { // FIX: Added category + type for filter/sort logic
-      name: "Fest Kurta Set",
-      image: "assets/images/works/kurta-item.svg",
-      description: "Colorful ethnic wear set used once during cultural day. Looks fresh and photo-friendly.",
-      price: "Buy at Rs 450",
-      alternate: "Rent at Rs 129 per day",
-      seller: "Listed by Meenal, third year",
-      size: "Size S",
-      category: "fest",
-      type: "both",
-      buyPrice: 450,
-      rentPrice: 129
+    {
+      name: "Chemistry Reference Book",
+      description: "Complete Chemistry reference book for First Year B.Tech, MIT Academy of Engineering. Hand-written with all experiments verified. Manuals are for reference & help.",
+      price: "Buy at Rs 150",
+      alternate: "Rent at Rs 40/week",
+      image: "assets/images/works/chem_manual.png",
+      seller: "Gauri Gandre",
+      category: "manuals",
+      size: "FY B.Tech"
+    },
+    {
+      name: "Physics Reference Book",
+      description: "Official MITAOE Physics reference book. Neat diagrams and accurate readings. Slightly used but in great condition. Manuals are for reference & help.",
+      price: "Buy at Rs 150",
+      alternate: "Rent at Rs 40/week",
+      image: "assets/images/works/phys_manual.png",
+      seller: "Vishv Chavan",
+      category: "manuals",
+      size: "FY B.Tech"
+    },
+    {
+      name: "Applied Mechanics Book",
+      description: "Yellow cover Applied Mechanics reference book for MIT Academy of Engineering. Includes all drafting sheets and experimental data. Manuals are for reference & help.",
+      price: "Buy at Rs 200",
+      alternate: "Rent at Rs 50/week",
+      image: "assets/images/works/mech_manual.png",
+      seller: "Aditi",
+      category: "manuals",
+      size: "FY B.Tech"
     }
   ]
 };
