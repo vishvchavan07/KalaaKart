@@ -145,7 +145,11 @@ window.closeOnboarding = function() {
       galleryHtml = `
         <div class="works-preview" style="display:flex; gap:8px; overflow-x:auto; margin: 12px 0; padding-bottom:6px; scrollbar-width: none;">
           ${profile.gallery.map(work => `
-            <img src="${work.src}" alt="${work.title}" class="work-preview-item" style="width:90px; height:90px; border-radius:10px; object-fit:cover; flex-shrink:0; border:1px solid var(--border); cursor:zoom-in;">
+            <img src="${work.src}" 
+                 onerror="this.src='https://api.dicebear.com/7.x/initials/svg?seed=${encodeURIComponent(work.title)}&backgroundColor=120A05';" 
+                 alt="${work.title}" 
+                 class="work-preview-item" 
+                 style="width:90px; height:90px; border-radius:10px; object-fit:cover; flex-shrink:0; border:1px solid var(--border); cursor:zoom-in;">
           `).join("")}
         </div>
       `;
@@ -489,9 +493,16 @@ Sent via KalaaKart Marketplace`;
     }
 
     const preview = e.target.closest(".work-preview-item");
-    if(preview) {
-      lightbox.querySelector(".lightbox-image").src = preview.src;
-      lightbox.querySelector(".lightbox-title").textContent = preview.alt;
+    const showcase = e.target.closest(".showcase-btn");
+    
+    if(preview || showcase) {
+      const src = preview ? preview.src : showcase.dataset.workSrc;
+      const title = preview ? preview.alt : showcase.dataset.workTitle;
+      const owner = showcase ? showcase.dataset.workOwner : "";
+      
+      lightbox.querySelector(".lightbox-image").src = src;
+      lightbox.querySelector(".lightbox-title").textContent = title;
+      lightbox.querySelector(".lightbox-owner").textContent = owner;
       lightbox.classList.add("is-open");
       document.body.classList.add("lightbox-open");
       return;
