@@ -180,20 +180,30 @@ window.closeOnboarding = function() {
   function mentorCard(mentor, index) {
     return `
       <article class="mentor-card" data-mentor-id="${index}">
-        <img src="${mentor.image}" class="mentor-avatar" style="border-radius:18px; object-fit:cover; border:2px solid var(--accent); padding:3px;" alt="${mentor.name}">
-        <div class="mentor-info">
-          <h3 style="margin:0;">${mentor.name}</h3>
-          <p style="color:var(--accent); font-weight:700; font-size:14px; margin:4px 0;">${mentor.subject} • ${mentor.mode}</p>
-          <p style="margin:12px 0; font-size:14px; line-height:1.5; opacity:0.8;">${mentor.description}</p>
-          <div>${renderStars(mentor.rating)}</div>
-        </div>
-        <div class="mentor-actions">
-          <div style="text-align:right;">
-            <div style="font-weight:800; font-size:1.1rem;">${mentor.price}</div>
-            <small style="opacity:0.6; display:block; margin-top:4px;">${mentor.freeOption}</small>
+        <div>
+          <div style="display:flex; align-items:center; gap:16px; margin-bottom:16px;">
+            <img src="${mentor.image}" style="width:70px; height:70px; border-radius:50%; object-fit:cover; border:3px solid var(--accent); padding:3px; background:var(--surface);" alt="${mentor.name}">
+            <div>
+              <h3 style="margin:0; font-size:18px;">${mentor.name}</h3>
+              <p style="margin:2px 0 0; font-size:14px; color:var(--accent); font-weight:700;">${mentor.subject}</p>
+              <p style="margin:0; font-size:12px; opacity:0.6;">${mentor.mode}</p>
+            </div>
           </div>
-          <button class="button btn-primary" data-book-mentor="${index}" style="width:100%; margin-top:12px;">Book Session</button>
+          <div style="background:var(--tag-bg); padding:12px; border-radius:14px; margin-bottom:16px;">
+            <p style="margin:0; font-size:14px; opacity:0.9; line-height:1.5;">${mentor.description}</p>
+          </div>
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
+            <div style="display:flex; flex-direction:column; gap:4px;">
+              ${renderStars(mentor.rating)}
+              <span style="font-size:12px; opacity:0.6;">${mentor.rating} Rating</span>
+            </div>
+            <div style="text-align:right;">
+              <div style="font-weight:800; font-size:1.1rem; color:var(--text-primary);">${mentor.price}</div>
+              <small style="opacity:0.6; font-size:11px;">${mentor.freeOption}</small>
+            </div>
+          </div>
         </div>
+        <button class="button btn-primary" data-book-mentor="${index}" style="width:100%; font-weight:700;">Book Session</button>
       </article>
     `;
   }
