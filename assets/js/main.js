@@ -186,6 +186,40 @@ window.closeOnboarding = function() {
     mSubmit?.addEventListener('click', () => handleSearch(mInput.value.trim()));
   }
 
+  // 1.5 DYNAMIC NAVBAR AUTH STATE
+  function updateNavbarAuth() {
+    const isLoggedIn = localStorage.getItem('kk_user_logged_in') === 'true';
+    const user = JSON.parse(localStorage.getItem('kk_current_user') || '{}');
+    
+    document.querySelectorAll('.nav-links, .nav-mobile-dropdown').forEach(nav => {
+      const loginLink = Array.from(nav.querySelectorAll('a')).find(a => a.getAttribute('href') === 'login.html');
+      const signupLink = Array.from(nav.querySelectorAll('a')).find(a => a.getAttribute('href') === 'signup.html' || a.getAttribute('href') === 'create-profile.html');
+      
+      if (isLoggedIn) {
+        if (loginLink) {
+          loginLink.textContent = 'LOG OUT';
+          loginLink.removeAttribute('href');
+          loginLink.style.cursor = 'pointer';
+          loginLink.onclick = (e) => {
+            e.preventDefault();
+            localStorage.removeItem('kk_user_logged_in');
+            localStorage.removeItem('kk_user_email');
+            localStorage.removeItem('kk_current_user');
+            sessionStorage.removeItem('kk_current_user');
+            window.location.href = 'index.html';
+          };
+        }
+        if (signupLink) {
+          signupLink.textContent = 'MY PROFILE';
+          signupLink.setAttribute('href', 'profiles.html');
+        }
+      }
+    });
+  }
+  document.addEventListener('DOMContentLoaded', updateNavbarAuth);
+  // Also run immediately in case DOM is already loaded
+  updateNavbarAuth();
+
   // 2. REUSABLE UI HELPERS
   function renderStars(rating) {
     const r = parseFloat(rating) || 5;
