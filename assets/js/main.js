@@ -160,9 +160,72 @@ window.closeOnboarding = function() {
     const mInput = document.getElementById('mobileSearchInput');
     const mSubmit = document.getElementById('mobileSearchSubmit');
 
+    // Add a results container to the dropdown if it doesn't exist
+    if (dropdown && !document.getElementById('globalSearchResults')) {
+      dropdown.insertAdjacentHTML('beforeend', '<div id="globalSearchResults" style="max-height:300px; overflow-y:auto; display:flex; flex-direction:column; gap:8px;"></div>');
+    }
+    const gResults = document.getElementById('globalSearchResults');
+
+    const doLiveSearch = (query, resultsContainer) => {
+      if (!query || query.length < 2) {
+        if(resultsContainer) resultsContainer.innerHTML = '';
+        return;
+      }
+      const q = query.toLowerCase();
+      
+      // Collect Data
+      const users = JSON.parse(localStorage.getItem('kk_users') || '[]');
+      const userListings = JSON.parse(localStorage.getItem('kk_user_listings') || '[]');
+      
+      const allItems = [...(window.data?.marketplace || []), ...userListings];
+      const allProfiles = [...(window.data?.featuredProfiles || []), ...(window.data?.extraProfiles || []), ...users];
+      const allMentors = window.data?.mentors || [];
+
+      // Filter
+      const matchedItems = allItems.filter(i => (i.name||'').toLowerCase().includes(q) || (i.description||'').toLowerCase().includes(q)).slice(0, 3);
+      const matchedProfiles = allProfiles.filter(p => (p.name||'').toLowerCase().includes(q) || (p.title||'').toLowerCase().includes(q) || (p.hobbies||[]).some(h=>h.toLowerCase().includes(q))).slice(0, 3);
+      const matchedMentors = allMentors.filter(m => (m.name||'').toLowerCase().includes(q) || (m.subject||'').toLowerCase().includes(q)).slice(0, 2);
+
+      let html = '';
+      if (matchedProfiles.length) {
+        html += `<div style="font-size:0.75rem; color:var(--text-secondary); font-weight:700; margin-top:8px;">PROFILES</div>`;
+        matchedProfiles.forEach(p => {
+          html += `<a href="profiles.html?search=${encodeURIComponent(p.name)}" style="display:flex; align-items:center; gap:10px; text-decoration:none; color:var(--text-primary); padding:6px; border-radius:6px; background:var(--card-bg); border:1px solid var(--border);">
+            <img src="${p.image||'assets/images/profiles/ppp.jpeg'}" style="width:30px;height:30px;border-radius:50%;object-fit:cover;">
+            <div style="font-size:0.85rem;font-weight:600;">${p.name} <span style="font-size:0.7rem;font-weight:400;color:var(--text-secondary);display:block;">${p.title||'User'}</span></div>
+          </a>`;
+        });
+      }
+      if (matchedItems.length) {
+        html += `<div style="font-size:0.75rem; color:var(--text-secondary); font-weight:700; margin-top:8px;">MARKETPLACE</div>`;
+        matchedItems.forEach(i => {
+          html += `<a href="marketplace.html?q=${encodeURIComponent(i.name)}" style="display:flex; align-items:center; gap:10px; text-decoration:none; color:var(--text-primary); padding:6px; border-radius:6px; background:var(--card-bg); border:1px solid var(--border);">
+            <img src="${i.image||''}" style="width:30px;height:30px;border-radius:6px;object-fit:cover;">
+            <div style="font-size:0.85rem;font-weight:600;">${i.name} <span style="font-size:0.75rem;color:var(--accent);display:block;">${i.price}</span></div>
+          </a>`;
+        });
+      }
+      if (matchedMentors.length) {
+        html += `<div style="font-size:0.75rem; color:var(--text-secondary); font-weight:700; margin-top:8px;">MENTORS</div>`;
+        matchedMentors.forEach(m => {
+          html += `<a href="mentor-booking.html" style="display:flex; align-items:center; gap:10px; text-decoration:none; color:var(--text-primary); padding:6px; border-radius:6px; background:var(--card-bg); border:1px solid var(--border);">
+            <div style="font-size:0.85rem;font-weight:600;">${m.name} <span style="font-size:0.7rem;font-weight:400;color:var(--text-secondary);display:block;">${m.subject}</span></div>
+          </a>`;
+        });
+      }
+
+      if (!html) html = `<div style="padding:10px; text-align:center; color:var(--text-secondary); font-size:0.85rem;">No results found for "${query}"</div>`;
+      if (resultsContainer) resultsContainer.innerHTML = html;
+    };
+
+    let debounceTimer;
+    gInput?.addEventListener('input', (e) => {
+      clearTimeout(debounceTimer);
+      debounceTimer = setTimeout(() => doLiveSearch(e.target.value.trim(), gResults), 200);
+    });
+
     const handleSearch = (query) => {
       if (!query) return;
-      // Heuristic: if they search for a person/skill, go to profiles. Else marketplace.
       const q = query.toLowerCase();
       const isProfile = ['writer', 'painter', 'art', 'mentor', 'video', 'edit'].some(kw => q.includes(kw));
       if (isProfile) window.location.href = `profiles.html?search=${encodeURIComponent(query)}`;
@@ -174,7 +237,10 @@ window.closeOnboarding = function() {
         e.stopPropagation();
         const isVis = dropdown.style.display === 'flex';
         dropdown.style.display = isVis ? 'none' : 'flex';
-        if (!isVis) gInput.focus();
+        if (!isVis) {
+          gInput.focus();
+          if (gInput.value) doLiveSearch(gInput.value.trim(), gResults);
+        }
       });
       document.addEventListener('click', (e) => {
         if (!dropdown.contains(e.target) && e.target !== toggleBtn) dropdown.style.display = 'none';
