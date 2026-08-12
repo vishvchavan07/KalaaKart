@@ -1,6 +1,6 @@
 /**
  * assets/js/feedback.js
- * KalaaKart — Feedback & Ratings store
+ * Craftified — Feedback & Ratings store
  */
 (function() {
   'use strict';

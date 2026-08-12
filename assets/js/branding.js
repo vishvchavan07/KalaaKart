@@ -1,6 +1,6 @@
 /**
  * assets/js/branding.js
- * KalaaKart — Live branding (logo / favicon / site name) from localStorage
+ * Craftified — Live branding (logo / favicon / site name) from localStorage
  *
  * Runs immediately in <head> before page render to avoid FOUC.
  * Reads: localStorage.kk_branding = { logoUrl, faviconUrl, siteName }
@@ -8,7 +8,7 @@
  * Targets:
  *   • img[data-kk-logo]   — all nav + footer logos
  *   • link[rel="icon"]    — favicon
- *   • document.title      — replaces "Kalaa Kart" with siteName if set
+ *   • document.title      — replaces "Craftified" with siteName if set
  *
  * When backend is live:
  *   Fetch GET /api/admin/config/branding and call KKBranding.apply(data).
@@ -16,8 +16,8 @@
 (function() {
   'use strict';
 
-  var DEFAULT_LOGO = 'assets/images/main_logo_final.jpeg';
-  var DEFAULT_NAME = 'Kalaa Kart';
+  var DEFAULT_LOGO = 'assets/images/craftified_logo.jpg';
+  var DEFAULT_NAME = 'Craftified';
 
   function apply(b) {
     if (!b) return;

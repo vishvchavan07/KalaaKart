@@ -1,6 +1,6 @@
 /**
  * assets/js/imageProcessor.js
- * KalaaKart — Shared image processing + perceptual hash module
+ * Craftified — Shared image processing + perceptual hash module
  *
  * Used by:
  *   • sell-item.html  (listing photo upload)

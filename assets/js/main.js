@@ -775,7 +775,7 @@ window.closeOnboarding = function() {
     const bookM = e.target.closest("[data-book-mentor]");
     if(bookM) {
       const m = data.mentors[bookM.dataset.bookMentor];
-      window.location.href = `mailto:mentors@kalaakart.in?subject=Mentorship&body=Hi ${m.name}, I'm interested in ${m.subject} session.`;
+      window.location.href = `mailto:mentors@craftified.in?subject=Mentorship&body=Hi ${m.name}, I'm interested in ${m.subject} session.`;
       return;
     }
 
@@ -783,7 +783,7 @@ window.closeOnboarding = function() {
     if(bookI) {
       const list = [...data.marketplace, ...userListingsRaw];
       const i = list[bookI.dataset.bookItem];
-      window.location.href = `mailto:${i.sellerContact || 'marketplace@kalaakart.in'}?subject=Marketplace inquiry: ${i.name}&body=Hi ${i.seller}, is this ${i.name} still available?`;
+      window.location.href = `mailto:${i.sellerContact || 'marketplace@craftified.in'}?subject=Marketplace inquiry: ${i.name}&body=Hi ${i.seller}, is this ${i.name} still available?`;
       return;
     }
 
@@ -792,17 +792,17 @@ window.closeOnboarding = function() {
       const creatorName = currentProfile?.name || "Creator";
       const budget = bookingSlate.querySelector(".slider-value").textContent;
 
-      const sub = `Project Interest: ${creatorName} — KalaaKart`;
+      const sub = `Project Interest: ${creatorName} — Craftified`;
       
       const body = `Hi ${creatorName},
 
-I absolutely love your work and I'm interested in purchasing your services! I found your profile on the KalaaKart student marketplace.
+I absolutely love your work and I'm interested in purchasing your services! I found your profile on the Craftified student marketplace.
 
 My budget for this project is around ${budget}. 
 
 I would love to discuss the details and how we can collaborate. Looking forward to your response!
 
-Sent via KalaaKart Marketplace`;
+Sent via Craftified Marketplace`;
 
       window.location.href = `mailto:${currentProfile?.email}?subject=${encodeURIComponent(sub)}&body=${encodeURIComponent(body)}`;
       

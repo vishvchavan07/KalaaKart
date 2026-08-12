@@ -1,6 +1,6 @@
 /**
  * assets/js/points.js
- * KalaaKart — Gamified Points & Rewards Engine
+ * Craftified — Gamified Points & Rewards Engine
  */
 (function() {
   'use strict';

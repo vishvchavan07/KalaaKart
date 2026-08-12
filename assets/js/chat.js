@@ -1,6 +1,6 @@
 /**
  * assets/js/chat.js
- * KalaaKart — LocalStorage-based real-time chat mock.
+ * Craftified — LocalStorage-based real-time chat mock.
  * Uses window 'storage' events for instant tab-to-tab sync, and a short interval polling fallback.
  */
 (function() {

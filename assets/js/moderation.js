@@ -1,6 +1,6 @@
 /**
  * assets/js/moderation.js
- * KalaaKart — Client-side chat moderation engine
+ * Craftified — Client-side chat moderation engine
  * Filters out phone numbers, emails, and external app handles to keep transactions on-platform.
  */
 (function() {
@@ -11,12 +11,12 @@
       id: 'phone_number',
       // Matches typical 10 digit numbers, +91, with spaces/dashes
       regex: /(\+?\d{1,3}[\s-]?)?\(?\d{3}\)?[\s-]?\d{3}[\s-]?\d{4}/gi,
-      reason: 'Sharing phone numbers is not allowed. Keep communication on KalaaKart for your safety.'
+      reason: 'Sharing phone numbers is not allowed. Keep communication on Craftified for your safety.'
     },
     {
       id: 'email_address',
       regex: /[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/gi,
-      reason: 'Sharing email addresses is not allowed. Keep communication on KalaaKart.'
+      reason: 'Sharing email addresses is not allowed. Keep communication on Craftified.'
     },
     {
       id: 'external_app',

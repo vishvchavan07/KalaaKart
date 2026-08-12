@@ -9,9 +9,9 @@
   </script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Admin — Kalaa Kart</title>
+  <title>Admin — Craftified</title>
   <meta name="robots" content="noindex,nofollow">
-  <link rel="icon" type="image/jpeg" href="assets/images/main_logo_final.jpeg">
+  <link rel="icon" type="image/jpeg" href="assets/images/craftified_logo.jpg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -362,7 +362,7 @@
     <div class="gate-card">
       <div class="gate-icon">🔐</div>
       <h1 class="gate-title">Admin Panel</h1>
-      <p class="gate-sub">Kalaa Kart — Internal Dashboard</p>
+      <p class="gate-sub">Craftified — Internal Dashboard</p>
       <input type="password" class="gate-input" id="adminPin" placeholder="Enter PIN" maxlength="6"
              onkeyup="if(event.key==='Enter') checkPin()">
       <button class="gate-btn" onclick="checkPin()">Unlock</button>
@@ -375,7 +375,7 @@
   <div class="admin-shell" id="adminShell">
     <div class="admin-topbar">
       <div class="admin-brand">
-        🛠️ Kalaa Kart Admin <span>INTERNAL</span>
+        🛠️ Craftified Admin <span>INTERNAL</span>
       </div>
       <button class="admin-logout" onclick="adminLogout()">Log Out</button>
     </div>
@@ -797,7 +797,7 @@
     const reports = getData('kk_safety_reports');
     const r = reports[idx];
     if (r && r.reporterEmail) {
-      window.location.href = `mailto:${r.reporterEmail}?subject=KalaaKart Safety Report Follow-up&body=Hi ${r.reporterName || 'there'},\n\nThank you for filing a safety report. Our team is looking into this.`;
+      window.location.href = `mailto:${r.reporterEmail}?subject=Craftified Safety Report Follow-up&body=Hi ${r.reporterName || 'there'},\n\nThank you for filing a safety report. Our team is looking into this.`;
     }
   }
 

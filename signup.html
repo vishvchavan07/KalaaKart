@@ -11,9 +11,9 @@
   <script src="assets/js/imageProcessor.js"></script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Sign Up — Kalaa Kart</title>
-  <meta name="description" content="Join Kalaa Kart as a Buyer or Seller — India's premier campus marketplace for student art, skills, and essentials.">
-  <link rel="icon" type="image/jpeg" href="assets/images/main_logo_final.jpeg">
+  <title>Sign Up — Craftified</title>
+  <meta name="description" content="Join Craftified as a Buyer or Seller — India's premier campus marketplace for student art, skills, and essentials.">
+  <link rel="icon" type="image/jpeg" href="assets/images/craftified_logo.jpg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -494,7 +494,7 @@
 
   <header class="navbar">
     <a class="nav-brand" href="index.html">
-      <img src="assets/images/main_logo_final.jpeg" alt="Kalaa Kart logo" style="height:45px;width:auto;object-fit:contain;">
+      <img src="assets/images/craftified_logo.jpg" alt="Craftified logo" style="height:45px;width:auto;object-fit:contain;">
     </a>
     <div class="nav-links">
       <a href="index.html">HOME</a>
@@ -530,7 +530,7 @@
 
         <!-- ═══ STEP 1: ROLE SELECTION ═══ -->
         <div class="wizard-panel active" id="step1">
-          <h1 class="wizard-title">Join Kalaa Kart</h1>
+          <h1 class="wizard-title">Join Craftified</h1>
           <p class="wizard-sub">Choose how you'll use the platform. You can hold both roles.</p>
 
           <div class="role-cards">
@@ -648,7 +648,7 @@
 
           <div class="safety-card">
             <div class="safety-card-title">🛡️ Emergency Contact <em style="font-size:0.75rem;font-weight:400;color:var(--text-secondary);margin-left:4px;">Optional but recommended</em></div>
-            <div class="safety-card-sub">Visible only to Kalaa Kart admins if you trigger a safety report. Never shown to other users.</div>
+            <div class="safety-card-sub">Visible only to Craftified admins if you trigger a safety report. Never shown to other users.</div>
             <div class="field-row">
               <div class="field">
                 <label for="s3ecName">Contact Name</label>
@@ -682,7 +682,7 @@
         <div class="wizard-panel" id="stepSuccess">
           <div class="success-panel">
             <div class="success-icon" id="successIcon">🎉</div>
-            <h2 class="success-heading" id="successHeading">Welcome to Kalaa Kart!</h2>
+            <h2 class="success-heading" id="successHeading">Welcome to Craftified!</h2>
             <div id="verificationBadge"></div>
             <p class="success-body" id="successBody">Your account has been created. Redirecting you now…</p>
             <a href="index.html" class="btn-wizard-next" style="display:inline-block;text-align:center;text-decoration:none;padding:14px 32px;border-radius:12px;max-width:220px;">Go to Home</a>
@@ -1070,7 +1070,7 @@
       successBody.textContent = `Welcome, ${userDoc.name}! Your portfolio is with our team for review. You'll be able to list items once approved.`;
     } else {
       successIcon.textContent = '🎉';
-      successHeading.textContent = 'Welcome to Kalaa Kart!';
+      successHeading.textContent = 'Welcome to Craftified!';
       badge.innerHTML = '<div class="verification-badge buyer">✅ Buyer account active</div>';
       successBody.textContent = `You're all set, ${userDoc.name}! Start browsing campus talent and essentials.`;
     }
