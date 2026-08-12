@@ -1,0 +1,7 @@
+<svg width="480" height="300" viewBox="0 0 480 300" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="480" height="300" rx="26" fill="#EFF7FF"/>
+  <path d="M157 63H323L353 235H127L157 63Z" fill="#2B4A72"/>
+  <path d="M196 63L240 121L284 63" stroke="#E7F0FF" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="225" y="145" width="30" height="90" rx="15" fill="#E7F0FF"/>
+  <text x="240" y="278" text-anchor="middle" fill="#17313E" font-family="Arial, sans-serif" font-size="26" font-weight="700">Formal College Blazer</text>
+</svg>

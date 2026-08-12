@@ -1,0 +1,8 @@
+<svg width="480" height="300" viewBox="0 0 480 300" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="480" height="300" rx="26" fill="#EEF3FF"/>
+  <path d="M145 86H335L317 232H163L145 86Z" fill="#6E8DCD"/>
+  <path d="M188 86C188 60.5949 208.595 40 234 40H246C271.405 40 292 60.5949 292 86" stroke="#17313E" stroke-width="8"/>
+  <circle cx="204" cy="132" r="7" fill="#FFF8EF"/>
+  <circle cx="276" cy="132" r="7" fill="#FFF8EF"/>
+  <text x="240" y="278" text-anchor="middle" fill="#17313E" font-family="Arial, sans-serif" font-size="26" font-weight="700">Blazer Alteration Service</text>
+</svg>

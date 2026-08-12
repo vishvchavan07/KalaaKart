@@ -1,0 +1,8 @@
+<svg width="480" height="300" viewBox="0 0 480 300" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="480" height="300" rx="26" fill="#FFF2E8"/>
+  <path d="M159 64H321L341 235H139L159 64Z" fill="#D96C47"/>
+  <path d="M197 64L240 121L283 64" stroke="#F7C6B5" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="226" y="147" width="28" height="86" rx="14" fill="#F7C6B5"/>
+  <circle cx="240" cy="118" r="10" fill="#FFF6F1"/>
+  <text x="240" y="278" text-anchor="middle" fill="#17313E" font-family="Arial, sans-serif" font-size="26" font-weight="700">Fest Kurta Set</text>
+</svg>

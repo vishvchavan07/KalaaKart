@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark-cold">
+<head>
+  <script>
+    (function() {
+      const t = localStorage.getItem('kk-theme') || 'dark-cold';
+      document.documentElement.setAttribute('data-theme', t);
+    })();
+  </script>
+  <script src="assets/js/branding.js"></script>
+  <script src="assets/js/moderation.js"></script>
+  <script src="assets/js/chat.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chat — Kalaa Kart</title>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/styles.css">
+  <style>
+    body { display: flex; flex-direction: column; height: 100vh; margin: 0; }
+    .chat-wrapper {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      max-width: 800px;
+      width: 100%;
+      margin: 20px auto;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: var(--shadow);
+    }
+    .chat-header {
+      padding: 15px 20px;
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    .chat-header-info { display: flex; flex-direction: column; }
+    .chat-title { font-weight: 700; font-size: 1.2rem; margin-bottom: 4px; }
+    .chat-subtitle { font-size: 0.85rem; color: var(--accent); font-weight: 600; }
+    
+    .chat-messages {
+      flex: 1;
+      padding: 20px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      background: var(--bg);
+    }
+    .msg-bubble {
+      max-width: 70%;
+      padding: 12px 16px;
+      border-radius: 16px;
+      font-size: 0.95rem;
+      line-height: 1.4;
+      position: relative;
+    }
+    .msg-mine {
+      align-self: flex-end;
+      background: var(--accent);
+      color: #fff;
+      border-bottom-right-radius: 4px;
+    }
+    .msg-theirs {
+      align-self: flex-start;
+      background: var(--surface);
+      color: var(--text-primary);
+      border: 1px solid var(--border);
+      border-bottom-left-radius: 4px;
+    }
+    .msg-time {
+      font-size: 0.7rem;
+      opacity: 0.7;
+      margin-top: 5px;
+      text-align: right;
+    }
+    
+    .chat-input-area {
+      padding: 15px;
+      background: var(--surface);
+      border-top: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .chat-input-row { display: flex; gap: 10px; }
+    .chat-input-row input {
+      flex: 1;
+      padding: 12px 16px;
+      border-radius: 20px;
+      border: 1px solid var(--border);
+      background: var(--card-bg);
+      color: var(--text-primary);
+      font-family: inherit;
+      outline: none;
+    }
+    .chat-input-row input:focus { border-color: var(--accent); }
+    .chat-input-row button {
+      padding: 10px 20px;
+      border-radius: 20px;
+      border: none;
+      background: var(--accent);
+      color: #fff;
+      font-weight: 700;
+      cursor: pointer;
+    }
+    
+    .mod-warning {
+      color: #ef4444;
+      font-size: 0.85rem;
+      font-weight: 600;
+      display: none;
+    }
+    .mod-warning.show { display: block; }
+  </style>
+</head>
+<body data-page="chat">
+
+  <header class="navbar">
+    <a class="nav-brand" href="index.html">
+        <img src="assets/images/main_logo_final.jpeg" data-kk-logo alt="Kalaa Kart logo" style="height: 45px; width: auto;">
+    </a>
+    <div class="nav-links">
+        <a href="index.html">HOME</a>
+        <a href="messages.html">MESSAGES</a>
+    </div>
+  </header>
+
+  <div class="chat-wrapper">
+    <div class="chat-header">
+      <div class="chat-header-info">
+        <div class="chat-title" id="chatTitle">Loading...</div>
+        <div class="chat-subtitle" id="chatItem">Loading Item...</div>
+      </div>
+      <div>
+        <button id="leaveFeedbackBtn" class="button button-secondary" style="font-size:0.8rem; padding: 6px 12px; border-radius: 8px;">Leave Feedback</button>
+      </div>
+    </div>
+    
+    <div class="chat-messages" id="messagesArea">
+      <!-- Injected -->
+    </div>
+    
+    <div class="chat-input-area">
+      <div class="mod-warning" id="modWarning"></div>
+      <div class="chat-input-row">
+        <input type="text" id="msgInput" placeholder="Type your message... (No external apps or phone numbers)" autocomplete="off">
+        <button id="sendBtn">Send</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="assets/js/data.js"></script>
+  <script>
+    const currentUserEmail = localStorage.getItem('kk_user_email');
+    if (!currentUserEmail) window.location.href = 'login.html';
+
+    const params = new URLSearchParams(window.location.search);
+    const threadId = params.get('t');
+    
+    if (!threadId) {
+      alert("Invalid thread.");
+      window.location.href = 'messages.html';
+    }
+
+    const messagesArea = document.getElementById('messagesArea');
+    const msgInput = document.getElementById('msgInput');
+    const modWarning = document.getElementById('modWarning');
+    const allListings = [...data.marketplace, ...(JSON.parse(localStorage.getItem('kk_user_listings') || '[]'))];
+    
+    let unsubscribe = null;
+    let currentThread = null;
+
+    function renderMessages(thread) {
+      if (!thread) return;
+      currentThread = thread;
+
+      // Header
+      const otherUser = thread.buyerEmail === currentUserEmail ? thread.sellerEmail : thread.buyerEmail;
+      const listing = allListings.find(l => l.id === thread.listingId || l.name === thread.listingId);
+      document.getElementById('chatTitle').textContent = `Chat with ${otherUser}`;
+      document.getElementById('chatItem').textContent = `Item: ${listing ? listing.name : thread.listingId}`;
+
+      // Feedback button logic
+      document.getElementById('leaveFeedbackBtn').onclick = () => {
+        window.location.href = `feedback.html?target=${encodeURIComponent(otherUser)}&listing=${encodeURIComponent(thread.listingId)}`;
+      };
+
+      // Messages
+      messagesArea.innerHTML = thread.messages.map(m => {
+        const isMine = m.sender === currentUserEmail;
+        const time = new Date(m.ts).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+        return `
+          <div class="msg-bubble ${isMine ? 'msg-mine' : 'msg-theirs'}">
+            ${m.text}
+            <div class="msg-time">${time}</div>
+          </div>
+        `;
+      }).join('');
+      
+      // Auto-scroll
+      messagesArea.scrollTop = messagesArea.scrollHeight;
+    }
+
+    // Subscribe to updates
+    unsubscribe = KKChat.subscribe(threadId, (updatedThread) => {
+      renderMessages(updatedThread);
+    });
+
+    // Initial load
+    renderMessages(KKChat.getThread(threadId));
+
+    // Send
+    function handleSend() {
+      const text = msgInput.value.trim();
+      if (!text) return;
+
+      modWarning.classList.remove('show');
+      
+      const res = KKChat.sendMessage(threadId, currentUserEmail, text);
+      if (res.error) {
+        modWarning.textContent = `⚠️ Message blocked: ${res.reason}`;
+        modWarning.classList.add('show');
+      } else {
+        msgInput.value = '';
+      }
+    }
+
+    document.getElementById('sendBtn').addEventListener('click', handleSend);
+    msgInput.addEventListener('keypress', e => { if (e.key === 'Enter') handleSend(); });
+
+  </script>
+</body>
+</html>

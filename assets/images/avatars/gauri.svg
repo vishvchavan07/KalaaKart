@@ -1,0 +1,10 @@
+<svg width="320" height="320" viewBox="0 0 320 320" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="320" height="320" rx="36" fill="#FFE1D3"/>
+  <circle cx="160" cy="120" r="68" fill="#FFC7AF"/>
+  <path d="M94 114C94 80.8629 120.863 54 154 54H166C199.137 54 226 80.8629 226 114V130H94V114Z" fill="#2C4552"/>
+  <rect x="103" y="175" width="114" height="92" rx="42" fill="#FF8F66"/>
+  <circle cx="135" cy="118" r="8" fill="#17313E"/>
+  <circle cx="186" cy="118" r="8" fill="#17313E"/>
+  <path d="M139 150C147.667 158 171.8 161.2 184.5 148" stroke="#17313E" stroke-width="8" stroke-linecap="round"/>
+  <text x="160" y="291" text-anchor="middle" fill="#17313E" font-family="Arial, sans-serif" font-size="30" font-weight="700">GAURI</text>
+</svg>

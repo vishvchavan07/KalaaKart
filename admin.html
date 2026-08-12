@@ -1,0 +1,879 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark-cold">
+<head>
+  <script>
+    (function() {
+      const t = localStorage.getItem('kk-theme') || 'dark-cold';
+      document.documentElement.setAttribute('data-theme', t);
+    })();
+  </script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin — Kalaa Kart</title>
+  <meta name="robots" content="noindex,nofollow">
+  <link rel="icon" type="image/jpeg" href="assets/images/main_logo_final.jpeg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/styles.css?v=4">
+  <style>
+    [data-theme="dark-cold"]      { --bg:#0D0F1A; --accent:#7C6EF5; --text-primary:#E8EAFF; }
+    [data-theme="dark-warm"]      { --bg:#120A05; --accent:#E8832A; --text-primary:#FFE8CC; }
+    [data-theme="light-pro"]      { --bg:#F7F8FC; --accent:#5046E5; --text-primary:#1A1A2E; }
+    [data-theme="sakura"]         { --bg:#12080A; --accent:#FF78A5; --text-primary:#FFE0E9; }
+    [data-theme="midnight-ink"]   { --bg:#040406; --accent:#5C5CFF; --text-primary:#EEEEFF; }
+    [data-theme="stone-gold"]     { --bg:#0F0E0C; --accent:#D4AF37; --text-primary:#F5EDD6; }
+    [data-theme="cyber-campus"]   { --bg:#020205; --accent:#00F2FF; --text-primary:#00F2FF; }
+    [data-theme="vintage-vinyl"]  { --bg:#F2E8D5; --accent:#D95D39; --text-primary:#2E2E2E; }
+    [data-theme="emerald-forest"] { --bg:#0A1A12; --accent:#4CAF50; --text-primary:#E8F5E9; }
+    [data-theme="ocean-abyss"]    { --bg:#010B13; --accent:#00BCD4; --text-primary:#E0F7FA; }
+    [data-theme="sunset-mirage"]  { --bg:#1A0B2E; --accent:#FF4E50; --text-primary:#F9D423; }
+    [data-theme="parchment-quill"]{ --bg:#D6C6B0; --accent:#8B4513; --text-primary:#2C1E1E; }
+
+    /* ── Auth gate ── */
+    .admin-gate {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+    .gate-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      padding: 40px 36px;
+      max-width: 360px;
+      width: 100%;
+      text-align: center;
+      box-shadow: var(--shadow);
+    }
+    .gate-icon { font-size: 3rem; margin-bottom: 16px; }
+    .gate-title { font-size: 1.4rem; font-weight: 800; margin: 0 0 6px; }
+    .gate-sub { font-size: 0.85rem; color: var(--text-secondary); margin: 0 0 24px; }
+    .gate-input {
+      width: 100%;
+      padding: 12px 16px;
+      background: var(--card-bg);
+      border: 1.5px solid var(--border);
+      border-radius: 12px;
+      color: var(--text-primary);
+      font-family: inherit;
+      font-size: 1rem;
+      outline: none;
+      text-align: center;
+      letter-spacing: 0.3em;
+      box-sizing: border-box;
+      margin-bottom: 14px;
+    }
+    .gate-input:focus { border-color: var(--accent); box-shadow: 0 0 0 3px var(--tag-bg); }
+    .gate-btn {
+      width: 100%;
+      padding: 13px;
+      border: none;
+      border-radius: 12px;
+      background: var(--accent);
+      color: #fff;
+      font-family: inherit;
+      font-weight: 700;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: opacity 0.2s;
+    }
+    .gate-btn:hover { opacity: 0.9; }
+    .gate-error { color: #ef4444; font-size: 0.82rem; margin-top: 10px; display: none; }
+    .gate-error.show { display: block; }
+
+    /* ── Admin shell ── */
+    .admin-shell { display: none; }
+    .admin-shell.visible { display: block; }
+    .admin-topbar {
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      padding: 14px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .admin-brand { font-weight: 800; font-size: 1rem; display: flex; align-items: center; gap: 10px; }
+    .admin-brand span { background: var(--accent); color: #fff; font-size: 0.7rem; padding: 3px 8px; border-radius: 50px; font-weight: 700; }
+    .admin-logout {
+      background: var(--tag-bg);
+      border: 1px solid var(--border);
+      color: var(--text-secondary);
+      padding: 8px 16px;
+      border-radius: 50px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      cursor: pointer;
+      font-family: inherit;
+      transition: all 0.2s;
+    }
+    .admin-logout:hover { border-color: var(--accent); color: var(--text-primary); }
+
+    .admin-body { padding: 24px; max-width: 1100px; margin: 0 auto; }
+
+    /* ── Tabs ── */
+    .admin-tabs { display: flex; gap: 8px; margin-bottom: 24px; flex-wrap: wrap; }
+    .admin-tab {
+      padding: 9px 20px;
+      border-radius: 50px;
+      border: 1.5px solid var(--border);
+      background: transparent;
+      color: var(--text-secondary);
+      font-family: inherit;
+      font-weight: 600;
+      font-size: 0.85rem;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 7px;
+    }
+    .admin-tab:hover { border-color: var(--accent); color: var(--text-primary); }
+    .admin-tab.active { background: var(--accent); border-color: var(--accent); color: #fff; }
+    .tab-badge {
+      background: rgba(255,255,255,0.25);
+      padding: 1px 7px;
+      border-radius: 50px;
+      font-size: 0.72rem;
+      font-weight: 700;
+    }
+    .admin-tab:not(.active) .tab-badge { background: var(--tag-bg); color: var(--accent); }
+
+    /* ── Stats row ── */
+    .stats-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 14px; margin-bottom: 28px; }
+    .stat-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 18px;
+      text-align: center;
+    }
+    .stat-card .num { font-size: 1.8rem; font-weight: 800; color: var(--accent); }
+    .stat-card .lbl { font-size: 0.78rem; color: var(--text-secondary); margin-top: 4px; }
+
+    /* ── Section ── */
+    .admin-section { display: none; }
+    .admin-section.active { display: block; }
+    .section-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; }
+    .section-title { font-size: 1.1rem; font-weight: 700; }
+    .empty-state {
+      text-align: center;
+      padding: 48px 24px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      color: var(--text-secondary);
+    }
+    .empty-icon { font-size: 2.5rem; margin-bottom: 12px; }
+
+    /* ── Review Cards ── */
+    .review-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 22px;
+      margin-bottom: 16px;
+      transition: box-shadow 0.2s;
+    }
+    .review-card:hover { box-shadow: var(--shadow); }
+    .review-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 16px;
+    }
+    .reviewer-info .name { font-weight: 700; font-size: 1rem; margin: 0 0 3px; }
+    .reviewer-info .email { font-size: 0.8rem; color: var(--text-secondary); }
+    .reviewer-info .meta { font-size: 0.78rem; color: var(--text-secondary); margin-top: 4px; }
+    .review-status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 5px 12px;
+      border-radius: 50px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+    .status-pending  { background: rgba(234,179,8,0.15); color: #ca8a04; border: 1px solid rgba(234,179,8,0.3); }
+    .status-flagged  { background: rgba(239,68,68,0.12); color: #dc2626; border: 1px solid rgba(239,68,68,0.25); }
+    .status-approved { background: rgba(34,197,94,0.12); color: #16a34a; border: 1px solid rgba(34,197,94,0.25); }
+    .status-rejected { background: rgba(107,114,128,0.12); color: var(--text-secondary); border: 1px solid var(--border); }
+
+    /* Portfolio images */
+    .portfolio-preview { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 14px; }
+    .portfolio-thumb {
+      width: 80px; height: 80px;
+      border-radius: 10px;
+      object-fit: cover;
+      border: 1px solid var(--border);
+      cursor: zoom-in;
+      transition: transform 0.2s;
+    }
+    .portfolio-thumb:hover { transform: scale(1.05); }
+    .portfolio-thumb.flagged { border-color: #ef4444; outline: 2px solid rgba(239,68,68,0.3); }
+
+    /* Flags list */
+    .flags-list { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 14px; }
+    .flag-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 4px 10px;
+      border-radius: 50px;
+      font-size: 0.72rem;
+      font-weight: 600;
+      background: rgba(239,68,68,0.1);
+      color: #dc2626;
+      border: 1px solid rgba(239,68,68,0.2);
+    }
+    .portfolio-bio {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      padding: 10px 14px;
+      background: var(--card-bg);
+      border-radius: 10px;
+      margin-bottom: 14px;
+      font-style: italic;
+    }
+    .portfolio-link a {
+      font-size: 0.8rem;
+      color: var(--accent);
+      font-weight: 600;
+      text-decoration: none;
+    }
+    .portfolio-link a:hover { text-decoration: underline; }
+
+    /* Review actions */
+    .review-actions { display: flex; gap: 10px; flex-wrap: wrap; }
+    .action-btn {
+      padding: 9px 18px;
+      border-radius: 10px;
+      border: none;
+      font-family: inherit;
+      font-weight: 700;
+      font-size: 0.83rem;
+      cursor: pointer;
+      transition: opacity 0.2s, transform 0.15s;
+    }
+    .action-btn:hover { opacity: 0.85; transform: translateY(-1px); }
+    .action-btn:disabled { opacity: 0.4; cursor: not-allowed; transform: none; }
+    .btn-approve { background: #16a34a; color: #fff; }
+    .btn-hold    { background: var(--tag-bg); color: var(--accent); border: 1px solid var(--border); }
+    .btn-reject  { background: rgba(239,68,68,0.12); color: #dc2626; border: 1px solid rgba(239,68,68,0.2); }
+    .btn-view-id { background: var(--card-bg); color: var(--text-secondary); border: 1px solid var(--border); }
+
+    /* ── Safety Reports ── */
+    .safety-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 22px;
+      margin-bottom: 16px;
+    }
+    .safety-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      margin-bottom: 14px;
+    }
+    .safety-title { font-weight: 700; font-size: 1rem; margin: 0 0 3px; }
+    .safety-meta { font-size: 0.78rem; color: var(--text-secondary); }
+    .safety-body {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      line-height: 1.6;
+      margin-bottom: 14px;
+      padding: 12px;
+      background: var(--card-bg);
+      border-radius: 10px;
+    }
+    .safety-ec {
+      background: rgba(239,68,68,0.06);
+      border: 1px solid rgba(239,68,68,0.2);
+      border-radius: 12px;
+      padding: 14px;
+      font-size: 0.83rem;
+      margin-bottom: 14px;
+    }
+    .safety-ec .ec-label { font-weight: 700; font-size: 0.75rem; color: #dc2626; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 6px; }
+    .safety-ec .ec-value { font-weight: 600; }
+
+    /* ── Auth log ── */
+    .log-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.82rem;
+    }
+    .log-table th {
+      text-align: left;
+      padding: 10px 12px;
+      color: var(--text-secondary);
+      font-weight: 600;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      border-bottom: 1px solid var(--border);
+    }
+    .log-table td { padding: 10px 12px; border-bottom: 1px solid rgba(255,255,255,0.04); }
+    .log-row-fail { background: rgba(239,68,68,0.04); }
+    .log-event {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 3px 9px;
+      border-radius: 50px;
+      font-size: 0.72rem;
+      font-weight: 700;
+    }
+    .event-signup   { background: rgba(124,110,245,0.12); color: #7C6EF5; }
+    .event-login    { background: rgba(34,197,94,0.1); color: #16a34a; }
+    .event-fail     { background: rgba(239,68,68,0.1); color: #dc2626; }
+    .log-table-wrap { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; overflow: hidden; }
+
+    /* Image lightbox */
+    .img-lightbox {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.85);
+      backdrop-filter: blur(8px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+      cursor: zoom-out;
+    }
+    .img-lightbox.open { display: flex; }
+    .img-lightbox img { max-width: 90vw; max-height: 90vh; border-radius: 12px; box-shadow: 0 20px 60px rgba(0,0,0,0.5); }
+  </style>
+</head>
+<body data-page="admin">
+  <div id="cursor-dot"></div>
+  <div id="cursor-ring"></div>
+
+  <!-- ═══ AUTH GATE ═══ -->
+  <div class="admin-gate" id="adminGate">
+    <div class="gate-card">
+      <div class="gate-icon">🔐</div>
+      <h1 class="gate-title">Admin Panel</h1>
+      <p class="gate-sub">Kalaa Kart — Internal Dashboard</p>
+      <input type="password" class="gate-input" id="adminPin" placeholder="Enter PIN" maxlength="6"
+             onkeyup="if(event.key==='Enter') checkPin()">
+      <button class="gate-btn" onclick="checkPin()">Unlock</button>
+      <div class="gate-error" id="gateError">Incorrect PIN. Try again.</div>
+      <p style="margin-top:20px;font-size:0.75rem;color:var(--text-secondary);">Default PIN: <strong>kk2025</strong><br>Change this in production.</p>
+    </div>
+  </div>
+
+  <!-- ═══ ADMIN SHELL ═══ -->
+  <div class="admin-shell" id="adminShell">
+    <div class="admin-topbar">
+      <div class="admin-brand">
+        🛠️ Kalaa Kart Admin <span>INTERNAL</span>
+      </div>
+      <button class="admin-logout" onclick="adminLogout()">Log Out</button>
+    </div>
+
+    <div class="admin-body">
+      <!-- Stats -->
+      <div class="stats-row" id="statsRow"></div>
+
+      <!-- Tabs -->
+      <div class="admin-tabs">
+        <button class="admin-tab active" onclick="switchTab('queue')" id="tabQueue">
+          📋 Review Queue <span class="tab-badge" id="queueBadge">0</span>
+        </button>
+        <button class="admin-tab" onclick="switchTab('safety')" id="tabSafety">
+          🛡️ Safety Reports <span class="tab-badge" id="safetyBadge">0</span>
+        </button>
+        <button class="admin-tab" onclick="switchTab('log')" id="tabLog">
+          📊 Auth Log <span class="tab-badge" id="logBadge">0</span>
+        </button>
+        <button class="admin-tab" onclick="switchTab('users')" id="tabUsers">
+          👥 All Users <span class="tab-badge" id="usersBadge">0</span>
+        </button>
+        <button class="admin-tab" onclick="switchTab('boosts')" id="tabBoosts">
+          🌟 Boosts & Revenue
+        </button>
+      </div>
+
+      <!-- ── Review Queue ── -->
+      <div class="admin-section active" id="sectionQueue">
+        <div class="section-header">
+          <div class="section-title">Seller Portfolio Review Queue</div>
+          <button class="action-btn btn-hold" onclick="loadAll()">↺ Refresh</button>
+        </div>
+        <div id="queueList"></div>
+      </div>
+
+      <!-- ── Safety Reports ── -->
+      <div class="admin-section" id="sectionSafety">
+        <div class="section-header">
+          <div class="section-title">Safety Reports</div>
+        </div>
+        <div id="safetyList"></div>
+      </div>
+
+      <!-- ── Auth Log ── -->
+      <div class="admin-section" id="sectionLog">
+        <div class="section-header">
+          <div class="section-title">Authentication Event Log</div>
+          <button class="action-btn btn-hold" onclick="renderLog()">↺ Refresh</button>
+        </div>
+        <div class="log-table-wrap">
+          <table class="log-table">
+            <thead><tr>
+              <th>Event</th><th>Email</th><th>Roles</th><th>Attempts</th><th>Timestamp</th>
+            </tr></thead>
+            <tbody id="logBody"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- ── All Users ── -->
+      <div class="admin-section" id="sectionUsers">
+        <div class="section-header">
+          <div class="section-title">All Registered Users</div>
+        </div>
+        <div class="log-table-wrap">
+          <table class="log-table">
+            <thead><tr>
+              <th>Name</th><th>Email</th><th>Roles</th><th>Status</th><th>Verified Badge</th><th>Joined</th>
+            </tr></thead>
+            <tbody id="usersBody"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- ── Boosts & Revenue ── -->
+      <div class="admin-section" id="sectionBoosts">
+        <div class="section-header">
+          <div class="section-title">Active Ad Boosts & Revenue</div>
+          <button class="action-btn btn-hold" onclick="renderBoosts()">↺ Refresh</button>
+        </div>
+        <div class="log-table-wrap">
+          <table class="log-table">
+            <thead><tr>
+              <th>Listing ID</th><th>Seller Email</th><th>Tier</th><th>Method</th><th>Revenue</th><th>Expires At</th>
+            </tr></thead>
+            <tbody id="boostsBody"></tbody>
+          </table>
+        </div>
+      </div>
+
+    </div><!-- /admin-body -->
+  </div><!-- /admin-shell -->
+
+  <!-- Image lightbox -->
+  <div class="img-lightbox" id="imgLightbox" onclick="this.classList.remove('open')">
+    <img src="" id="lightboxImg" alt="Portfolio image">
+  </div>
+
+  <!-- Theme switcher -->
+  <div id="theme-switcher">
+    <button class="theme-toggle-btn" onclick="document.getElementById('theme-panel').classList.toggle('open')">🎨 Theme</button>
+    <div class="theme-panel" id="theme-panel">
+      <button class="theme-opt" data-theme="dark-cold"       onclick="setTheme('dark-cold')"><span class="swatch" style="background:linear-gradient(135deg,#0D0F1A,#7C6EF5)"></span>Dark Cold</button>
+      <button class="theme-opt" data-theme="dark-warm"       onclick="setTheme('dark-warm')"><span class="swatch" style="background:linear-gradient(135deg,#120A05,#E8832A)"></span>Dark Warm</button>
+      <button class="theme-opt" data-theme="light-pro"       onclick="setTheme('light-pro')"><span class="swatch" style="background:linear-gradient(135deg,#F7F8FC,#5046E5)"></span>Light Pro</button>
+      <button class="theme-opt" data-theme="sakura"          onclick="setTheme('sakura')"><span class="swatch" style="background:linear-gradient(135deg,#12080A,#FF78A5)"></span>Sakura</button>
+      <button class="theme-opt" data-theme="midnight-ink"    onclick="setTheme('midnight-ink')"><span class="swatch" style="background:linear-gradient(135deg,#040406,#5C5CFF)"></span>Midnight Ink</button>
+      <button class="theme-opt" data-theme="stone-gold"      onclick="setTheme('stone-gold')"><span class="swatch" style="background:linear-gradient(135deg,#0F0E0C,#D4AF37)"></span>Stone &amp; Gold</button>
+      <button class="theme-opt" data-theme="cyber-campus"    onclick="setTheme('cyber-campus')"><span class="swatch" style="background:linear-gradient(135deg,#020205,#00F2FF)"></span>Cyber Campus</button>
+      <button class="theme-opt" data-theme="vintage-vinyl"   onclick="setTheme('vintage-vinyl')"><span class="swatch" style="background:linear-gradient(135deg,#F2E8D5,#D95D39)"></span>Vintage Vinyl</button>
+      <button class="theme-opt" data-theme="emerald-forest"  onclick="setTheme('emerald-forest')"><span class="swatch" style="background:linear-gradient(135deg,#0A1A12,#4CAF50)"></span>Emerald Forest</button>
+      <button class="theme-opt" data-theme="ocean-abyss"     onclick="setTheme('ocean-abyss')"><span class="swatch" style="background:linear-gradient(135deg,#010B13,#00BCD4)"></span>Ocean Abyss</button>
+      <button class="theme-opt" data-theme="sunset-mirage"   onclick="setTheme('sunset-mirage')"><span class="swatch" style="background:linear-gradient(135deg,#1A0B2E,#FF4E50)"></span>Sunset Mirage</button>
+      <button class="theme-opt" data-theme="parchment-quill" onclick="setTheme('parchment-quill')"><span class="swatch" style="background:linear-gradient(135deg,#D6C6B0,#8B4513)"></span>Parchment &amp; Quill</button>
+    </div>
+  </div>
+
+  <script src="assets/js/main.js?v=1.1"></script>
+  <script>
+  /* ═══════════════════════════════════════════════
+     KALAA KART — ADMIN PANEL
+     PIN: kk2025 (change in production)
+  ═══════════════════════════════════════════════ */
+
+  const ADMIN_PIN = 'kk2025'; // In production, verify server-side with a real admin token
+
+  // ── Auth gate ──────────────────────────────────
+  function checkPin() {
+    const pin = document.getElementById('adminPin').value;
+    if (pin === ADMIN_PIN) {
+      sessionStorage.setItem('kk_admin_auth', 'true');
+      unlockAdmin();
+    } else {
+      document.getElementById('gateError').classList.add('show');
+      document.getElementById('adminPin').value = '';
+      document.getElementById('adminPin').focus();
+    }
+  }
+
+  function unlockAdmin() {
+    document.getElementById('adminGate').style.display = 'none';
+    document.getElementById('adminShell').classList.add('visible');
+    loadAll();
+  }
+
+  function adminLogout() {
+    sessionStorage.removeItem('kk_admin_auth');
+    location.reload();
+  }
+
+  // Check if already authed this session
+  if (sessionStorage.getItem('kk_admin_auth') === 'true') unlockAdmin();
+
+  // ── Data loaders ───────────────────────────────
+  function getData(key) {
+    try { return JSON.parse(localStorage.getItem(key) || '[]'); } catch(e) { return []; }
+  }
+
+  function loadAll() {
+    renderStats();
+    renderQueue();
+    renderSafety();
+    renderLog();
+    renderUsers();
+    renderBoosts();
+  }
+
+  // ── Stats ──────────────────────────────────────
+  function renderStats() {
+    const queue    = getData('kk_review_queue');
+    const safety   = getData('kk_safety_reports');
+    const users    = getData('kk_users');
+    const authLogs = getData('kk_auth_log');
+
+    const pending  = queue.filter(q => q.status === 'pending').length;
+    const flagged  = queue.filter(q => q.status === 'flagged' || (q.flags && q.flags.length)).length;
+    const approved = users.filter(u => u.verifiedBadge).length;
+    const failedLogins = authLogs.filter(l => l.event === 'login_failed').length;
+
+    document.getElementById('queueBadge').textContent  = queue.filter(q => q.status === 'pending').length;
+    document.getElementById('safetyBadge').textContent = safety.length;
+    document.getElementById('logBadge').textContent    = authLogs.length;
+    document.getElementById('usersBadge').textContent  = users.length;
+
+    const boosts   = getData('kk_boosts');
+    const revenue  = boosts.reduce((acc, curr) => acc + (curr.revenue || 0), 0);
+    const activeB  = boosts.filter(b => new Date(b.expiresAt) > new Date()).length;
+
+    document.getElementById('statsRow').innerHTML = `
+      <div class="stat-card"><div class="num">${users.length}</div><div class="lbl">Total Users</div></div>
+      <div class="stat-card"><div class="num">${pending}</div><div class="lbl">Pending Review</div></div>
+      <div class="stat-card"><div class="num">${approved}</div><div class="lbl">Verified Sellers</div></div>
+      <div class="stat-card"><div class="num">${activeB}</div><div class="lbl">Active Boosts</div></div>
+      <div class="stat-card"><div class="num" style="color:#22c55e;">₹${revenue}</div><div class="lbl">Ad Revenue</div></div>
+    `;
+  }
+
+  // ── Boosts ─────────────────────────────────────
+  function renderBoosts() {
+    const boosts = getData('kk_boosts').sort((a,b) => new Date(b.purchasedAt) - new Date(a.purchasedAt));
+    document.getElementById('boostsBody').innerHTML = boosts.map(b => {
+      const isActive = new Date(b.expiresAt) > new Date();
+      return `<tr>
+        <td><strong>${escHtml(b.listingId)}</strong></td>
+        <td>${escHtml(b.sellerEmail)}</td>
+        <td><span class="review-status-badge ${isActive ? 'status-approved' : 'status-rejected'}">${b.tier}</span></td>
+        <td>${b.method}</td>
+        <td style="color:#22c55e; font-weight:bold;">₹${b.revenue || 0}</td>
+        <td>${new Date(b.expiresAt).toLocaleString()}</td>
+      </tr>`;
+    }).join('');
+  }
+
+  // ── Queue ──────────────────────────────────────
+  function renderQueue() {
+    const queue = getData('kk_review_queue');
+    const el = document.getElementById('queueList');
+    if (queue.length === 0) {
+      el.innerHTML = `<div class="empty-state"><div class="empty-icon">✅</div><p>No items in the review queue.</p></div>`;
+      return;
+    }
+
+    el.innerHTML = queue.map((item, idx) => {
+      const type = item.type || 'portfolio';
+      const typeBadge = type === 'listing' ? '📦 Listing' : '🎨 Portfolio';
+      
+      const imgs = type === 'listing' 
+        ? [(item.listingSnapshot?.image || '')] 
+        : (item.portfolio && item.portfolio.images) ? item.portfolio.images : [];
+        
+      const flagCount = (item.flags || []).length;
+      const statusClass = flagCount > 0 ? 'status-flagged' : 'status-pending';
+      const statusText  = flagCount > 0 ? `⚠️ ${flagCount} flag${flagCount > 1 ? 's' : ''}` : '🕐 Pending';
+
+      const flagChips = (item.flags || []).map(f => {
+        const labels = {
+          very_small_file: '⚠️ Suspiciously small file',
+          mime_ext_mismatch: '⚠️ MIME/extension mismatch',
+          potential_duplicate: '🔁 Possible duplicate image',
+          uniform_color: '🎨 Uniform Color',
+          white_heavy_background: '⬜ White Background',
+          very_dark_image: '⬛ Dark Image'
+        };
+        const key = Object.keys(labels).find(k => f.flag && f.flag.startsWith(k));
+        const displayFlag = key ? labels[key] : f.flag;
+        return `<span class="flag-chip" title="${escHtml(f.detail || '')}">${displayFlag}</span>`;
+      }).join('');
+
+      const imgHtml = imgs.map((img, ii) => {
+        const imgSrc = img.data || img;
+        if (!imgSrc) return '';
+        const isFlagged = (item.flags || []).some(f => f.imageIndex === ii && f.flag === 'potential_duplicate');
+        return `<img src="${imgSrc}" class="portfolio-thumb${isFlagged ? ' flagged' : ''}"
+          alt="Preview ${ii+1}" onclick="openLightbox(this.src)" title="${isFlagged ? '⚠️ Possible duplicate' : 'Click to enlarge'}">`;
+      }).join('');
+
+      let contentHtml = '';
+      if (type === 'listing') {
+         contentHtml = `
+            <div style="font-weight:700; margin-bottom: 4px;">Item: ${escHtml(item.listingSnapshot?.name || 'Unknown')}</div>
+            <div style="font-size:0.8rem; color:var(--text-secondary); margin-bottom: 12px;">Category: ${escHtml(item.listingSnapshot?.category || '')}</div>
+         `;
+      } else {
+         const link = item.portfolio && item.portfolio.link
+           ? `<div class="portfolio-link" style="margin-bottom:12px;">🔗 <a href="${item.portfolio.link}" target="_blank" rel="noopener">${item.portfolio.link}</a></div>`
+           : '';
+         contentHtml = `
+           ${item.portfolio && item.portfolio.bio ? `<div class="portfolio-bio">"${escHtml(item.portfolio.bio)}"</div>` : ''}
+           ${link}
+         `;
+      }
+
+      const actionDisabled = item.status === 'approved' || item.status === 'rejected';
+      const queuedDate = item.queuedAt ? new Date(item.queuedAt).toLocaleDateString('en-IN', { day:'numeric', month:'short', year:'numeric' }) : '—';
+
+      return `
+        <div class="review-card" id="qCard${idx}">
+          <div class="review-header">
+            <div class="reviewer-info">
+              <div class="name">
+                 <span style="font-size: 0.7rem; background: var(--tag-bg); padding: 2px 6px; border-radius: 4px; margin-right: 6px; vertical-align: middle;">${typeBadge}</span>
+                 ${escHtml(item.name)}
+              </div>
+              <div class="email">${escHtml(item.email)}</div>
+              <div class="meta">Queued: ${queuedDate} · Roles: ${(item.roles || []).join(', ')}</div>
+            </div>
+            <div class="review-status-badge ${statusClass}" id="qStatus${idx}">${statusText}</div>
+          </div>
+
+          ${flagChips ? `<div class="flags-list">${flagChips}</div>` : ''}
+
+          <div class="portfolio-preview">${imgHtml}</div>
+
+          ${contentHtml}
+
+          <div class="review-actions">
+            <button class="action-btn btn-approve" ${actionDisabled ? 'disabled' : ''}
+              onclick="queueAction(${idx}, 'approved')">✅ Approve & Verify</button>
+            <button class="action-btn btn-hold" ${actionDisabled ? 'disabled' : ''}
+              onclick="queueAction(${idx}, 'hold')">📋 Hold</button>
+            <button class="action-btn btn-reject" ${actionDisabled ? 'disabled' : ''}
+              onclick="queueAction(${idx}, 'rejected')">✕ Reject</button>
+            ${type === 'portfolio' ? `<button class="action-btn btn-view-id" onclick="viewId(${idx})">🪪 View ID</button>` : ''}
+          </div>
+          ${actionDisabled ? `<p style="font-size:0.75rem;color:var(--text-secondary);margin-top:10px;">Status: <strong>${item.status}</strong></p>` : ''}
+        </div>
+      `;
+    }).join('');
+  }
+
+  function queueAction(idx, action) {
+    const queue = getData('kk_review_queue');
+    if (!queue[idx]) return;
+    const entry = queue[idx];
+    entry.status = action;
+    entry.reviewedAt = new Date().toISOString();
+
+    if (action === 'approved') {
+      if (entry.type === 'listing') {
+        const listings = getData('kk_user_listings');
+        const li = listings.findIndex(l => l.id === entry.listingId);
+        if (li !== -1) {
+          listings[li].imageApproved = true;
+          localStorage.setItem('kk_user_listings', JSON.stringify(listings));
+        }
+      } else {
+        const users = getData('kk_users');
+        const ui = users.findIndex(u => u.email === entry.email);
+        if (ui !== -1) {
+          users[ui].verifiedBadge = true;
+          users[ui].reviewStatus = 'approved';
+          localStorage.setItem('kk_users', JSON.stringify(users));
+        }
+      }
+    }
+
+    localStorage.setItem('kk_review_queue', JSON.stringify(queue));
+    loadAll();
+  }
+
+  function viewId(idx) {
+    const queue = getData('kk_review_queue');
+    const users = getData('kk_users');
+    const entry = queue[idx];
+    if (!entry) return;
+    const user = users.find(u => u.email === entry.email);
+    if (user && user.idVerification && user.idVerification.file && user.idVerification.file.type && user.idVerification.file.type.startsWith('image/')) {
+      openLightbox(user.idVerification.file.data);
+    } else if (user && user.idVerification && user.idVerification.file) {
+      alert('ID on file: ' + (user.idVerification.file.name || 'File uploaded') + '\n(PDF files cannot be previewed here — download in production.)');
+    } else {
+      alert('No ID on file for this user.');
+    }
+  }
+
+  // ── Safety Reports ─────────────────────────────
+  function renderSafety() {
+    const reports = getData('kk_safety_reports');
+    const users   = getData('kk_users');
+    const el = document.getElementById('safetyList');
+
+    if (reports.length === 0) {
+      el.innerHTML = `<div class="empty-state"><div class="empty-icon">🛡️</div><p>No safety reports filed.</p></div>`;
+      return;
+    }
+
+    el.innerHTML = reports.map((r, i) => {
+      // Find emergency contact for reported-about person if email known
+      let ecHtml = '';
+      if (r.reportedEmail) {
+        const u = users.find(u => u.email === r.reportedEmail);
+        const reporter = users.find(u => u.email === r.reporterEmail);
+        if (reporter && reporter.emergencyContact && (reporter.emergencyContact.name || reporter.emergencyContact.phone)) {
+          ecHtml = `
+            <div class="safety-ec">
+              <div class="ec-label">🆘 Reporter's Emergency Contact (private)</div>
+              <div class="ec-value">${escHtml(reporter.emergencyContact.name || '—')} · ${escHtml(reporter.emergencyContact.phone || '—')}</div>
+            </div>`;
+        }
+      }
+      const rDate = r.submittedAt ? new Date(r.submittedAt).toLocaleString('en-IN') : '—';
+      const statusBadge = r.resolved
+        ? '<span class="review-status-badge status-approved">✅ Resolved</span>'
+        : '<span class="review-status-badge status-flagged">🔴 Open</span>';
+
+      return `
+        <div class="safety-card">
+          <div class="safety-header">
+            <div>
+              <div class="safety-title">🚨 Report from: ${escHtml(r.reporterName || 'Anonymous')}</div>
+              <div class="safety-meta">Submitted: ${rDate} · Reporter email: ${escHtml(r.reporterEmail || '—')}</div>
+            </div>
+            ${statusBadge}
+          </div>
+          <div class="safety-body">${escHtml(r.description || '(No description provided)')}</div>
+          ${ecHtml}
+          <div class="review-actions">
+            ${!r.resolved ? `<button class="action-btn btn-approve" onclick="resolveReport(${i})">✅ Mark Resolved</button>` : ''}
+            <button class="action-btn btn-hold" onclick="contactReporter(${i})">📧 Contact Reporter</button>
+          </div>
+        </div>
+      `;
+    }).join('');
+  }
+
+  function resolveReport(idx) {
+    const reports = getData('kk_safety_reports');
+    if (reports[idx]) {
+      reports[idx].resolved = true;
+      reports[idx].resolvedAt = new Date().toISOString();
+      localStorage.setItem('kk_safety_reports', JSON.stringify(reports));
+      renderSafety();
+      renderStats();
+    }
+  }
+
+  function contactReporter(idx) {
+    const reports = getData('kk_safety_reports');
+    const r = reports[idx];
+    if (r && r.reporterEmail) {
+      window.location.href = `mailto:${r.reporterEmail}?subject=KalaaKart Safety Report Follow-up&body=Hi ${r.reporterName || 'there'},\n\nThank you for filing a safety report. Our team is looking into this.`;
+    }
+  }
+
+  // ── Auth Log ───────────────────────────────────
+  function renderLog() {
+    const logs = getData('kk_auth_log').reverse(); // newest first
+    const body = document.getElementById('logBody');
+    if (!logs.length) {
+      body.innerHTML = `<tr><td colspan="5" style="text-align:center;padding:24px;color:var(--text-secondary);">No auth events logged yet.</td></tr>`;
+      return;
+    }
+    body.innerHTML = logs.slice(0, 200).map(l => {
+      const isFail = l.event === 'login_failed';
+      const eventClass = l.event === 'signup' ? 'event-signup' : isFail ? 'event-fail' : 'event-login';
+      const eventLabel = l.event === 'signup' ? '🆕 Signup' : isFail ? '❌ Login Failed' : '✅ Login';
+      const ts = l.ts ? new Date(l.ts).toLocaleString('en-IN') : '—';
+      return `
+        <tr class="${isFail ? 'log-row-fail' : ''}">
+          <td><span class="log-event ${eventClass}">${eventLabel}</span></td>
+          <td>${escHtml(l.email || '—')}</td>
+          <td>${(l.roles || []).join(', ') || '—'}</td>
+          <td>${l.attempts || '—'}</td>
+          <td>${ts}</td>
+        </tr>
+      `;
+    }).join('');
+  }
+
+  // ── Users table ────────────────────────────────
+  function renderUsers() {
+    const users = getData('kk_users');
+    const body = document.getElementById('usersBody');
+    if (!users.length) {
+      body.innerHTML = `<tr><td colspan="6" style="text-align:center;padding:24px;color:var(--text-secondary);">No registered users yet.</td></tr>`;
+      return;
+    }
+    body.innerHTML = users.map(u => {
+      const statusMap = {
+        approved: '<span class="review-status-badge status-approved">Approved</span>',
+        pending:  '<span class="review-status-badge status-pending">Pending</span>',
+        flagged:  '<span class="review-status-badge status-flagged">Flagged</span>'
+      };
+      const joined = u.createdAt ? new Date(u.createdAt).toLocaleDateString('en-IN') : '—';
+      return `
+        <tr>
+          <td>${escHtml(u.name || '—')}</td>
+          <td>${escHtml(u.email || '—')}</td>
+          <td>${(u.roles || []).join(', ')}</td>
+          <td>${statusMap[u.reviewStatus] || '—'}</td>
+          <td>${u.verifiedBadge ? '✅ Verified' : '—'}</td>
+          <td>${joined}</td>
+        </tr>
+      `;
+    }).join('');
+  }
+
+  // ── Tabs ───────────────────────────────────────
+  function switchTab(name) {
+    const tabs    = { queue:'sectionQueue', safety:'sectionSafety', log:'sectionLog', users:'sectionUsers' };
+    const tabBtns = { queue:'tabQueue', safety:'tabSafety', log:'tabLog', users:'tabUsers' };
+    Object.keys(tabs).forEach(k => {
+      document.getElementById(tabs[k]).classList.toggle('active', k === name);
+      document.getElementById(tabBtns[k]).classList.toggle('active', k === name);
+    });
+  }
+
+  // ── Lightbox ───────────────────────────────────
+  function openLightbox(src) {
+    document.getElementById('lightboxImg').src = src;
+    document.getElementById('imgLightbox').classList.add('open');
+  }
+
+  // ── Utility ────────────────────────────────────
+  function escHtml(s) {
+    return String(s || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  }
+  </script>
+</body>
+</html>

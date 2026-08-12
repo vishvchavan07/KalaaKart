@@ -1,0 +1,9 @@
+<svg width="480" height="300" viewBox="0 0 480 300" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="480" height="300" rx="26" fill="#FFF5F8"/>
+  <rect x="88" y="60" width="304" height="180" rx="24" fill="#FFFDFE"/>
+  <path d="M138 108C184 77 223 77 271 108C309 133 339 136 361 122" stroke="#C46D8E" stroke-width="8" stroke-linecap="round"/>
+  <path d="M136 150H326" stroke="#2F5D50" stroke-width="6" stroke-linecap="round"/>
+  <path d="M136 181H301" stroke="#C46D8E" stroke-width="6" stroke-linecap="round"/>
+  <path d="M136 210H282" stroke="#2F5D50" stroke-width="6" stroke-linecap="round"/>
+  <text x="240" y="278" text-anchor="middle" fill="#111827" font-family="Arial, sans-serif" font-size="25" font-weight="700">Romantic Shayari Letter</text>
+</svg>

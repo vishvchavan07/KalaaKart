@@ -1,0 +1,10 @@
+<svg width="480" height="300" viewBox="0 0 480 300" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="480" height="300" rx="26" fill="#F6FAFF"/>
+  <rect x="153" y="42" width="174" height="216" rx="30" fill="#FFE1D3" stroke="#17313E" stroke-width="6"/>
+  <circle cx="240" cy="120" r="40" fill="#A8D5FF"/>
+  <circle cx="217" cy="112" r="5" fill="#17313E"/>
+  <circle cx="261" cy="112" r="5" fill="#17313E"/>
+  <path d="M223 135C230.333 140.667 248.6 142.6 257 133" stroke="#17313E" stroke-width="6" stroke-linecap="round"/>
+  <path d="M193 79C203 62 217 54 238 54C258 54 278 62 289 80" stroke="#17313E" stroke-width="7" stroke-linecap="round"/>
+  <text x="240" y="282" text-anchor="middle" fill="#17313E" font-family="Arial, sans-serif" font-size="26" font-weight="700">Custom Anime Phone Cover</text>
+</svg>

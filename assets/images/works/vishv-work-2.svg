@@ -1,0 +1,10 @@
+<svg width="480" height="300" viewBox="0 0 480 300" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="480" height="300" rx="26" fill="#FFF9EF"/>
+  <rect x="100" y="56" width="280" height="188" rx="18" fill="#FFFFFF" stroke="#E4D9C7" stroke-width="4"/>
+  <path d="M136 104H332" stroke="#2F5D50" stroke-width="6" stroke-linecap="round"/>
+  <path d="M136 136H308" stroke="#D28E53" stroke-width="6" stroke-linecap="round"/>
+  <path d="M136 168H326" stroke="#2F5D50" stroke-width="6" stroke-linecap="round"/>
+  <path d="M136 200H281" stroke="#D28E53" stroke-width="6" stroke-linecap="round"/>
+  <circle cx="334" cy="95" r="14" fill="#F08A64"/>
+  <text x="240" y="278" text-anchor="middle" fill="#111827" font-family="Arial, sans-serif" font-size="25" font-weight="700">Farewell Poem Card</text>
+</svg>

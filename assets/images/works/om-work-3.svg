@@ -1,0 +1,11 @@
+<svg width="480" height="300" viewBox="0 0 480 300" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="480" height="300" rx="26" fill="#F7F9FD"/>
+  <rect x="110" y="84" width="260" height="132" rx="24" fill="#FFFFFF"/>
+  <circle cx="180" cy="150" r="22" fill="#6E8DCD"/>
+  <circle cx="240" cy="150" r="22" fill="#CDA66E"/>
+  <circle cx="300" cy="150" r="22" fill="#6E8DCD"/>
+  <circle cx="180" cy="150" r="6" fill="#FFFFFF"/>
+  <circle cx="240" cy="150" r="6" fill="#FFFFFF"/>
+  <circle cx="300" cy="150" r="6" fill="#FFFFFF"/>
+  <text x="240" y="278" text-anchor="middle" fill="#111827" font-family="Arial, sans-serif" font-size="25" font-weight="700">Quick Button Repair</text>
+</svg>

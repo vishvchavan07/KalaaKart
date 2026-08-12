@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark-cold">
+<head>
+    <script>
+    (function() {
+      const t = localStorage.getItem('kk-theme') || 'dark-cold';
+      document.documentElement.setAttribute('data-theme', t);
+    })();
+  </script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Create Profile — Kalaa Kart</title>
+  <link rel="icon" type="image/jpeg" href="assets/images/main_logo_final.jpeg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/styles.css?v=4">
+</head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Create Profile — Kalaa Kart</title>
+  <link rel="icon" type="image/jpeg" href="assets/images/main_logo_final.jpeg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/styles.css?v=4">
+</head>
+<body data-page="create-profile">
+  <div id="cursor-dot"></div>
+  <div id="cursor-ring"></div>
+
+  <header class="navbar">
+    <a class="nav-brand" href="index.html">
+        <img src="assets/images/main_logo_final.jpeg" alt="Kalaa Kart logo" style="height: 45px; width: auto; object-fit: contain;">
+    </a>
+    <div class="nav-links">
+        <a href="index.html">HOME</a>
+        <a href="profiles.html">PROFILES</a>
+        <a href="mentor-booking.html">MENTOR BOOKING</a>
+        <a href="marketplace.html">REUSE SECTION</a>
+        <a href="login.html">LOG IN</a>
+        <a href="create-profile.html">SIGN UP</a>
+    </div>
+    <button class="nav-hamburger" id="navHamburger" aria-label="Toggle menu">☰</button>
+  </header>
+  <nav class="nav-mobile-dropdown" id="navMobileDropdown">
+    <a href="index.html">HOME</a>
+    <a href="profiles.html">PROFILES</a>
+    <a href="mentor-booking.html">MENTOR BOOKING</a>
+    <a href="marketplace.html">REUSE SECTION</a>
+    <a href="login.html" style="color:var(--accent);">LOG IN</a>
+    <a href="create-profile.html" style="color:var(--accent);font-weight:700;">SIGN UP</a>
+  </nav>
+
+  <main>
+    <section class="page-hero">
+      <div class="container hero-frame">
+        <h1 class="hero-headline">Create Your Profile</h1>
+        <p class="hero-subtext">Join Kalaa Kart to showcase your talent, mentor peers, or sell items.</p>
+      </div>
+    </section>
+
+    <div class="container form-container">
+        <form id="createProfileForm">
+            <div class="form-group">
+                <label>Profile Photo</label>
+                <div class="profile-photo-box" id="profilePhotoBox">
+                    <span>Upload</span>
+                    <input type="file" id="profilePhotoInput" accept="image/*">
+                    <img id="profilePhotoPreview" src="" alt="Profile Preview">
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group required-group">
+                    <label>Full Name</label>
+                    <input type="text" id="fullName" placeholder="E.g. Ananya Iyer" required>
+                    <div class="error-msg">Full Name is required</div>
+                </div>
+                <div class="form-group required-group">
+                    <label>Creative Title</label>
+                    <input type="text" id="creativeTitle" placeholder="E.g. Resin Artist & Keychain Maker" required>
+                    <div class="error-msg">Creative Title is required</div>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group required-group">
+                    <label>College Name</label>
+                    <input type="text" id="collegeName" placeholder="E.g. Engineering College" required>
+                    <div class="error-msg">College is required</div>
+                </div>
+                <div class="form-group required-group">
+                    <label>Branch / Department</label>
+                    <input type="text" id="branch" placeholder="E.g. Computer Science" required>
+                    <div class="error-msg">Branch is required</div>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group required-group">
+                    <label>Year</label>
+                    <select id="year" required>
+                        <option value="">Select Year...</option>
+                        <option value="First Year">First Year</option>
+                        <option value="Second Year">Second Year</option>
+                        <option value="Third Year">Third Year</option>
+                        <option value="Final Year">Final Year</option>
+                    </select>
+                    <div class="error-msg">Year is required</div>
+                </div>
+                <div class="form-group required-group">
+                    <label>Email</label>
+                    <input type="email" id="email" placeholder="E.g. ananya@campus.edu" required>
+                    <div class="error-msg">Email is required</div>
+                </div>
+                <div class="form-group">
+                    <label>Phone <span class="optional">(Optional)</span></label>
+                    <input type="tel" id="phone" placeholder="E.g. +91 9999999999">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>How do you want to use Kalaa Kart?</label>
+                <div class="pill-checkboxes" id="rolesCheckboxes">
+                    <label><input type="checkbox" value="Creator/Artist"><span>Creator/Artist</span></label>
+                    <label><input type="checkbox" value="Peer Mentor"><span>Peer Mentor</span></label>
+                    <label><input type="checkbox" value="Buyer/Client"><span>Buyer/Client</span></label>
+                    <label><input type="checkbox" value="Selling Clothes"><span>Selling Clothes</span></label>
+                    <label><input type="checkbox" value="Looking to Collaborate"><span>Looking to Collaborate</span></label>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Skill/Hobby Tags <span class="optional">(Comma separated)</span></label>
+                <input type="text" id="hobbies" placeholder="E.g. Painting, Calligraphy, UI Design">
+            </div>
+
+            <div class="form-row" style="align-items: center;">
+                <div class="form-group">
+                    <label>Price Min (₹)</label>
+                    <input type="number" id="priceMin" placeholder="E.g. 100" min="0">
+                </div>
+                <div class="form-group">
+                    <label>Price Max (₹)</label>
+                    <input type="number" id="priceMax" placeholder="E.g. 1000" min="0">
+                </div>
+                <div class="form-group" style="margin-top: 15px;">
+                    <label style="display:inline-flex;align-items:center;cursor:pointer;">
+                        <input type="checkbox" id="negotiable" style="width:auto;margin-right:8px;"> Negotiable
+                    </label>
+                </div>
+            </div>
+
+            <div class="form-group required-group">
+                <label>Short Bio</label>
+                <textarea id="bio" rows="3" maxlength="220" placeholder="A brief description of who you are..." required></textarea>
+                <div class="char-counter"><span id="bioCount">0</span> / 220</div>
+                <div class="error-msg">Bio is required</div>
+            </div>
+
+            <div class="form-group required-group">
+                <label>Your Story / Journey</label>
+                <textarea id="story" rows="5" maxlength="500" placeholder="Share your journey, how you got into this, what inspires you..." required></textarea>
+                <div class="char-counter"><span id="storyCount">0</span> / 500</div>
+                <div class="error-msg">Story is required</div>
+            </div>
+
+            <div class="form-group">
+                <label>Work Gallery (Up to 3 images)</label>
+                <div class="gallery-grid">
+                    <div class="img-preview-box">
+                        <span>Slot 1</span>
+                        <input type="file" class="gallery-upload" accept="image/*">
+                        <img src="" alt="Gallery Image 1">
+                    </div>
+                    <div class="img-preview-box">
+                        <span>Slot 2</span>
+                        <input type="file" class="gallery-upload" accept="image/*">
+                        <img src="" alt="Gallery Image 2">
+                    </div>
+                    <div class="img-preview-box">
+                        <span>Slot 3</span>
+                        <input type="file" class="gallery-upload" accept="image/*">
+                        <img src="" alt="Gallery Image 3">
+                    </div>
+                </div>
+            </div>
+
+            <button type="submit" class="submit-btn" id="submitBtn">Create Profile</button>
+        </form>
+    </div>
+  </main>
+
+  <footer class="site-footer-premium">
+    <div class="footer-bottom" style="border-top:none; padding-top:20px;">
+      <p style="text-align:center;">© 2025 Kalaa Kart. Made with ♥ for campus communities.</p>
+    </div>
+  </footer>
+
+  <div id="theme-switcher">
+    <button class="theme-toggle-btn" onclick="document.getElementById('theme-panel').classList.toggle('open')">🎨 Theme</button>
+    <div class="theme-panel" id="theme-panel">
+      <button class="theme-opt" data-theme="dark-cold" onclick="setTheme('dark-cold')"><span class="swatch" style="background:linear-gradient(135deg,#0D0F1A,#7C6EF5)"></span>Dark Cold</button>
+      <button class="theme-opt" data-theme="dark-warm" onclick="setTheme('dark-warm')"><span class="swatch" style="background:linear-gradient(135deg,#120A05,#E8832A)"></span>Dark Warm</button>
+      <button class="theme-opt" data-theme="light-pro" onclick="setTheme('light-pro')"><span class="swatch" style="background:linear-gradient(135deg,#F7F8FC,#5046E5)"></span>Light Pro</button>
+    </div>
+  </div>
+
+  <div class="toast" id="successToast">Profile created! Redirecting...</div>
+  <button id="backToTop" aria-label="Back to top">↑</button>
+
+<script>
+function setTheme(t) {
+  document.documentElement.setAttribute('data-theme', t);
+  localStorage.setItem('kk-theme', t);
+  document.querySelectorAll('.theme-opt').forEach(b => b.classList.toggle('active', b.dataset.theme === t));
+}
+(function(){ setTheme(localStorage.getItem('kk-theme') || 'dark-cold'); })();
+
+const dot = document.getElementById('cursor-dot');
+const ring = document.getElementById('cursor-ring');
+let rx=0,ry=0,dx=0,dy=0;
+document.addEventListener('mousemove', e => { dx=e.clientX; dy=e.clientY; dot.style.left=dx+'px'; dot.style.top=dy+'px'; });
+(function loop(){ rx+=(dx-rx)*0.12; ry+=(dy-ry)*0.12; ring.style.left=rx+'px'; ring.style.top=ry+'px'; requestAnimationFrame(loop); })();
+document.querySelectorAll('a,button,.img-preview-box,.profile-photo-box,input,select,textarea').forEach(el=>{
+  el.addEventListener('mouseenter',()=>{ ring.style.width='52px'; ring.style.height='52px'; ring.style.opacity='1'; });
+  el.addEventListener('mouseleave',()=>{ ring.style.width='36px'; ring.style.height='36px'; ring.style.opacity='0.65'; });
+});
+
+(function() {
+  const hamburger = document.getElementById('navHamburger');
+  const mobileNav = document.getElementById('navMobileDropdown');
+  if (hamburger && mobileNav) {
+    hamburger.addEventListener('click', function() {
+      mobileNav.classList.toggle('open');
+      hamburger.textContent = mobileNav.classList.contains('open') ? '✕' : '☰';
+    });
+    document.addEventListener('click', function(e) {
+      if (!hamburger.contains(e.target) && !mobileNav.contains(e.target)) {
+        mobileNav.classList.remove('open');
+        hamburger.textContent = '☰';
+      }
+    });
+  }
+
+  const backToTop = document.getElementById('backToTop');
+  if (backToTop) {
+    window.addEventListener('scroll', function() {
+      backToTop.style.opacity = window.scrollY > 300 ? '1' : '0';
+      backToTop.style.pointerEvents = window.scrollY > 300 ? 'auto' : 'none';
+    });
+    backToTop.addEventListener('click', function() {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  }
+})();
+
+// Character counters
+document.getElementById('bio').addEventListener('input', function() {
+    document.getElementById('bioCount').textContent = this.value.length;
+});
+document.getElementById('story').addEventListener('input', function() {
+    document.getElementById('storyCount').textContent = this.value.length;
+});
+
+// Helpers to encode image
+function encodeImageFileAsURL(element, callback) {
+  var file = element.files[0];
+  if (!file) return callback(null);
+  var reader = new FileReader();
+  reader.onloadend = function() {
+    callback(reader.result);
+  }
+  reader.readAsDataURL(file);
+}
+
+// Profile photo preview
+document.getElementById('profilePhotoInput').addEventListener('change', function() {
+    let box = document.getElementById('profilePhotoBox');
+    let img = document.getElementById('profilePhotoPreview');
+    encodeImageFileAsURL(this, function(res) {
+        if(res){
+            img.src = res;
+            box.classList.add('has-img');
+        } else {
+            box.classList.remove('has-img');
+        }
+    });
+});
+
+// Gallery photo previews
+document.querySelectorAll('.gallery-upload').forEach(el => {
+    el.addEventListener('change', function() {
+        let box = this.parentElement;
+        let img = box.querySelector('img');
+        encodeImageFileAsURL(this, function(res) {
+            if(res){
+                img.src = res;
+                box.classList.add('has-img');
+            } else {
+                box.classList.remove('has-img');
+            }
+        });
+    });
+});
+
+// Form Submit
+document.getElementById('createProfileForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    let form = this;
+    let isValid = true;
+    
+    // Clear errors
+    document.querySelectorAll('.has-error').forEach(el => el.classList.remove('has-error'));
+    
+    // Validate required fields
+    ['fullName', 'creativeTitle', 'collegeName', 'branch', 'year', 'email', 'bio', 'story'].forEach(id => {
+        let el = document.getElementById(id);
+        if(!el.value.trim()) {
+            el.parentElement.classList.add('has-error');
+            isValid = false;
+        }
+    });
+
+    if(!isValid) {
+        window.scrollTo({ top: document.querySelector('.has-error').offsetTop - 100, behavior: 'smooth' });
+        return;
+    }
+
+    // Gather roles
+    let roles = [];
+    document.querySelectorAll('#rolesCheckboxes input:checked').forEach(cb => {
+        roles.push(cb.value);
+    });
+
+    // Gather hobbies
+    let hobbiesStr = document.getElementById('hobbies').value;
+    let hobbies = hobbiesStr ? hobbiesStr.split(',').map(s => s.trim()).filter(s => s) : [];
+
+    // Gather gallery images
+    let gallery = [];
+    document.querySelectorAll('.gallery-upload').forEach((el, index) => {
+        let img = el.parentElement.querySelector('img');
+        if(img.src && img.src.startsWith('data:')) {
+            gallery.push({
+                title: "Work " + (index + 1),
+                src: img.src
+            });
+        }
+    });
+
+    let pMin = document.getElementById('priceMin').value || 0;
+    let pMax = document.getElementById('priceMax').value || 0;
+
+    let profileData = {
+        id: "p_" + Date.now(),
+        name: document.getElementById('fullName').value.trim(),
+        title: document.getElementById('creativeTitle').value.trim(),
+        image: document.getElementById('profilePhotoPreview').src || "assets/images/profiles/default.jpg",
+        bio: document.getElementById('bio').value.trim(),
+        story: document.getElementById('story').value.trim(),
+        email: document.getElementById('email').value.trim(),
+        phone: document.getElementById('phone').value.trim(),
+        college: document.getElementById('collegeName').value.trim(),
+        branch: document.getElementById('branch').value.trim(),
+        year: document.getElementById('year').value,
+        roles: roles,
+        hobbies: hobbies,
+        gallery: gallery,
+        priceRange: { min: parseInt(pMin), max: parseInt(pMax), defaultValue: parseInt(pMin), step: 50 },
+        negotiable: document.getElementById('negotiable').checked,
+        location: document.getElementById('collegeName').value.trim(),
+        responseTime: "2-3 hours",
+        rating: "5.0",
+        reviews: 0,
+        works: gallery.length,
+        isUserCreated: true
+    };
+
+    // Save to local storage
+    let existingProfiles = [];
+    try {
+        existingProfiles = JSON.parse(localStorage.getItem('kk_user_profiles')) || [];
+    } catch(err) {
+        existingProfiles = [];
+    }
+    existingProfiles.push(profileData);
+    localStorage.setItem('kk_user_profiles', JSON.stringify(existingProfiles));
+
+    // Show toast
+    let toast = document.getElementById('successToast');
+    toast.classList.add('show');
+    
+    setTimeout(() => {
+        window.location.href = 'profiles.html';
+    }, 1500);
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark-cold">
+<head>
+    <script>
+    (function() {
+      const t = localStorage.getItem('kk-theme') || 'dark-cold';
+      document.documentElement.setAttribute('data-theme', t);
+    })();
+  </script>
+  <script src="assets/js/branding.js"></script>
+  <script src="assets/js/imageProcessor.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sell / Rent Item — Kalaa Kart</title>
+  <link rel="icon" type="image/jpeg" href="assets/images/main_logo_final.jpeg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/styles.css?v=4">
+</head>
+<body data-page="sell-item">
+  <div id="cursor-dot"></div>
+  <div id="cursor-ring"></div>
+
+  <header class="navbar">
+    <a class="nav-brand" href="index.html">
+        <img src="assets/images/main_logo_final.jpeg" alt="Kalaa Kart logo" style="height: 45px; width: auto; object-fit: contain;">
+    </a>
+    <div class="nav-links">
+        <a href="index.html">HOME</a>
+        <a href="profiles.html">PROFILES</a>
+        <a href="mentor-booking.html">MENTOR BOOKING</a>
+        <a href="marketplace.html">REUSE SECTION</a>
+        <a href="login.html">LOG IN</a>
+        <a href="create-profile.html">SIGN UP</a>
+    </div>
+    <button class="nav-hamburger" id="navHamburger" aria-label="Toggle menu">☰</button>
+  </header>
+  <nav class="nav-mobile-dropdown" id="navMobileDropdown">
+    <a href="index.html">HOME</a>
+    <a href="profiles.html">PROFILES</a>
+    <a href="mentor-booking.html">MENTOR BOOKING</a>
+    <a href="marketplace.html">REUSE SECTION</a>
+    <a href="login.html" style="color:var(--accent);">LOG IN</a>
+    <a href="create-profile.html" style="color:var(--accent);font-weight:700;">SIGN UP</a>
+  </nav>
+
+  <main>
+    <section class="page-hero">
+      <div class="container hero-frame">
+        <h1 class="hero-headline">List an Item</h1>
+        <p class="hero-subtext">Sell or rent your college wear, gear, and essentials.</p>
+      </div>
+    </section>
+
+    <div class="container form-container">
+        <form id="sellItemForm">
+            <div class="form-group required-group">
+                <label>Item Name</label>
+                <input type="text" id="itemName" placeholder="E.g. College Blazer" required>
+                <div class="error-msg">Item Name is required</div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group required-group">
+                    <label>Category</label>
+                    <select id="category" required>
+                        <option value="">Select...</option>
+                        <option value="formals">Formals</option>
+                        <option value="lab">Lab Gear</option>
+                        <option value="fest">Fest Wear</option>
+                    </select>
+                    <div class="error-msg">Category is required</div>
+                </div>
+                <div class="form-group required-group">
+                    <label>Size</label>
+                    <select id="size" required>
+                        <option value="">Select...</option>
+                        <option value="XS">XS</option>
+                        <option value="S">S</option>
+                        <option value="M">M</option>
+                        <option value="L">L</option>
+                        <option value="XL">XL</option>
+                        <option value="XXL">XXL</option>
+                        <option value="NA">Not Applicable</option>
+                    </select>
+                    <div class="error-msg">Size is required</div>
+                </div>
+            </div>
+
+            <div class="form-group required-group">
+                <label>Condition</label>
+                <select id="condition" required>
+                    <option value="">Select...</option>
+                    <option value="Like New">Like New</option>
+                    <option value="Good">Good</option>
+                    <option value="Fair">Fair</option>
+                </select>
+                <div class="error-msg">Condition is required</div>
+            </div>
+
+            <div class="form-group required-group">
+                <label>Description</label>
+                <textarea id="description" rows="3" maxlength="200" placeholder="Describe the item, how old it is, etc." required></textarea>
+                <div class="char-counter"><span id="descCount">0</span> / 200</div>
+                <div class="error-msg">Description is required</div>
+            </div>
+
+            <div class="form-group">
+                <label>Listing Type</label>
+                <div class="pill-radio-group">
+                    <label><input type="radio" name="listingType" value="Sell Only"><span>Sell Only</span></label>
+                    <label><input type="radio" name="listingType" value="Rent Only"><span>Rent Only</span></label>
+                    <label><input type="radio" name="listingType" value="Both"><span>Both</span></label>
+                </div>
+                <div class="error-msg" id="listingTypeError">Select a listing type</div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group" id="priceBuyContainer">
+                    <label>Buy Price (₹)</label>
+                    <input type="number" id="priceBuy" placeholder="E.g. 500" min="0">
+                    <div class="error-msg">Enter a buy price</div>
+                </div>
+                <div class="form-group" id="priceRentContainer">
+                    <label>Rent Price / Day (₹)</label>
+                    <input type="number" id="priceRent" placeholder="E.g. 100" min="0">
+                    <div class="error-msg">Enter a rent price</div>
+                </div>
+            </div>
+            
+            <div class="form-group" style="margin-top: -5px; margin-bottom: 25px;">
+                <label style="display:inline-flex;align-items:center;cursor:pointer;font-weight:normal;">
+                    <input type="checkbox" id="negotiable" style="width:auto;margin-right:8px;"> Negotiable
+                </label>
+            </div>
+
+            <div class="form-group">
+                <label>Item Photos</label>
+                <p style="font-size:0.8rem;color:var(--text-secondary);margin-bottom:10px;">Min 400×400px · Max 10 MB · Auto-compressed to ≤1200px JPEG</p>
+                <div class="gallery-grid">
+                    <div class="img-preview-box" id="photoBox0">
+                        <span>Main Photo<br><small>(Required)</small></span>
+                        <input type="file" class="gallery-upload" id="mainPhotoInput" accept="image/jpeg,image/png,image/webp,image/gif" data-slot="0">
+                        <img src="" alt="Main Image Preview">
+                    </div>
+                    <div class="img-preview-box" id="photoBox1">
+                        <span>Second Angle<br><small>(Optional)</small></span>
+                        <input type="file" class="gallery-upload" accept="image/jpeg,image/png,image/webp,image/gif" data-slot="1">
+                        <img src="" alt="Second Image Preview">
+                    </div>
+                </div>
+                <!-- Per-slot status messages -->
+                <div id="imgStatus0" style="font-size:0.78rem;margin-top:6px;display:none;"></div>
+                <div id="imgStatus1" style="font-size:0.78rem;margin-top:4px;display:none;"></div>
+                <!-- Progress bars -->
+                <div id="imgProgress0" style="height:4px;border-radius:4px;background:var(--border);margin-top:8px;display:none;overflow:hidden;">
+                  <div style="height:100%;width:0%;background:var(--accent);transition:width 0.3s;" id="imgProgressBar0"></div>
+                </div>
+                <div id="imgProgress1" style="height:4px;border-radius:4px;background:var(--border);margin-top:4px;display:none;overflow:hidden;">
+                  <div style="height:100%;width:0%;background:var(--accent);transition:width 0.3s;" id="imgProgressBar1"></div>
+                </div>
+                <!-- AI check result chips -->
+                <div id="imgFlags0" style="display:flex;flex-wrap:wrap;gap:6px;margin-top:8px;"></div>
+                <div id="imgFlags1" style="display:flex;flex-wrap:wrap;gap:6px;margin-top:4px;"></div>
+                <div class="error-msg" id="photoError">Main photo is required</div>
+            </div>
+
+            <hr style="border:0;border-top:1px solid var(--border);margin:30px 0;">
+
+            <div class="form-row">
+                <div class="form-group required-group">
+                    <label>Seller Name</label>
+                    <input type="text" id="sellerName" placeholder="E.g. Arjun Sharma" required>
+                    <div class="error-msg">Seller Name is required</div>
+                </div>
+                <div class="form-group required-group">
+                    <label>Year</label>
+                    <select id="sellerYear" required>
+                        <option value="">Select Year...</option>
+                        <option value="First Year">First Year</option>
+                        <option value="Second Year">Second Year</option>
+                        <option value="Third Year">Third Year</option>
+                        <option value="Final Year">Final Year</option>
+                    </select>
+                    <div class="error-msg">Year is required</div>
+                </div>
+            </div>
+
+            <div class="form-group required-group">
+                <label>Contact Email</label>
+                <input type="email" id="contactEmail" placeholder="E.g. arjun@campus.edu" required>
+                <div class="error-msg">Email is required</div>
+            </div>
+
+            <button type="submit" class="submit-btn" id="submitBtn">List Item</button>
+        </form>
+    </div>
+  </main>
+
+  <footer class="site-footer-premium">
+    <div class="footer-bottom" style="border-top:none; padding-top:20px;">
+      <p style="text-align:center;">© 2025 Kalaa Kart. Made with ♥ for campus communities.</p>
+    </div>
+  </footer>
+
+  <div id="theme-switcher">
+    <button class="theme-toggle-btn" onclick="document.getElementById('theme-panel').classList.toggle('open')">🎨 Theme</button>
+    <div class="theme-panel" id="theme-panel">
+      <button class="theme-opt" data-theme="dark-cold" onclick="setTheme('dark-cold')"><span class="swatch" style="background:linear-gradient(135deg,#0D0F1A,#7C6EF5)"></span>Dark Cold</button>
+      <button class="theme-opt" data-theme="dark-warm" onclick="setTheme('dark-warm')"><span class="swatch" style="background:linear-gradient(135deg,#120A05,#E8832A)"></span>Dark Warm</button>
+      <button class="theme-opt" data-theme="light-pro" onclick="setTheme('light-pro')"><span class="swatch" style="background:linear-gradient(135deg,#F7F8FC,#5046E5)"></span>Light Pro</button>
+    </div>
+  </div>
+
+  <div class="toast" id="successToast">Item listed! Redirecting...</div>
+  <button id="backToTop" aria-label="Back to top">↑</button>
+
+<script>
+function setTheme(t) {
+  document.documentElement.setAttribute('data-theme', t);
+  localStorage.setItem('kk-theme', t);
+  document.querySelectorAll('.theme-opt').forEach(b => b.classList.toggle('active', b.dataset.theme === t));
+}
+(function(){ setTheme(localStorage.getItem('kk-theme') || 'dark-cold'); })();
+
+/* ═══════════════════════════════════════════════
+   SELL ITEM — Photo Upload with Quality Gate
+   + AI Verification (Tier 1)
+═══════════════════════════════════════════════ */
+
+// State: processed results per slot
+const photoResults = { 0: null, 1: null };
+
+function showSlotStatus(slot, text, color) {
+  const el = document.getElementById(`imgStatus${slot}`);
+  if (!el) return;
+  el.style.display = 'block';
+  el.style.color = color || 'var(--text-secondary)';
+  el.innerHTML = text;
+}
+function showSlotProgress(slot, pct) {
+  const bar = document.getElementById(`imgProgress${slot}`);
+  const inner = document.getElementById(`imgProgressBar${slot}`);
+  if (!bar || !inner) return;
+  bar.style.display = pct >= 100 ? 'none' : 'block';
+  inner.style.width = pct + '%';
+}
+function showSlotFlags(slot, flags) {
+  const el = document.getElementById(`imgFlags${slot}`);
+  if (!el) return;
+  el.innerHTML = flags.map(f => `
+    <span style="display:inline-flex;align-items:center;gap:5px;padding:3px 9px;border-radius:50px;font-size:0.7rem;font-weight:700;background:rgba(234,179,8,0.12);color:#ca8a04;border:1px solid rgba(234,179,8,0.25);">
+      ⚠️ ${f.flag === 'uniform_color' ? 'Uniform colour' : f.flag === 'white_heavy_background' ? 'Possible stock photo' : f.flag === 'very_dark_image' ? 'Very dark image' : f.flag === 'potential_duplicate' ? 'Possible duplicate' : f.flag}
+    </span>
+  `).join('');
+}
+
+// Process each file upload through the quality gate
+document.querySelectorAll('.gallery-upload').forEach(input => {
+  input.addEventListener('change', async function() {
+    const file = this.files[0];
+    const slot = Number(this.dataset.slot || 0);
+    const box  = document.getElementById(`photoBox${slot}`) || this.parentElement;
+    const img  = box.querySelector('img');
+
+    if (!file) {
+      photoResults[slot] = null;
+      box.classList.remove('has-img');
+      showSlotStatus(slot, '', '');
+      showSlotFlags(slot, []);
+      return;
+    }
+
+    // Show progress
+    showSlotProgress(slot, 30);
+    showSlotStatus(slot, '⏳ Processing…', 'var(--text-secondary)');
+    document.getElementById('photoError').style.display = 'none';
+
+    // Simulate progress animation
+    let prog = 30;
+    const progInt = setInterval(() => {
+      prog = Math.min(prog + 20, 85);
+      showSlotProgress(slot, prog);
+    }, 120);
+
+    const result = await KKImageProcessor.processImage(file);
+    clearInterval(progInt);
+    showSlotProgress(slot, 100);
+
+    if (!result.ok) {
+      // Rejected — quality floor not met
+      photoResults[slot] = null;
+      box.classList.remove('has-img');
+      img.src = '';
+      showSlotStatus(slot, `✗ ${result.reason}`, '#ef4444');
+      this.value = ''; // reset file input
+      return;
+    }
+
+    // Accepted — show preview
+    photoResults[slot] = result;
+    img.src = result.dataUrl;
+    box.classList.add('has-img');
+
+    // Compute pHash
+    const imgEl = new Image();
+    imgEl.src = result.dataUrl;
+    imgEl.onload = () => {
+      result.pHash = KKImageProcessor.computePHash(imgEl);
+
+      // Tier 1 AI checks
+      const dupMatches = KKImageProcessor.checkDuplicates(result.pHash);
+      const contentFlags = KKImageProcessor.checkImageContent(result.canvas, document.getElementById('category')?.value);
+
+      const dupFlags = dupMatches.map(d => ({ flag: 'potential_duplicate', detail: `Similar to: ${d.name}` }));
+      const allFlags = [...contentFlags, ...dupFlags];
+
+      result.imageFlags = allFlags;
+      result.dupMatches = dupMatches;
+
+      // Show status
+      const status = KKImageProcessor.formatCompressionStatus(result);
+      showSlotStatus(slot, `✓ ${status}`, '#16a34a');
+      showSlotFlags(slot, allFlags);
+    };
+  });
+});
+
+
+
+(function() {
+  const hamburger = document.getElementById('navHamburger');
+  const mobileNav = document.getElementById('navMobileDropdown');
+  if (hamburger && mobileNav) {
+    hamburger.addEventListener('click', function() {
+      mobileNav.classList.toggle('open');
+      hamburger.textContent = mobileNav.classList.contains('open') ? '✕' : '☰';
+    });
+    document.addEventListener('click', function(e) {
+      if (!hamburger.contains(e.target) && !mobileNav.contains(e.target)) {
+        mobileNav.classList.remove('open');
+        hamburger.textContent = '☰';
+      }
+    });
+  }
+
+  const backToTop = document.getElementById('backToTop');
+  if (backToTop) {
+    window.addEventListener('scroll', function() {
+      backToTop.style.opacity = window.scrollY > 300 ? '1' : '0';
+      backToTop.style.pointerEvents = window.scrollY > 300 ? 'auto' : 'none';
+    });
+    backToTop.addEventListener('click', function() {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  }
+})();
+
+// Character counters
+document.getElementById('description').addEventListener('input', function() {
+    document.getElementById('descCount').textContent = this.value.length;
+});
+
+// Listing type logic
+const radios = document.querySelectorAll('input[name="listingType"]');
+const buyC = document.getElementById('priceBuyContainer');
+const rentC = document.getElementById('priceRentContainer');
+
+radios.forEach(r => {
+    r.addEventListener('change', function() {
+        document.getElementById('listingTypeError').style.display = 'none';
+        const v = this.value;
+        if(v === 'Sell Only') {
+            buyC.style.display = 'block';
+            rentC.style.display = 'none';
+        } else if(v === 'Rent Only') {
+            buyC.style.display = 'none';
+            rentC.style.display = 'block';
+        } else {
+            buyC.style.display = 'block';
+            rentC.style.display = 'block';
+        }
+    });
+});
+
+// Note: gallery photo previews are now handled by the KKImageProcessor block above
+
+// Form Submit
+document.getElementById('sellItemForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    let isValid = true;
+
+    // Clear errors
+    document.querySelectorAll('.has-error').forEach(el => el.classList.remove('has-error'));
+
+    // Validate required fields
+    ['itemName', 'category', 'size', 'condition', 'description', 'sellerName', 'sellerYear', 'contactEmail'].forEach(id => {
+        let el = document.getElementById(id);
+        if(!el || !el.value.trim()) {
+            if (el) el.parentElement.classList.add('has-error');
+            isValid = false;
+        }
+    });
+
+    // Validate Listing Type
+    let listingType = document.querySelector('input[name="listingType"]:checked');
+    if(!listingType) {
+        document.getElementById('listingTypeError').style.display = 'block';
+        isValid = false;
+    } else {
+        if (['Sell Only', 'Both'].includes(listingType.value)) {
+            let pb = document.getElementById('priceBuy');
+            if(!pb.value) { pb.parentElement.classList.add('has-error'); isValid = false; }
+        }
+        if (['Rent Only', 'Both'].includes(listingType.value)) {
+            let pr = document.getElementById('priceRent');
+            if(!pr.value) { pr.parentElement.classList.add('has-error'); isValid = false; }
+        }
+    }
+
+    // Validate Main Photo — must have passed quality gate
+    const mainResult = photoResults[0];
+    if (!mainResult || !mainResult.ok) {
+        document.getElementById('photoError').style.display = 'block';
+        isValid = false;
+    }
+
+    if(!isValid) {
+        const el = document.querySelector('.has-error') || document.getElementById('listingTypeError') || document.getElementById('photoError');
+        if (el) window.scrollTo({ top: el.offsetTop - 100, behavior: 'smooth' });
+        return;
+    }
+
+    const bPrice = document.getElementById('priceBuy').value;
+    const rPrice = document.getElementById('priceRent').value;
+    let priceStr = '', altStr = '';
+    if (listingType.value === 'Sell Only')       { priceStr = 'Buy at \u20b9' + bPrice; }
+    else if (listingType.value === 'Rent Only')  { priceStr = 'Rent at \u20b9' + rPrice + ' per day'; }
+    else { priceStr = 'Buy at \u20b9' + bPrice; altStr = 'Rent at \u20b9' + rPrice + ' per day'; }
+
+    // Collect all image flags from both slots
+    const allImageFlags = [
+        ...(photoResults[0]?.imageFlags || []),
+        ...(photoResults[1]?.imageFlags || [])
+    ];
+    const needsReview = allImageFlags.length > 0;
+
+    const itemData = {
+        id: 'lst_' + Date.now(),
+        name: document.getElementById('itemName').value.trim(),
+        image: mainResult.dataUrl,
+        imageHash: mainResult.pHash || null,
+        imageFlags: allImageFlags,
+        imageApproved: !needsReview,
+        description: document.getElementById('description').value.trim(),
+        price: priceStr,
+        alternate: altStr,
+        seller: document.getElementById('sellerName').value.trim(),
+        sellerYear: document.getElementById('sellerYear').value,
+        sellerContact: document.getElementById('contactEmail').value.trim(),
+        size: document.getElementById('size').value,
+        condition: document.getElementById('condition').value,
+        negotiable: document.getElementById('negotiable').checked,
+        listingType: listingType.value,
+        category: document.getElementById('category').value,
+        type: 'apparel',
+        buyPrice: bPrice ? Number(bPrice) : null,
+        rentPrice: rPrice ? Number(rPrice) : null,
+        isUserListing: true,
+        listedAt: new Date().toISOString()
+    };
+
+    // Save to localStorage
+    let existingListings = [];
+    try { existingListings = JSON.parse(localStorage.getItem('kk_user_listings')) || []; } catch(err) { existingListings = []; }
+    existingListings.push(itemData);
+    localStorage.setItem('kk_user_listings', JSON.stringify(existingListings));
+
+    // Push to review queue if flagged
+    if (needsReview) {
+        let queue = [];
+        try { queue = JSON.parse(localStorage.getItem('kk_review_queue')) || []; } catch(e) { queue = []; }
+        queue.push({
+            type: 'listing',
+            listingId: itemData.id,
+            name: itemData.seller,
+            email: itemData.sellerContact,
+            roles: ['seller'],
+            listingSnapshot: { name: itemData.name, category: itemData.category, image: itemData.image },
+            flags: allImageFlags,
+            status: 'pending',
+            queuedAt: new Date().toISOString()
+        });
+        localStorage.setItem('kk_review_queue', JSON.stringify(queue));
+    }
+
+    // Show toast
+    const toast = document.getElementById('successToast');
+    if (toast) { toast.textContent = needsReview ? 'Item submitted! Under review.\u2026' : 'Item listed! Redirecting\u2026'; toast.classList.add('show'); }
+    setTimeout(() => { window.location.href = 'marketplace.html'; }, 1500);
+});
+
+</script>
+</body>
+</html>

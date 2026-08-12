@@ -1,0 +1,10 @@
+<svg width="320" height="320" viewBox="0 0 320 320" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="320" height="320" rx="36" fill="#E6F5D7"/>
+  <circle cx="160" cy="122" r="68" fill="#FFD4BE"/>
+  <path d="M98 110C98 76.8629 124.863 50 158 50H170C203.137 50 230 76.8629 230 110V127H98V110Z" fill="#3C4B2B"/>
+  <rect x="102" y="179" width="116" height="92" rx="44" fill="#85B85D"/>
+  <circle cx="136" cy="123" r="8" fill="#17313E"/>
+  <circle cx="185" cy="123" r="8" fill="#17313E"/>
+  <path d="M140 154C148.667 161 170.8 163.2 183.5 150" stroke="#17313E" stroke-width="8" stroke-linecap="round"/>
+  <text x="160" y="291" text-anchor="middle" fill="#17313E" font-family="Arial, sans-serif" font-size="30" font-weight="700">NEHA</text>
+</svg>

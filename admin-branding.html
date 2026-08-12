@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark-cold">
+<head>
+  <script>
+    (function() {
+      const t = localStorage.getItem('kk-theme') || 'dark-cold';
+      document.documentElement.setAttribute('data-theme', t);
+    })();
+  </script>
+  <script src="assets/js/branding.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Branding — Kalaa Kart</title>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/styles.css">
+  <style>
+    /* Add any specific admin CSS here */
+    .admin-container { max-width: 800px; margin: 40px auto; padding: 20px; }
+    .auth-overlay { position: fixed; inset: 0; background: var(--bg); z-index: 1000; display: flex; align-items: center; justify-content: center; }
+    .auth-box { background: var(--card-bg); padding: 40px; border-radius: 16px; border: 1px solid var(--border); text-align: center; width: 100%; max-width: 400px; }
+    .auth-box input { width: 100%; padding: 12px; margin: 20px 0; border-radius: 8px; border: 1px solid var(--border); background: var(--surface); color: var(--text-primary); text-align: center; letter-spacing: 4px; font-size: 1.2rem; }
+    
+    .panel { background: var(--card-bg); border: 1px solid var(--border); border-radius: 16px; padding: 30px; margin-bottom: 30px; }
+    .preview-box { background: var(--surface); border: 1px dashed var(--border); border-radius: 12px; padding: 30px; text-align: center; margin-bottom: 20px; display: flex; align-items: center; justify-content: center; min-height: 150px; }
+    .preview-box img { max-height: 80px; max-width: 100%; object-fit: contain; }
+    
+    .form-group { margin-bottom: 20px; }
+    .form-group label { display: block; margin-bottom: 8px; font-weight: 600; font-size: 0.9rem; }
+    .form-group input[type="text"], .form-group input[type="file"] { width: 100%; padding: 12px; border-radius: 8px; border: 1px solid var(--border); background: var(--surface); color: var(--text-primary); }
+    
+    .action-row { display: flex; gap: 15px; margin-top: 30px; }
+  </style>
+</head>
+<body data-page="admin">
+  
+  <div class="auth-overlay" id="authOverlay">
+    <div class="auth-box">
+      <h2>Admin Access</h2>
+      <p style="color:var(--text-secondary); margin-top:10px;">Enter PIN to configure branding.</p>
+      <input type="password" id="adminPin" placeholder="••••••" maxlength="10">
+      <button class="button btn-primary" style="width:100%" onclick="checkPin()">Unlock</button>
+      <p id="pinError" style="color:#ef4444; margin-top:10px; display:none;">Invalid PIN</p>
+    </div>
+  </div>
+
+  <header class="navbar">
+    <a class="nav-brand" href="index.html">
+        <img src="assets/images/main_logo_final.jpeg" data-kk-logo alt="Kalaa Kart logo" style="height: 45px; width: auto;">
+    </a>
+    <div class="nav-links">
+        <a href="admin.html">DASHBOARD</a>
+        <a href="admin-branding.html" style="color:var(--accent);font-weight:700;">BRANDING</a>
+        <a href="index.html">BACK TO SITE</a>
+    </div>
+  </header>
+
+  <main class="admin-container">
+    <h1 style="margin-bottom: 10px;">Branding Management</h1>
+    <p style="color:var(--text-secondary); margin-bottom: 30px;">Update the site logo, favicon, and name without modifying code. Changes apply instantly.</p>
+
+    <div class="panel">
+      <h2>Logo & Favicon</h2>
+      
+      <div class="preview-box">
+        <img src="assets/images/main_logo_final.jpeg" id="logoPreview" alt="Logo Preview">
+      </div>
+
+      <div class="form-group">
+        <label>Primary Logo (PNG, SVG, JPEG — Max 2MB)</label>
+        <input type="file" id="logoInput" accept="image/png, image/jpeg, image/svg+xml, image/webp">
+      </div>
+      
+      <div class="form-group" style="margin-top:20px;">
+        <label>Favicon (ICO, PNG — Max 500KB)</label>
+        <input type="file" id="faviconInput" accept="image/x-icon, image/png">
+      </div>
+    </div>
+
+    <div class="panel">
+      <h2>Site Settings</h2>
+      <div class="form-group">
+        <label>Site Name</label>
+        <input type="text" id="siteNameInput" placeholder="Kalaa Kart">
+      </div>
+    </div>
+
+    <div class="action-row">
+      <button class="button btn-primary" id="saveBtn">Save Changes</button>
+      <button class="button button-secondary" id="resetBtn">Reset to Default</button>
+      <button class="button button-secondary" id="exportBtn">Export Config (JSON)</button>
+    </div>
+  </main>
+
+  <script>
+    // PIN Auth
+    function checkPin() {
+      const pin = document.getElementById('adminPin').value;
+      if (pin === 'kk2025' || pin === localStorage.getItem('kk_admin_pin')) {
+        document.getElementById('authOverlay').style.display = 'none';
+        localStorage.setItem('kk_admin_pin', pin);
+        loadCurrentConfig();
+      } else {
+        document.getElementById('pinError').style.display = 'block';
+      }
+    }
+    
+    // Auto-login if PIN remembered
+    if (localStorage.getItem('kk_admin_pin')) {
+      document.getElementById('adminPin').value = localStorage.getItem('kk_admin_pin');
+      checkPin();
+    }
+
+    // Load config
+    function loadCurrentConfig() {
+      const config = KKBranding.get();
+      if (config.logoUrl) document.getElementById('logoPreview').src = config.logoUrl;
+      document.getElementById('siteNameInput').value = config.siteName || KKBranding.DEFAULT_NAME;
+    }
+
+    // File input handlers
+    function encodeImage(file, maxSizeMB, callback) {
+      if (!file) return callback(null);
+      if (file.size > maxSizeMB * 1024 * 1024) {
+        alert(`File too large. Max ${maxSizeMB}MB.`);
+        return callback(null);
+      }
+      const reader = new FileReader();
+      reader.onload = e => callback(e.target.result);
+      reader.readAsDataURL(file);
+    }
+
+    document.getElementById('logoInput').addEventListener('change', function(e) {
+      encodeImage(this.files[0], 2, res => {
+        if (res) document.getElementById('logoPreview').src = res;
+      });
+    });
+
+    // Actions
+    document.getElementById('saveBtn').addEventListener('click', function() {
+      const updates = {};
+      const logoSrc = document.getElementById('logoPreview').src;
+      // Only save if it's a data URL (newly uploaded) or explicitly set
+      if (logoSrc.startsWith('data:')) updates.logoUrl = logoSrc;
+      
+      const siteName = document.getElementById('siteNameInput').value.trim();
+      if (siteName) updates.siteName = siteName;
+
+      const favFile = document.getElementById('faviconInput').files[0];
+      if (favFile) {
+        encodeImage(favFile, 0.5, res => {
+          if (res) updates.faviconUrl = res;
+          finishSave(updates);
+        });
+      } else {
+        finishSave(updates);
+      }
+    });
+
+    function finishSave(updates) {
+      KKBranding.save(updates);
+      const btn = document.getElementById('saveBtn');
+      btn.textContent = 'Saved!';
+      btn.style.background = '#16a34a';
+      setTimeout(() => {
+        btn.textContent = 'Save Changes';
+        btn.style.background = '';
+      }, 2000);
+    }
+
+    document.getElementById('resetBtn').addEventListener('click', function() {
+      if(confirm('Are you sure you want to reset all branding to defaults?')) {
+        KKBranding.reset();
+        document.getElementById('logoInput').value = '';
+        document.getElementById('faviconInput').value = '';
+        loadCurrentConfig();
+      }
+    });
+
+    document.getElementById('exportBtn').addEventListener('click', function() {
+      const conf = KKBranding.get();
+      const blob = new Blob([JSON.stringify(conf, null, 2)], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'kk_branding.json';
+      a.click();
+    });
+  </script>
+</body>
+</html>

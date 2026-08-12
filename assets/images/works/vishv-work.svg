@@ -1,0 +1,11 @@
+<svg width="480" height="300" viewBox="0 0 480 300" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="480" height="300" rx="26" fill="#FFF9E7"/>
+  <rect x="106" y="52" width="268" height="192" rx="20" fill="white" stroke="#17313E" stroke-width="5"/>
+  <path d="M143 103H335" stroke="#98C58B" stroke-width="6" stroke-linecap="round"/>
+  <path d="M143 137H317" stroke="#98C58B" stroke-width="6" stroke-linecap="round"/>
+  <path d="M143 171H342" stroke="#98C58B" stroke-width="6" stroke-linecap="round"/>
+  <path d="M143 205H292" stroke="#98C58B" stroke-width="6" stroke-linecap="round"/>
+  <path d="M343 76C332 90 324 103 319 121" stroke="#17313E" stroke-width="7" stroke-linecap="round"/>
+  <circle cx="344" cy="76" r="10" fill="#17313E"/>
+  <text x="240" y="278" text-anchor="middle" fill="#17313E" font-family="Arial, sans-serif" font-size="26" font-weight="700">Personalized Shayari Note</text>
+</svg>

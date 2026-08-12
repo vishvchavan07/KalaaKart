@@ -1,0 +1,10 @@
+<svg width="480" height="300" viewBox="0 0 480 300" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="480" height="300" rx="26" fill="#EEF4F8"/>
+  <rect x="120" y="54" width="240" height="192" rx="24" fill="#FFFFFF"/>
+  <rect x="152" y="84" width="176" height="132" rx="18" fill="#DCE8DF"/>
+  <circle cx="240" cy="138" r="34" fill="#F1CDAA"/>
+  <path d="M188 193C201 172 220 161 240 161C260 161 279 172 292 193" stroke="#2F5D50" stroke-width="9" stroke-linecap="round"/>
+  <circle cx="227" cy="133" r="5" fill="#111827"/>
+  <circle cx="253" cy="133" r="5" fill="#111827"/>
+  <text x="240" y="278" text-anchor="middle" fill="#111827" font-family="Arial, sans-serif" font-size="25" font-weight="700">Cinematic Portrait Shoot</text>
+</svg>

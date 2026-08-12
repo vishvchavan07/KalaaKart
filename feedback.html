@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark-cold">
+<head>
+  <script>
+    (function() {
+      const t = localStorage.getItem('kk-theme') || 'dark-cold';
+      document.documentElement.setAttribute('data-theme', t);
+    })();
+  </script>
+  <script src="assets/js/branding.js"></script>
+  <script src="assets/js/feedback.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Leave Feedback — Kalaa Kart</title>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/styles.css">
+  <style>
+    .feedback-container {
+      max-width: 500px;
+      margin: 60px auto;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 30px;
+      box-shadow: var(--shadow);
+    }
+    h2 { margin-top: 0; margin-bottom: 5px; }
+    .subtitle { color: var(--text-secondary); margin-bottom: 25px; font-size: 0.9rem; }
+    
+    .rating-group { display: flex; gap: 10px; margin-bottom: 20px; flex-direction: row-reverse; justify-content: flex-end; }
+    .rating-group input { display: none; }
+    .rating-group label {
+      font-size: 2rem;
+      color: var(--border);
+      cursor: pointer;
+      transition: color 0.2s;
+    }
+    .rating-group label:hover,
+    .rating-group label:hover ~ label,
+    .rating-group input:checked ~ label {
+      color: #fbbf24;
+    }
+
+    textarea {
+      width: 100%;
+      height: 120px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 15px;
+      color: var(--text-primary);
+      font-family: inherit;
+      resize: vertical;
+      margin-bottom: 15px;
+    }
+    textarea:focus { outline: none; border-color: var(--accent); }
+
+    .checkbox-row {
+      display: flex; align-items: center; gap: 10px; margin-bottom: 25px;
+    }
+    .checkbox-row label { font-size: 0.85rem; color: var(--text-secondary); }
+    .checkbox-row input { cursor: pointer; }
+
+  </style>
+</head>
+<body data-page="feedback">
+
+  <header class="navbar">
+    <a class="nav-brand" href="index.html">
+        <img src="assets/images/main_logo_final.jpeg" data-kk-logo alt="Kalaa Kart logo" style="height: 45px; width: auto;">
+    </a>
+  </header>
+
+  <main class="container">
+    <div class="feedback-container">
+      <h2 id="fbTitle">Leave Feedback</h2>
+      <p class="subtitle" id="fbSubtitle">Rate your experience</p>
+
+      <form id="feedbackForm">
+        <label style="display:block; margin-bottom:8px; font-weight:600;">Rating</label>
+        <div class="rating-group">
+          <input type="radio" id="star5" name="rating" value="5"><label for="star5">★</label>
+          <input type="radio" id="star4" name="rating" value="4"><label for="star4">★</label>
+          <input type="radio" id="star3" name="rating" value="3"><label for="star3">★</label>
+          <input type="radio" id="star2" name="rating" value="2"><label for="star2">★</label>
+          <input type="radio" id="star1" name="rating" value="1"><label for="star1">★</label>
+        </div>
+
+        <label style="display:block; margin-bottom:8px; font-weight:600;">Review (Optional)</label>
+        <textarea id="reviewText" placeholder="How was the transaction?"></textarea>
+
+        <div class="checkbox-row">
+          <input type="checkbox" id="disputeCheck">
+          <label for="disputeCheck">Report a serious issue / dispute</label>
+        </div>
+
+        <button type="submit" class="button btn-primary" style="width:100%;">Submit Feedback</button>
+      </form>
+    </div>
+  </main>
+
+  <script src="assets/js/data.js"></script>
+  <script>
+    const currentUserEmail = localStorage.getItem('kk_user_email');
+    if (!currentUserEmail) window.location.href = 'login.html';
+
+    const params = new URLSearchParams(window.location.search);
+    const targetEmail = params.get('target');
+    const listingId = params.get('listing');
+    
+    if (!targetEmail) {
+      alert("Invalid target user.");
+      window.location.href = 'messages.html';
+    }
+
+    const allListings = [...data.marketplace, ...(JSON.parse(localStorage.getItem('kk_user_listings') || '[]'))];
+    const listing = allListings.find(l => l.id === listingId || l.name === listingId);
+    
+    document.getElementById('fbTitle').textContent = `Feedback for ${targetEmail}`;
+    document.getElementById('fbSubtitle').textContent = `Regarding item: ${listing ? listing.name : listingId}`;
+
+    document.getElementById('feedbackForm').addEventListener('submit', (e) => {
+      e.preventDefault();
+      
+      const rating = document.querySelector('input[name="rating"]:checked');
+      if (!rating) {
+        alert("Please select a rating.");
+        return;
+      }
+
+      const text = document.getElementById('reviewText').value;
+      const isDispute = document.getElementById('disputeCheck').checked;
+
+      KKFeedback.submitFeedback(targetEmail, currentUserEmail, listingId, rating.value, text, isDispute);
+      
+      alert("Feedback submitted successfully!");
+      window.location.href = 'messages.html';
+    });
+  </script>
+</body>
+</html>

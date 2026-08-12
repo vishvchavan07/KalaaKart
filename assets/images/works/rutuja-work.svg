@@ -1,0 +1,7 @@
+<svg width="480" height="300" viewBox="0 0 480 300" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="480" height="300" rx="26" fill="#FFF1FB"/>
+  <rect x="92" y="60" width="296" height="180" rx="24" fill="white"/>
+  <path d="M145 151C174.5 123.5 203.5 119.5 242 151C280.5 182.5 313.5 178.5 337 143" stroke="#ED7CBF" stroke-width="8" stroke-linecap="round"/>
+  <path d="M153 101C180 84 210 78 242 92C274 106 304 106 330 94" stroke="#17313E" stroke-width="5" stroke-linecap="round"/>
+  <text x="240" y="278" text-anchor="middle" fill="#17313E" font-family="Arial, sans-serif" font-size="26" font-weight="700">Custom Calligraphy Poster</text>
+</svg>

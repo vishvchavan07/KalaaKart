@@ -1,0 +1,84 @@
+<svg width="760" height="900" viewBox="0 0 760 900" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <g filter="url(#shadow)">
+    <path d="M480 74C611 177 664 326 642 477C619 637 521 764 365 854C419 704 400 560 327 434C270 336 260 207 316 100C349 36 415 19 480 74Z" fill="url(#mainFeather)"/>
+    <path d="M462 120C559 205 601 310 586 438C568 571 490 677 373 752C403 625 385 523 334 430C290 349 281 248 320 155C348 95 398 70 462 120Z" fill="url(#innerFeather)"/>
+    <path d="M424 192C493 244 527 308 522 396C516 493 465 571 390 630C402 542 390 467 360 409C334 359 328 293 348 230C362 185 389 169 424 192Z" fill="url(#eyeOuter)"/>
+    <path d="M422 242C467 273 489 314 489 365C489 421 459 467 409 503C412 455 404 411 385 378C367 346 363 303 374 265C383 233 398 224 422 242Z" fill="url(#eyeMid)"/>
+    <path d="M420 276C449 295 462 324 458 362C452 404 430 437 394 460C394 425 388 392 375 367C363 343 360 312 367 287C372 268 388 262 420 276Z" fill="url(#eyeInner)"/>
+    <path d="M353 819C416 659 393 511 312 402C258 329 245 236 280 147C201 254 195 368 244 469C312 608 313 720 353 819Z" fill="url(#sideLeaf1)"/>
+    <path d="M296 793C335 651 315 549 252 461C207 397 195 329 215 256C150 346 153 442 202 524C253 609 272 697 296 793Z" fill="url(#sideLeaf2)"/>
+    <path d="M257 744C278 630 262 546 221 480C188 426 176 376 183 320C131 397 130 474 164 540C204 612 229 681 257 744Z" fill="url(#sideLeaf3)"/>
+    <path d="M529 775C558 659 546 569 504 505C473 458 461 400 470 337C523 412 530 491 507 568C490 622 494 690 529 775Z" fill="url(#goldLeaf1)"/>
+    <path d="M594 722C620 640 620 569 593 512C573 469 568 425 575 381C614 443 622 500 611 552C602 596 597 652 594 722Z" fill="url(#goldLeaf2)"/>
+    <path d="M632 670C655 612 661 557 647 510C638 477 638 445 646 412C671 459 678 506 673 547C668 585 656 627 632 670Z" fill="url(#goldLeaf3)"/>
+    <path d="M337 289C413 356 441 448 430 566" stroke="#120202" stroke-width="6" stroke-linecap="round"/>
+    <path d="M368 232C430 310 451 399 448 513" stroke="#120202" stroke-width="4" stroke-linecap="round" opacity="0.7"/>
+    <path d="M409 170C461 257 476 337 472 434" stroke="#120202" stroke-width="3" stroke-linecap="round" opacity="0.55"/>
+    <circle cx="510" cy="176" r="6" fill="#FFCF90"/>
+    <circle cx="544" cy="210" r="5" fill="#FFCF90"/>
+    <circle cx="566" cy="264" r="5" fill="#FFCF90"/>
+    <circle cx="505" cy="258" r="4" fill="#FFCF90"/>
+    <circle cx="536" cy="310" r="4" fill="#FFCF90"/>
+    <circle cx="570" cy="350" r="4" fill="#FFCF90"/>
+  </g>
+  <defs>
+    <filter id="shadow" x="116" y="28" width="582" height="850" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+      <feFlood flood-opacity="0" result="BackgroundImageFix"/>
+      <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+      <feOffset dy="16"/>
+      <feGaussianBlur stdDeviation="18"/>
+      <feColorMatrix type="matrix" values="0 0 0 0 0.0705882 0 0 0 0 0.00784314 0 0 0 0 0.00784314 0 0 0 0.38 0"/>
+      <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow"/>
+      <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow" result="shape"/>
+    </filter>
+    <linearGradient id="mainFeather" x1="317" y1="91" x2="589" y2="790" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FF5653"/>
+      <stop offset="0.42" stop-color="#C92122"/>
+      <stop offset="1" stop-color="#5D0815"/>
+    </linearGradient>
+    <linearGradient id="innerFeather" x1="353" y1="131" x2="547" y2="703" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FF7B62"/>
+      <stop offset="0.48" stop-color="#E0342A"/>
+      <stop offset="1" stop-color="#7B0B1B"/>
+    </linearGradient>
+    <radialGradient id="eyeOuter" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(422 396) rotate(90) scale(234 179)">
+      <stop stop-color="#FFCF78"/>
+      <stop offset="0.52" stop-color="#2F6EDD"/>
+      <stop offset="1" stop-color="#102A64"/>
+    </radialGradient>
+    <radialGradient id="eyeMid" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(421 365) rotate(90) scale(138 110)">
+      <stop stop-color="#0CA34D"/>
+      <stop offset="0.55" stop-color="#1F5DAF"/>
+      <stop offset="1" stop-color="#0E2757"/>
+    </radialGradient>
+    <radialGradient id="eyeInner" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(409 354) rotate(90) scale(107 76)">
+      <stop stop-color="#94E554"/>
+      <stop offset="0.4" stop-color="#167A51"/>
+      <stop offset="1" stop-color="#0C2543"/>
+    </radialGradient>
+    <linearGradient id="sideLeaf1" x1="243" y1="184" x2="392" y2="774" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#C92122"/>
+      <stop offset="1" stop-color="#4B0814"/>
+    </linearGradient>
+    <linearGradient id="sideLeaf2" x1="168" y1="273" x2="306" y2="751" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#9E1622"/>
+      <stop offset="1" stop-color="#3B0611"/>
+    </linearGradient>
+    <linearGradient id="sideLeaf3" x1="140" y1="338" x2="255" y2="717" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#7A0F1B"/>
+      <stop offset="1" stop-color="#27040D"/>
+    </linearGradient>
+    <linearGradient id="goldLeaf1" x1="479" y1="360" x2="542" y2="744" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FFD68C"/>
+      <stop offset="1" stop-color="#8F5527"/>
+    </linearGradient>
+    <linearGradient id="goldLeaf2" x1="576" y1="398" x2="609" y2="703" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FFD68C"/>
+      <stop offset="1" stop-color="#8A4E20"/>
+    </linearGradient>
+    <linearGradient id="goldLeaf3" x1="647" y1="422" x2="650" y2="666" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FFD38A"/>
+      <stop offset="1" stop-color="#8C4D22"/>
+    </linearGradient>
+  </defs>
+</svg>

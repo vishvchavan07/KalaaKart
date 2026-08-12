@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark-cold">
+<head>
+  <script>
+    (function() {
+      const t = localStorage.getItem('kk-theme') || 'dark-cold';
+      document.documentElement.setAttribute('data-theme', t);
+    })();
+  </script>
+  <script src="assets/js/branding.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Log In — Kalaa Kart</title>
+  <meta name="description" content="Log in to your Kalaa Kart campus account — Buyer, Seller, or both.">
+  <link rel="icon" type="image/jpeg" href="assets/images/main_logo_final.jpeg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/styles.css?v=4">
+  <style>
+    /* Theme variable overrides for this page */
+    [data-theme="dark-cold"]      { --bg:#0D0F1A; --accent:#7C6EF5; --text-primary:#E8EAFF; }
+    [data-theme="dark-warm"]      { --bg:#120A05; --accent:#E8832A; --text-primary:#FFE8CC; }
+    [data-theme="light-pro"]      { --bg:#F7F8FC; --accent:#5046E5; --text-primary:#1A1A2E; }
+    [data-theme="sakura"]         { --bg:#12080A; --accent:#FF78A5; --text-primary:#FFE0E9; }
+    [data-theme="midnight-ink"]   { --bg:#040406; --accent:#5C5CFF; --text-primary:#EEEEFF; }
+    [data-theme="stone-gold"]     { --bg:#0F0E0C; --accent:#D4AF37; --text-primary:#F5EDD6; }
+    [data-theme="cyber-campus"]   { --bg:#020205; --accent:#00F2FF; --text-primary:#00F2FF; }
+    [data-theme="vintage-vinyl"]  { --bg:#F2E8D5; --accent:#D95D39; --text-primary:#2E2E2E; }
+    [data-theme="emerald-forest"] { --bg:#0A1A12; --accent:#4CAF50; --text-primary:#E8F5E9; }
+    [data-theme="ocean-abyss"]    { --bg:#010B13; --accent:#00BCD4; --text-primary:#E0F7FA; }
+    [data-theme="sunset-mirage"]  { --bg:#1A0B2E; --accent:#FF4E50; --text-primary:#F9D423; }
+    [data-theme="parchment-quill"]{ --bg:#D6C6B0; --accent:#8B4513; --text-primary:#2C1E1E; }
+
+    .login-wrap {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 80px 16px 60px;
+    }
+    .login-card {
+      width: 100%;
+      max-width: 420px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 28px;
+      box-shadow: var(--shadow);
+      padding: 40px 36px;
+    }
+    .login-logo {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 28px;
+    }
+    .login-logo img { height: 48px; width: auto; }
+    .login-title {
+      font-size: 1.7rem;
+      font-weight: 800;
+      text-align: center;
+      letter-spacing: -0.02em;
+      margin: 0 0 6px;
+    }
+    .login-sub {
+      text-align: center;
+      color: var(--text-secondary);
+      font-size: 0.88rem;
+      margin: 0 0 28px;
+    }
+    .field { margin-bottom: 18px; }
+    .field label {
+      display: block;
+      font-size: 0.85rem;
+      font-weight: 600;
+      margin-bottom: 7px;
+    }
+    .field input {
+      width: 100%;
+      padding: 12px 16px;
+      background: var(--card-bg);
+      border: 1.5px solid var(--border);
+      border-radius: 12px;
+      color: var(--text-primary);
+      font-family: inherit;
+      font-size: 0.92rem;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+      box-sizing: border-box;
+    }
+    .field input:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px var(--tag-bg);
+    }
+    .field-row-inline {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 18px;
+    }
+    .remember-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.83rem;
+      color: var(--text-secondary);
+      cursor: pointer;
+    }
+    .remember-label input[type="checkbox"] {
+      width: 15px;
+      height: 15px;
+      accent-color: var(--accent);
+    }
+    .forgot-link {
+      font-size: 0.83rem;
+      color: var(--accent);
+      text-decoration: none;
+      font-weight: 600;
+    }
+    .forgot-link:hover { text-decoration: underline; }
+    .login-btn {
+      width: 100%;
+      padding: 14px;
+      background: var(--accent);
+      color: #fff;
+      border: none;
+      border-radius: 12px;
+      font-family: inherit;
+      font-weight: 700;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: opacity 0.2s, transform 0.15s;
+      margin-bottom: 6px;
+    }
+    .login-btn:hover { opacity: 0.9; transform: translateY(-2px); }
+    .login-btn:active { transform: scale(0.98); }
+    .login-btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+    .login-error {
+      background: rgba(239,68,68,0.12);
+      border: 1px solid rgba(239,68,68,0.3);
+      border-radius: 10px;
+      padding: 10px 14px;
+      font-size: 0.83rem;
+      color: #ef4444;
+      margin-bottom: 14px;
+      display: none;
+    }
+    .login-error.show { display: block; }
+    .login-footer {
+      text-align: center;
+      margin-top: 22px;
+      font-size: 0.88rem;
+      color: var(--text-secondary);
+    }
+    .login-footer a { color: var(--accent); font-weight: 600; text-decoration: none; }
+
+    /* ── Post-login role display ── */
+    .role-banner {
+      display: none;
+      background: var(--tag-bg);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 16px 18px;
+      margin-bottom: 18px;
+    }
+    .role-banner.show { display: block; }
+    .role-banner-title {
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--text-secondary);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 8px;
+    }
+    .role-pills { display: flex; gap: 8px; flex-wrap: wrap; }
+    .role-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 14px;
+      border-radius: 50px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      background: var(--accent);
+      color: #fff;
+    }
+    .role-pill.buyer  { background: var(--tag-bg); color: var(--accent); border: 1px solid var(--border); }
+    .role-pill.seller { background: var(--accent); color: #fff; }
+    .role-switch-hint {
+      font-size: 0.75rem;
+      color: var(--text-secondary);
+      margin-top: 8px;
+    }
+    .role-switch-hint a { color: var(--accent); font-weight: 600; text-decoration: none; }
+    /* Verified / pending badge */
+    .account-status {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 12px;
+      border-radius: 50px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      margin-top: 10px;
+    }
+    .account-status.verified { background: rgba(34,197,94,0.15); color: #16a34a; }
+    .account-status.pending  { background: rgba(234,179,8,0.15); color: #ca8a04; }
+    .account-status.flagged  { background: rgba(239,68,68,0.12); color: #dc2626; }
+
+    /* Auth log warning (rate limit reached) */
+    .rate-limit-warning {
+      background: rgba(234,179,8,0.12);
+      border: 1px solid rgba(234,179,8,0.3);
+      border-radius: 10px;
+      padding: 10px 14px;
+      font-size: 0.82rem;
+      color: #b45309;
+      margin-bottom: 14px;
+      display: none;
+    }
+    .rate-limit-warning.show { display: block; }
+    /* Failed attempts counter */
+    .attempts-bar {
+      display: none;
+      justify-content: center;
+      gap: 6px;
+      margin-bottom: 12px;
+    }
+    .attempts-bar.show { display: flex; }
+    .attempt-dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: var(--border);
+      transition: background 0.2s;
+    }
+    .attempt-dot.used { background: #ef4444; }
+  </style>
+</head>
+<body data-page="login">
+  <div id="cursor-dot"></div>
+  <div id="cursor-ring"></div>
+
+  <header class="navbar">
+    <a class="nav-brand" href="index.html">
+      <img src="assets/images/main_logo_final.jpeg" alt="Kalaa Kart logo" style="height:45px;width:auto;object-fit:contain;">
+    </a>
+    <div class="nav-links">
+      <a href="index.html">HOME</a>
+      <a href="profiles.html">PROFILES</a>
+      <a href="mentor-booking.html">MENTOR BOOKING</a>
+      <a href="marketplace.html">REUSE SECTION</a>
+      <a href="login.html" style="color:var(--accent);font-weight:700;">LOG IN</a>
+      <a href="signup.html">SIGN UP</a>
+    </div>
+    <button class="nav-hamburger" id="navHamburger" aria-label="Toggle menu">☰</button>
+  </header>
+  <nav class="nav-mobile-dropdown" id="navMobileDropdown">
+    <a href="index.html">HOME</a>
+    <a href="profiles.html">PROFILES</a>
+    <a href="mentor-booking.html">MENTOR BOOKING</a>
+    <a href="marketplace.html">REUSE SECTION</a>
+    <a href="login.html" style="color:var(--accent);font-weight:700;">LOG IN</a>
+    <a href="signup.html">SIGN UP</a>
+  </nav>
+
+  <main class="login-wrap">
+    <div class="login-card">
+      <div class="login-logo">
+        <img src="assets/images/main_logo_final.jpeg" alt="Kalaa Kart">
+      </div>
+      <h1 class="login-title">Welcome Back</h1>
+      <p class="login-sub">Log in to your campus account</p>
+
+      <!-- Rate-limit warning -->
+      <div class="rate-limit-warning" id="rateLimitWarning">
+        🔒 Too many failed attempts. Please wait <span id="lockCountdown">5:00</span> before trying again.
+      </div>
+
+      <!-- Failed attempt dots (shown after 1st failure) -->
+      <div class="attempts-bar" id="attemptsBar">
+        <div class="attempt-dot" id="ad1"></div>
+        <div class="attempt-dot" id="ad2"></div>
+        <div class="attempt-dot" id="ad3"></div>
+        <div class="attempt-dot" id="ad4"></div>
+        <div class="attempt-dot" id="ad5"></div>
+      </div>
+
+      <!-- Role banner (shown after login) -->
+      <div class="role-banner" id="roleBanner">
+        <div class="role-banner-title">Active Account Roles</div>
+        <div class="role-pills" id="rolePills"></div>
+        <div id="accountStatusBadge"></div>
+        <div class="role-switch-hint">Want to add the Seller role? <a href="signup.html">Upgrade your account →</a></div>
+      </div>
+
+      <div id="loginError" class="login-error">Incorrect email or password. Please try again.</div>
+
+      <form id="loginForm" autocomplete="on">
+        <div class="field">
+          <label for="loginEmail">College Email</label>
+          <input type="email" id="loginEmail" placeholder="name@campus.edu" required autocomplete="email">
+        </div>
+        <div class="field">
+          <label for="loginPassword">Password</label>
+          <input type="password" id="loginPassword" placeholder="••••••••" required autocomplete="current-password">
+        </div>
+        <div class="field-row-inline">
+          <label class="remember-label">
+            <input type="checkbox" id="rememberMe"> Remember me
+          </label>
+          <a href="#" class="forgot-link">Forgot Password?</a>
+        </div>
+        <button type="submit" class="login-btn" id="loginBtn">Log In</button>
+      </form>
+
+      <div class="login-footer">
+        Don't have an account? <a href="signup.html">Sign Up</a>
+        <br><br>
+        <a href="safety-report.html" style="color:var(--text-secondary);font-size:0.8rem;">🛡️ Report an unsafe meetup</a>
+      </div>
+    </div>
+  </main>
+
+  <!-- Theme switcher -->
+  <div id="theme-switcher">
+    <button class="theme-toggle-btn" onclick="document.getElementById('theme-panel').classList.toggle('open')">🎨 Theme</button>
+    <div class="theme-panel" id="theme-panel">
+      <button class="theme-opt" data-theme="dark-cold"       onclick="setTheme('dark-cold')"><span class="swatch" style="background:linear-gradient(135deg,#0D0F1A,#7C6EF5)"></span>Dark Cold</button>
+      <button class="theme-opt" data-theme="dark-warm"       onclick="setTheme('dark-warm')"><span class="swatch" style="background:linear-gradient(135deg,#120A05,#E8832A)"></span>Dark Warm</button>
+      <button class="theme-opt" data-theme="light-pro"       onclick="setTheme('light-pro')"><span class="swatch" style="background:linear-gradient(135deg,#F7F8FC,#5046E5)"></span>Light Pro</button>
+      <button class="theme-opt" data-theme="sakura"          onclick="setTheme('sakura')"><span class="swatch" style="background:linear-gradient(135deg,#12080A,#FF78A5)"></span>Sakura</button>
+      <button class="theme-opt" data-theme="midnight-ink"    onclick="setTheme('midnight-ink')"><span class="swatch" style="background:linear-gradient(135deg,#040406,#5C5CFF)"></span>Midnight Ink</button>
+      <button class="theme-opt" data-theme="stone-gold"      onclick="setTheme('stone-gold')"><span class="swatch" style="background:linear-gradient(135deg,#0F0E0C,#D4AF37)"></span>Stone &amp; Gold</button>
+      <button class="theme-opt" data-theme="cyber-campus"    onclick="setTheme('cyber-campus')"><span class="swatch" style="background:linear-gradient(135deg,#020205,#00F2FF)"></span>Cyber Campus</button>
+      <button class="theme-opt" data-theme="vintage-vinyl"   onclick="setTheme('vintage-vinyl')"><span class="swatch" style="background:linear-gradient(135deg,#F2E8D5,#D95D39)"></span>Vintage Vinyl</button>
+      <button class="theme-opt" data-theme="emerald-forest"  onclick="setTheme('emerald-forest')"><span class="swatch" style="background:linear-gradient(135deg,#0A1A12,#4CAF50)"></span>Emerald Forest</button>
+      <button class="theme-opt" data-theme="ocean-abyss"     onclick="setTheme('ocean-abyss')"><span class="swatch" style="background:linear-gradient(135deg,#010B13,#00BCD4)"></span>Ocean Abyss</button>
+      <button class="theme-opt" data-theme="sunset-mirage"   onclick="setTheme('sunset-mirage')"><span class="swatch" style="background:linear-gradient(135deg,#1A0B2E,#FF4E50)"></span>Sunset Mirage</button>
+      <button class="theme-opt" data-theme="parchment-quill" onclick="setTheme('parchment-quill')"><span class="swatch" style="background:linear-gradient(135deg,#D6C6B0,#8B4513)"></span>Parchment &amp; Quill</button>
+    </div>
+  </div>
+
+  <script src="assets/js/main.js?v=1.1"></script>
+  <script>
+  /* ═══════════════════════════════════════════════
+     KALAA KART — LOGIN WITH RATE LIMITING
+     - 5 failed attempts → 5-minute lockout
+     - Auth events logged to kk_auth_log
+     - Roles array read from user doc
+     - Failed attempts logged for monitoring
+  ═══════════════════════════════════════════════ */
+
+  const MAX_ATTEMPTS = 5;
+  const LOCKOUT_MS = 5 * 60 * 1000; // 5 minutes
+
+  // ── Rate limit helpers ─────────────────────────
+  function getAttemptData() {
+    try { return JSON.parse(localStorage.getItem('kk_login_attempts') || '{"count":0,"firstAt":null}'); }
+    catch(e) { return { count: 0, firstAt: null }; }
+  }
+  function saveAttemptData(d) { localStorage.setItem('kk_login_attempts', JSON.stringify(d)); }
+
+  function isLockedOut() {
+    const d = getAttemptData();
+    if (d.count < MAX_ATTEMPTS) return false;
+    const elapsed = Date.now() - d.firstAt;
+    if (elapsed > LOCKOUT_MS) {
+      // Reset after lockout period
+      saveAttemptData({ count: 0, firstAt: null });
+      return false;
+    }
+    return true;
+  }
+
+  function getRemainingLockMs() {
+    const d = getAttemptData();
+    return Math.max(0, LOCKOUT_MS - (Date.now() - d.firstAt));
+  }
+
+  function recordFailedAttempt(email) {
+    const d = getAttemptData();
+    if (!d.firstAt) d.firstAt = Date.now();
+    d.count++;
+    saveAttemptData(d);
+
+    // Log the failure
+    const logs = JSON.parse(localStorage.getItem('kk_auth_log') || '[]');
+    logs.push({ event: 'login_failed', email, attempts: d.count, ts: new Date().toISOString() });
+    localStorage.setItem('kk_auth_log', JSON.stringify(logs));
+
+    // Update UI dots
+    updateAttemptDots(d.count);
+    if (d.count >= MAX_ATTEMPTS) startLockoutTimer();
+  }
+
+  function recordSuccessfulLogin(user) {
+    saveAttemptData({ count: 0, firstAt: null });
+    const logs = JSON.parse(localStorage.getItem('kk_auth_log') || '[]');
+    logs.push({ event: 'login_success', userId: user._id, email: user.email, roles: user.roles, ts: new Date().toISOString() });
+    localStorage.setItem('kk_auth_log', JSON.stringify(logs));
+  }
+
+  function updateAttemptDots(count) {
+    if (count < 1) return;
+    const bar = document.getElementById('attemptsBar');
+    bar.classList.add('show');
+    for (let i = 1; i <= 5; i++) {
+      const d = document.getElementById('ad' + i);
+      if (d) d.classList.toggle('used', i <= count);
+    }
+  }
+
+  let lockTimer = null;
+  function startLockoutTimer() {
+    const warning = document.getElementById('rateLimitWarning');
+    const btn = document.getElementById('loginBtn');
+    warning.classList.add('show');
+    btn.disabled = true;
+
+    function tick() {
+      const rem = getRemainingLockMs();
+      if (rem <= 0) {
+        warning.classList.remove('show');
+        btn.disabled = false;
+        document.getElementById('attemptsBar').classList.remove('show');
+        for (let i = 1; i <= 5; i++) document.getElementById('ad' + i)?.classList.remove('used');
+        return;
+      }
+      const m = Math.floor(rem / 60000);
+      const s = Math.floor((rem % 60000) / 1000);
+      document.getElementById('lockCountdown').textContent = `${m}:${s.toString().padStart(2, '0')}`;
+      lockTimer = setTimeout(tick, 1000);
+    }
+    tick();
+  }
+
+  // ── On page load, check lockout state ─────────
+  if (isLockedOut()) {
+    const d = getAttemptData();
+    updateAttemptDots(d.count);
+    startLockoutTimer();
+  }
+
+  // ── Input sanitization ─────────────────────────
+  function sanitizeInput(val) {
+    // Strip MongoDB/NoSQL query operators from user input
+    return String(val).replace(/[$]/g, '').replace(/\.\./g, '.').trim();
+  }
+
+  // ── Login form ─────────────────────────────────
+  document.getElementById('loginForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    if (isLockedOut()) return;
+
+    const rawEmail = document.getElementById('loginEmail').value;
+    const rawPassword = document.getElementById('loginPassword').value;
+    const email = sanitizeInput(rawEmail).toLowerCase();
+    const password = sanitizeInput(rawPassword);
+    const errorEl = document.getElementById('loginError');
+
+    // Lookup user (localStorage — replaces real DB call)
+    let users = [];
+    try { users = JSON.parse(localStorage.getItem('kk_users') || '[]'); } catch(e) {}
+
+    // Find matching user (in production: compare bcrypt hash server-side)
+    const user = users.find(u =>
+      u.email && u.email.toLowerCase() === email &&
+      u.passwordHash === btoa(password)
+    );
+
+    if (!user) {
+      errorEl.classList.add('show');
+      recordFailedAttempt(email);
+      return;
+    }
+
+    errorEl.classList.remove('show');
+    recordSuccessfulLogin(user);
+
+    // Persist session
+    localStorage.setItem('kk_user_logged_in', 'true');
+    localStorage.setItem('kk_user_email', user.email);
+    if (document.getElementById('rememberMe').checked) {
+      localStorage.setItem('kk_current_user', JSON.stringify(user));
+    } else {
+      sessionStorage.setItem('kk_current_user', JSON.stringify(user));
+    }
+
+    // Show role banner before redirect
+    const btn = document.getElementById('loginBtn');
+    btn.textContent = '✓ Logged in! Redirecting…';
+    btn.disabled = true;
+    showRoleBanner(user);
+
+    setTimeout(() => { window.location.href = 'index.html'; }, 2000);
+  });
+
+  function showRoleBanner(user) {
+    const banner = document.getElementById('roleBanner');
+    const pills = document.getElementById('rolePills');
+    const statusBadge = document.getElementById('accountStatusBadge');
+    banner.classList.add('show');
+
+    pills.innerHTML = (user.roles || ['buyer']).map(r => `
+      <span class="role-pill ${r}">${r === 'seller' ? '🎨' : '🛍️'} ${r.charAt(0).toUpperCase() + r.slice(1)}</span>
+    `).join('');
+
+    const statusMap = {
+      approved: '<span class="account-status verified">✅ Verified</span>',
+      pending:  '<span class="account-status pending">🕐 Pending Review</span>',
+      flagged:  '<span class="account-status flagged">⚠️ Flagged — Under Review</span>'
+    };
+    statusBadge.innerHTML = statusMap[user.reviewStatus] || '';
+  }
+
+  // ── Mobile nav ─────────────────────────────────
+  (function() {
+    const hamburger = document.getElementById('navHamburger');
+    const mobileNav = document.getElementById('navMobileDropdown');
+    if (hamburger && mobileNav) {
+      hamburger.addEventListener('click', () => {
+        mobileNav.classList.toggle('open');
+        hamburger.textContent = mobileNav.classList.contains('open') ? '✕' : '☰';
+      });
+      document.addEventListener('click', e => {
+        if (!hamburger.contains(e.target) && !mobileNav.contains(e.target)) {
+          mobileNav.classList.remove('open');
+          hamburger.textContent = '☰';
+        }
+      });
+    }
+  })();
+  </script>
+</body>
+</html>

@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark-cold">
+<head>
+  <script>
+    (function() {
+      const t = localStorage.getItem('kk-theme') || 'dark-cold';
+      document.documentElement.setAttribute('data-theme', t);
+    })();
+  </script>
+  <script src="assets/js/branding.js"></script>
+  <script src="assets/js/points.js"></script>
+  <!-- Razorpay Test Mode Script -->
+  <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+  
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Boost Listing — Kalaa Kart</title>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/styles.css">
+  <style>
+    .boost-container {
+      max-width: 600px;
+      margin: 40px auto;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 30px;
+      box-shadow: var(--shadow);
+    }
+    .boost-header { margin-bottom: 30px; text-align: center; }
+    .boost-header h2 { margin: 0 0 10px; font-size: 1.8rem; }
+    .boost-header p { color: var(--text-secondary); margin: 0; }
+
+    .listing-preview {
+      display: flex;
+      gap: 15px;
+      padding: 15px;
+      background: var(--surface);
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      margin-bottom: 30px;
+    }
+    .listing-preview img { width: 80px; height: 80px; object-fit: cover; border-radius: 8px; }
+    .listing-preview div { display: flex; flex-direction: column; justify-content: center; }
+    .listing-preview h4 { margin: 0 0 5px; font-size: 1.1rem; }
+    .listing-preview span { font-size: 0.9rem; color: var(--text-secondary); }
+
+    .tier-card {
+      border: 2px solid var(--border);
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 15px;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: border-color 0.2s, background 0.2s;
+    }
+    .tier-card:hover { border-color: var(--accent); }
+    .tier-card.selected { border-color: var(--accent); background: rgba(245,166,35,0.05); }
+    
+    .tier-info h3 { margin: 0 0 5px; font-size: 1.2rem; }
+    .tier-info p { margin: 0; font-size: 0.9rem; color: var(--text-secondary); }
+    .tier-price { font-size: 1.4rem; font-weight: 800; color: var(--accent); }
+
+    .payment-methods {
+      margin-top: 30px;
+      border-top: 1px solid var(--border);
+      padding-top: 20px;
+    }
+    
+    .points-balance {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 15px;
+      background: var(--surface);
+      border-radius: 8px;
+      margin-bottom: 20px;
+    }
+    .points-balance strong { color: #fbbf24; }
+
+  </style>
+</head>
+<body data-page="boost">
+
+  <header class="navbar">
+    <a class="nav-brand" href="index.html">
+        <img src="assets/images/main_logo_final.jpeg" data-kk-logo alt="Kalaa Kart logo" style="height: 45px; width: auto;">
+    </a>
+  </header>
+
+  <main class="container">
+    <div class="boost-container">
+      <div class="boost-header">
+        <h2>Boost Your Listing</h2>
+        <p>Get featured at the top of the marketplace to sell faster.</p>
+      </div>
+
+      <div class="listing-preview" id="previewArea">
+        <!-- JS Injected -->
+      </div>
+
+      <div id="tiersArea">
+        <div class="tier-card selected" data-tier="24h" data-price="99" onclick="selectTier(this)">
+          <div class="tier-info">
+            <h3>24 Hours Boost</h3>
+            <p>Featured tag for 1 day</p>
+          </div>
+          <div class="tier-price">₹99</div>
+        </div>
+        <div class="tier-card" data-tier="3d" data-price="199" onclick="selectTier(this)">
+          <div class="tier-info">
+            <h3>3 Days Boost</h3>
+            <p>Featured tag for 3 days</p>
+          </div>
+          <div class="tier-price">₹199</div>
+        </div>
+        <div class="tier-card" data-tier="7d" data-price="299" onclick="selectTier(this)">
+          <div class="tier-info">
+            <h3>7 Days Boost</h3>
+            <p>Featured tag for 1 week</p>
+          </div>
+          <div class="tier-price">₹299</div>
+        </div>
+      </div>
+
+      <div class="payment-methods">
+        <div class="points-balance">
+          <span>Your KalaaKart Points: <strong id="ptsBalance">0</strong></span>
+          <button id="btnPoints" class="button button-secondary" style="padding:6px 12px; font-size:0.85rem;">Redeem 500 pts for 24h</button>
+        </div>
+        
+        <button id="btnPay" class="button btn-primary" style="width:100%; font-size:1.1rem; padding:15px;">Pay with Razorpay (Sandbox)</button>
+      </div>
+    </div>
+  </main>
+
+  <script src="assets/js/data.js"></script>
+  <script>
+    const currentUserEmail = localStorage.getItem('kk_user_email');
+    if (!currentUserEmail) window.location.href = 'login.html';
+
+    const params = new URLSearchParams(window.location.search);
+    const listingId = params.get('id');
+    
+    if (!listingId) {
+      alert("Invalid listing.");
+      window.location.href = 'profiles.html';
+    }
+
+    // Load listing details
+    const allListings = [...data.marketplace, ...(JSON.parse(localStorage.getItem('kk_user_listings') || '[]'))];
+    const listing = allListings.find(l => l.id === listingId || String(l.name) === String(listingId));
+    
+    if (listing) {
+      document.getElementById('previewArea').innerHTML = `
+        <img src="${listing.image}" alt="${listing.name}">
+        <div>
+          <h4>${listing.name}</h4>
+          <span>${listing.price}</span>
+        </div>
+      `;
+    }
+
+    // Points display
+    const balance = KKPoints.getBalance(currentUserEmail);
+    document.getElementById('ptsBalance').textContent = balance;
+    const btnPoints = document.getElementById('btnPoints');
+    if (balance < 500) {
+      btnPoints.disabled = true;
+      btnPoints.textContent = 'Not enough points';
+    }
+
+    // Tier selection
+    let selectedTier = '24h';
+    let selectedPrice = 99;
+    let selectedHours = 24;
+
+    window.selectTier = function(el) {
+      document.querySelectorAll('.tier-card').forEach(c => c.classList.remove('selected'));
+      el.classList.add('selected');
+      selectedTier = el.dataset.tier;
+      selectedPrice = parseInt(el.dataset.price);
+      selectedHours = selectedTier === '24h' ? 24 : (selectedTier === '3d' ? 72 : 168);
+    };
+
+    function activateBoost(method, amountPaid = 0) {
+      const boosts = JSON.parse(localStorage.getItem('kk_boosts') || '[]');
+      const expiresAt = new Date(Date.now() + selectedHours * 3600000).toISOString();
+      
+      boosts.push({
+        id: 'bst_' + Date.now(),
+        listingId: listingId || listing.name,
+        sellerEmail: currentUserEmail,
+        tier: selectedTier,
+        method: method,
+        revenue: amountPaid,
+        purchasedAt: new Date().toISOString(),
+        expiresAt: expiresAt
+      });
+      localStorage.setItem('kk_boosts', JSON.stringify(boosts));
+      
+      alert(`Success! Your listing is now boosted for ${selectedHours} hours.`);
+      window.location.href = 'marketplace.html';
+    }
+
+    // Razorpay Integration (Test Mode)
+    document.getElementById('btnPay').addEventListener('click', () => {
+      const options = {
+        key: "rzp_test_placeholder_key", // Generic placeholder for frontend test
+        amount: selectedPrice * 100, // paise
+        currency: "INR",
+        name: "KalaaKart Ad Boost",
+        description: `Boost listing for ${selectedHours} hours`,
+        handler: function (response) {
+          // Success callback
+          activateBoost('razorpay', selectedPrice);
+        },
+        prefill: {
+          email: currentUserEmail
+        },
+        theme: {
+          color: "#F5A623"
+        }
+      };
+      const rzp = new Razorpay(options);
+      rzp.on('payment.failed', function (response){
+        alert("Payment failed: " + response.error.description);
+      });
+      rzp.open();
+    });
+
+    // Points Redemption
+    btnPoints.addEventListener('click', () => {
+      if (selectedTier !== '24h') {
+        alert("Points can only be redeemed for the 24 Hour boost tier.");
+        return;
+      }
+      const res = KKPoints.redeemPoints(currentUserEmail, 'BOOST_24H');
+      if (res.ok) {
+        activateBoost('points', 0);
+      } else {
+        alert("Redemption failed: " + res.reason);
+      }
+    });
+
+  </script>
+</body>
+</html>

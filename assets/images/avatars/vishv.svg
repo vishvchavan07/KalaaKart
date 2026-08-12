@@ -1,0 +1,10 @@
+<svg width="320" height="320" viewBox="0 0 320 320" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="320" height="320" rx="36" fill="#FFF0BA"/>
+  <circle cx="160" cy="122" r="68" fill="#F3C8A8"/>
+  <path d="M100 112C100 76.6538 128.654 48 164 48H176C211.346 48 240 76.6538 240 112V130H100V112Z" fill="#17313E"/>
+  <rect x="104" y="177" width="112" height="92" rx="44" fill="#98C58B"/>
+  <circle cx="136" cy="123" r="8" fill="#17313E"/>
+  <circle cx="184" cy="123" r="8" fill="#17313E"/>
+  <path d="M139 154C148.333 161.333 170.733 163 183 151" stroke="#17313E" stroke-width="8" stroke-linecap="round"/>
+  <text x="160" y="291" text-anchor="middle" fill="#17313E" font-family="Arial, sans-serif" font-size="30" font-weight="700">VISHV</text>
+</svg>

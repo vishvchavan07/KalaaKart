@@ -1,0 +1,8 @@
+<svg width="480" height="300" viewBox="0 0 480 300" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="480" height="300" rx="26" fill="#F2F6FF"/>
+  <path d="M150 78H330L346 230H134L150 78Z" fill="#6E8DCD"/>
+  <path d="M195 78L240 124L285 78" stroke="#DCE5FF" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M116 114L152 144" stroke="#111827" stroke-width="6" stroke-linecap="round"/>
+  <path d="M364 114L328 144" stroke="#111827" stroke-width="6" stroke-linecap="round"/>
+  <text x="240" y="278" text-anchor="middle" fill="#111827" font-family="Arial, sans-serif" font-size="25" font-weight="700">Sleeve Fitting Fix</text>
+</svg>

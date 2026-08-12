@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark-cold">
+<head>
+  <script>
+    (function() {
+      const t = localStorage.getItem('kk-theme') || 'dark-cold';
+      document.documentElement.setAttribute('data-theme', t);
+    })();
+  </script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Report Unsafe Meetup — Kalaa Kart</title>
+  <meta name="description" content="Report an unsafe or suspicious meetup on Kalaa Kart. Our team will review and follow up within 24 hours.">
+  <link rel="icon" type="image/jpeg" href="assets/images/main_logo_final.jpeg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/styles.css?v=4">
+  <style>
+    [data-theme="dark-cold"]      { --bg:#0D0F1A; --accent:#7C6EF5; --text-primary:#E8EAFF; }
+    [data-theme="dark-warm"]      { --bg:#120A05; --accent:#E8832A; --text-primary:#FFE8CC; }
+    [data-theme="light-pro"]      { --bg:#F7F8FC; --accent:#5046E5; --text-primary:#1A1A2E; }
+    [data-theme="sakura"]         { --bg:#12080A; --accent:#FF78A5; --text-primary:#FFE0E9; }
+    [data-theme="midnight-ink"]   { --bg:#040406; --accent:#5C5CFF; --text-primary:#EEEEFF; }
+    [data-theme="stone-gold"]     { --bg:#0F0E0C; --accent:#D4AF37; --text-primary:#F5EDD6; }
+    [data-theme="cyber-campus"]   { --bg:#020205; --accent:#00F2FF; --text-primary:#00F2FF; }
+    [data-theme="vintage-vinyl"]  { --bg:#F2E8D5; --accent:#D95D39; --text-primary:#2E2E2E; }
+    [data-theme="emerald-forest"] { --bg:#0A1A12; --accent:#4CAF50; --text-primary:#E8F5E9; }
+    [data-theme="ocean-abyss"]    { --bg:#010B13; --accent:#00BCD4; --text-primary:#E0F7FA; }
+    [data-theme="sunset-mirage"]  { --bg:#1A0B2E; --accent:#FF4E50; --text-primary:#F9D423; }
+    [data-theme="parchment-quill"]{ --bg:#D6C6B0; --accent:#8B4513; --text-primary:#2C1E1E; }
+
+    .safety-wrap {
+      min-height: 100vh;
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      padding: 100px 16px 60px;
+    }
+    .safety-card {
+      width: 100%;
+      max-width: 540px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 28px;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+    /* Hero strip */
+    .safety-hero {
+      background: linear-gradient(135deg, rgba(239,68,68,0.15), rgba(220,38,38,0.08));
+      border-bottom: 1px solid rgba(239,68,68,0.15);
+      padding: 28px 32px 22px;
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+    }
+    .safety-hero-icon {
+      font-size: 2.8rem;
+      flex-shrink: 0;
+      line-height: 1;
+    }
+    .safety-hero-text h1 {
+      font-size: 1.4rem;
+      font-weight: 800;
+      margin: 0 0 6px;
+      letter-spacing: -0.02em;
+    }
+    .safety-hero-text p {
+      font-size: 0.84rem;
+      color: var(--text-secondary);
+      margin: 0;
+      line-height: 1.55;
+    }
+
+    /* Privacy note */
+    .privacy-note {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      background: rgba(34,197,94,0.08);
+      border: 1px solid rgba(34,197,94,0.2);
+      border-radius: 12px;
+      padding: 12px 14px;
+      margin: 20px 0;
+      font-size: 0.8rem;
+      color: var(--text-secondary);
+      line-height: 1.5;
+    }
+    .privacy-note .pn-icon { font-size: 1.1rem; flex-shrink: 0; margin-top: 1px; }
+
+    /* Form body */
+    .safety-form-body { padding: 24px 32px 32px; }
+
+    .field { margin-bottom: 18px; }
+    .field label {
+      display: block;
+      font-size: 0.85rem;
+      font-weight: 600;
+      margin-bottom: 7px;
+    }
+    .field label .opt { font-weight: 400; color: var(--text-secondary); margin-left: 4px; }
+    .field input, .field select, .field textarea {
+      width: 100%;
+      padding: 12px 16px;
+      background: var(--card-bg);
+      border: 1.5px solid var(--border);
+      border-radius: 12px;
+      color: var(--text-primary);
+      font-family: inherit;
+      font-size: 0.92rem;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+      box-sizing: border-box;
+    }
+    .field input:focus, .field select:focus, .field textarea:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px var(--tag-bg);
+    }
+    .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    .field-error {
+      font-size: 0.78rem;
+      color: #ef4444;
+      margin-top: 5px;
+      display: none;
+    }
+    .field-error.show { display: block; }
+    .char-counter {
+      text-align: right;
+      font-size: 0.75rem;
+      color: var(--text-secondary);
+      margin-top: 4px;
+    }
+
+    /* Incident type pills */
+    .incident-pills { display: flex; flex-wrap: wrap; gap: 8px; }
+    .incident-pill {
+      padding: 7px 14px;
+      border-radius: 50px;
+      border: 1.5px solid var(--border);
+      background: transparent;
+      color: var(--text-secondary);
+      font-family: inherit;
+      font-size: 0.8rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .incident-pill:hover { border-color: var(--accent); color: var(--text-primary); }
+    .incident-pill.selected {
+      background: rgba(239,68,68,0.12);
+      border-color: rgba(239,68,68,0.4);
+      color: #dc2626;
+    }
+
+    /* Submit button */
+    .submit-btn {
+      width: 100%;
+      padding: 15px;
+      background: linear-gradient(135deg, #dc2626, #ef4444);
+      color: #fff;
+      border: none;
+      border-radius: 14px;
+      font-family: inherit;
+      font-weight: 700;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: opacity 0.2s, transform 0.15s;
+      margin-top: 8px;
+    }
+    .submit-btn:hover { opacity: 0.9; transform: translateY(-2px); }
+    .submit-btn:active { transform: scale(0.98); }
+    .submit-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+    /* Success state */
+    .success-overlay {
+      display: none;
+      text-align: center;
+      padding: 40px 32px;
+      animation: fadeUp 0.4s ease;
+    }
+    .success-overlay.show { display: block; }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(12px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .success-icon { font-size: 3.5rem; margin-bottom: 16px; }
+    .success-title { font-size: 1.4rem; font-weight: 800; margin: 0 0 10px; }
+    .success-body {
+      font-size: 0.88rem;
+      color: var(--text-secondary);
+      line-height: 1.65;
+      margin: 0 auto 24px;
+      max-width: 360px;
+    }
+    .back-btn {
+      display: inline-block;
+      padding: 12px 28px;
+      border-radius: 12px;
+      background: var(--accent);
+      color: #fff;
+      font-weight: 700;
+      text-decoration: none;
+      font-size: 0.9rem;
+      transition: opacity 0.2s;
+    }
+    .back-btn:hover { opacity: 0.9; }
+
+    /* Divider */
+    .divider {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--text-secondary);
+      font-size: 0.78rem;
+      margin: 20px 0;
+    }
+    .divider::before, .divider::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+
+    /* Emergency helpline banner */
+    .helpline-banner {
+      background: rgba(239,68,68,0.06);
+      border: 1px solid rgba(239,68,68,0.15);
+      border-radius: 14px;
+      padding: 14px 16px;
+      margin-bottom: 20px;
+      font-size: 0.83rem;
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+    }
+    .helpline-banner strong { color: #dc2626; }
+  </style>
+</head>
+<body data-page="safety-report">
+  <div id="cursor-dot"></div>
+  <div id="cursor-ring"></div>
+
+  <header class="navbar">
+    <a class="nav-brand" href="index.html">
+      <img src="assets/images/main_logo_final.jpeg" alt="Kalaa Kart logo" style="height:45px;width:auto;object-fit:contain;">
+    </a>
+    <div class="nav-links">
+      <a href="index.html">HOME</a>
+      <a href="profiles.html">PROFILES</a>
+      <a href="marketplace.html">REUSE SECTION</a>
+      <a href="login.html">LOG IN</a>
+      <a href="signup.html">SIGN UP</a>
+    </div>
+    <button class="nav-hamburger" id="navHamburger" aria-label="Toggle menu">☰</button>
+  </header>
+  <nav class="nav-mobile-dropdown" id="navMobileDropdown">
+    <a href="index.html">HOME</a>
+    <a href="profiles.html">PROFILES</a>
+    <a href="marketplace.html">REUSE SECTION</a>
+    <a href="login.html" style="color:var(--accent);">LOG IN</a>
+    <a href="signup.html">SIGN UP</a>
+  </nav>
+
+  <main class="safety-wrap">
+    <div class="safety-card">
+      <!-- Hero -->
+      <div class="safety-hero">
+        <div class="safety-hero-icon">🛡️</div>
+        <div class="safety-hero-text">
+          <h1>Report an Unsafe Meetup</h1>
+          <p>If you felt unsafe, threatened, or witnessed suspicious behaviour during a Kalaa Kart transaction or meetup, please tell us. Your report is confidential.</p>
+        </div>
+      </div>
+
+      <!-- Form -->
+      <div class="safety-form-body" id="reportForm">
+
+        <!-- Emergency helpline -->
+        <div class="helpline-banner">
+          <span style="font-size:1.2rem;flex-shrink:0;">🚨</span>
+          <span>In immediate danger? Call <strong>112</strong> (All-India Emergency) or <strong>1091</strong> (Women's Helpline) right now. This form is for post-incident reporting only.</span>
+        </div>
+
+        <!-- Privacy note -->
+        <div class="privacy-note">
+          <span class="pn-icon">🔒</span>
+          <span>Your identity is shared only with Kalaa Kart admins. We will never share your emergency contact details or personal information with other users.</span>
+        </div>
+
+        <!-- Your details -->
+        <div class="field-row">
+          <div class="field">
+            <label for="rName">Your Name</label>
+            <input type="text" id="rName" placeholder="Your full name" autocomplete="name">
+            <div class="field-error" id="err-rName">Your name is required.</div>
+          </div>
+          <div class="field">
+            <label for="rEmail">Your Email</label>
+            <input type="email" id="rEmail" placeholder="your@email.com" autocomplete="email">
+            <div class="field-error" id="err-rEmail">A valid email is required.</div>
+          </div>
+        </div>
+
+        <!-- Incident type -->
+        <div class="field">
+          <label>Type of Incident</label>
+          <div class="incident-pills" id="incidentPills">
+            <button type="button" class="incident-pill" onclick="toggleIncident(this, 'Harassment')">😡 Harassment</button>
+            <button type="button" class="incident-pill" onclick="toggleIncident(this, 'Threatened / Coerced')">⚠️ Threatened</button>
+            <button type="button" class="incident-pill" onclick="toggleIncident(this, 'Fake item / Scam')">🎭 Fake Item / Scam</button>
+            <button type="button" class="incident-pill" onclick="toggleIncident(this, 'Inappropriate behaviour')">🚩 Inappropriate behaviour</button>
+            <button type="button" class="incident-pill" onclick="toggleIncident(this, 'Unsafe meetup location')">📍 Unsafe location</button>
+            <button type="button" class="incident-pill" onclick="toggleIncident(this, 'Other')">🔹 Other</button>
+          </div>
+          <div class="field-error" id="err-incident">Please select at least one incident type.</div>
+        </div>
+
+        <!-- Person involved -->
+        <div class="field">
+          <label for="rInvolved">Person / Listing Involved <span class="opt">(Optional)</span></label>
+          <input type="text" id="rInvolved" placeholder="Name, email, or listing title of the person involved">
+        </div>
+
+        <div class="field">
+          <label for="rInvolvedEmail">Their Email or Profile Link <span class="opt">(Optional)</span></label>
+          <input type="text" id="rInvolvedEmail" placeholder="E.g. seller@campus.edu">
+        </div>
+
+        <div class="divider">Tell us what happened</div>
+
+        <!-- Description -->
+        <div class="field">
+          <label for="rDescription">Description of Incident</label>
+          <textarea id="rDescription" rows="5" maxlength="1000"
+            placeholder="Please describe what happened — when, where, and what occurred. The more detail you provide, the better we can help."
+            oninput="document.getElementById('descCount').textContent = this.value.length"></textarea>
+          <div class="char-counter"><span id="descCount">0</span> / 1000</div>
+          <div class="field-error" id="err-desc">Please describe the incident (at least 30 characters).</div>
+        </div>
+
+        <!-- Date/time -->
+        <div class="field-row">
+          <div class="field">
+            <label for="rDate">Date of Incident <span class="opt">(Optional)</span></label>
+            <input type="date" id="rDate">
+          </div>
+          <div class="field">
+            <label for="rLocation">Location / Platform <span class="opt">(Optional)</span></label>
+            <input type="text" id="rLocation" placeholder="E.g. Campus canteen, WhatsApp">
+          </div>
+        </div>
+
+        <div class="divider">Your safety contact (optional)</div>
+
+        <!-- Safety contact (pre-filled if logged in) -->
+        <div class="privacy-note" style="margin-bottom:14px;">
+          <span class="pn-icon">🔒</span>
+          <span>If you provided an emergency contact during signup, it's already on file. You can add or update it below — visible to admins only.</span>
+        </div>
+        <div class="field-row">
+          <div class="field">
+            <label for="rEcName">Emergency Contact Name <span class="opt">(Optional)</span></label>
+            <input type="text" id="rEcName" placeholder="Parent / Guardian">
+          </div>
+          <div class="field">
+            <label for="rEcPhone">Emergency Contact Phone <span class="opt">(Optional)</span></label>
+            <input type="tel" id="rEcPhone" placeholder="+91 98765 43210">
+          </div>
+        </div>
+
+        <button type="button" class="submit-btn" id="submitReportBtn" onclick="submitReport()">
+          🛡️ Submit Safety Report
+        </button>
+
+        <p style="font-size:0.75rem;color:var(--text-secondary);text-align:center;margin-top:14px;line-height:1.5;">
+          Our team reviews all reports within 24 hours. If your situation is urgent, please contact campus security or call 112.
+        </p>
+      </div>
+
+      <!-- Success state -->
+      <div class="success-overlay" id="successOverlay">
+        <div class="success-icon">✅</div>
+        <h2 class="success-title">Report Submitted</h2>
+        <p class="success-body">
+          Thank you for keeping our campus safe. Your report has been received and is being reviewed by our team. We'll follow up at the email you provided within 24 hours.
+        </p>
+        <a href="index.html" class="back-btn">← Back to Home</a>
+      </div>
+
+    </div><!-- /safety-card -->
+  </main>
+
+  <!-- Theme switcher -->
+  <div id="theme-switcher">
+    <button class="theme-toggle-btn" onclick="document.getElementById('theme-panel').classList.toggle('open')">🎨 Theme</button>
+    <div class="theme-panel" id="theme-panel">
+      <button class="theme-opt" data-theme="dark-cold"       onclick="setTheme('dark-cold')"><span class="swatch" style="background:linear-gradient(135deg,#0D0F1A,#7C6EF5)"></span>Dark Cold</button>
+      <button class="theme-opt" data-theme="dark-warm"       onclick="setTheme('dark-warm')"><span class="swatch" style="background:linear-gradient(135deg,#120A05,#E8832A)"></span>Dark Warm</button>
+      <button class="theme-opt" data-theme="light-pro"       onclick="setTheme('light-pro')"><span class="swatch" style="background:linear-gradient(135deg,#F7F8FC,#5046E5)"></span>Light Pro</button>
+      <button class="theme-opt" data-theme="sakura"          onclick="setTheme('sakura')"><span class="swatch" style="background:linear-gradient(135deg,#12080A,#FF78A5)"></span>Sakura</button>
+      <button class="theme-opt" data-theme="midnight-ink"    onclick="setTheme('midnight-ink')"><span class="swatch" style="background:linear-gradient(135deg,#040406,#5C5CFF)"></span>Midnight Ink</button>
+      <button class="theme-opt" data-theme="stone-gold"      onclick="setTheme('stone-gold')"><span class="swatch" style="background:linear-gradient(135deg,#0F0E0C,#D4AF37)"></span>Stone &amp; Gold</button>
+      <button class="theme-opt" data-theme="cyber-campus"    onclick="setTheme('cyber-campus')"><span class="swatch" style="background:linear-gradient(135deg,#020205,#00F2FF)"></span>Cyber Campus</button>
+      <button class="theme-opt" data-theme="vintage-vinyl"   onclick="setTheme('vintage-vinyl')"><span class="swatch" style="background:linear-gradient(135deg,#F2E8D5,#D95D39)"></span>Vintage Vinyl</button>
+      <button class="theme-opt" data-theme="emerald-forest"  onclick="setTheme('emerald-forest')"><span class="swatch" style="background:linear-gradient(135deg,#0A1A12,#4CAF50)"></span>Emerald Forest</button>
+      <button class="theme-opt" data-theme="ocean-abyss"     onclick="setTheme('ocean-abyss')"><span class="swatch" style="background:linear-gradient(135deg,#010B13,#00BCD4)"></span>Ocean Abyss</button>
+      <button class="theme-opt" data-theme="sunset-mirage"   onclick="setTheme('sunset-mirage')"><span class="swatch" style="background:linear-gradient(135deg,#1A0B2E,#FF4E50)"></span>Sunset Mirage</button>
+      <button class="theme-opt" data-theme="parchment-quill" onclick="setTheme('parchment-quill')"><span class="swatch" style="background:linear-gradient(135deg,#D6C6B0,#8B4513)"></span>Parchment &amp; Quill</button>
+    </div>
+  </div>
+
+  <script src="assets/js/main.js?v=1.1"></script>
+  <script>
+  /* ═══════════════════════════════════════════════
+     KALAA KART — SAFETY REPORT
+     Stores to kk_safety_reports in localStorage.
+     Admin panel surfaces emergency contact.
+  ═══════════════════════════════════════════════ */
+
+  let selectedIncidents = [];
+
+  // Pre-fill from logged-in user
+  (function() {
+    try {
+      const user = JSON.parse(localStorage.getItem('kk_current_user') || sessionStorage.getItem('kk_current_user') || 'null');
+      if (user) {
+        if (user.name) document.getElementById('rName').value = user.name;
+        if (user.email) document.getElementById('rEmail').value = user.email;
+        if (user.emergencyContact) {
+          if (user.emergencyContact.name) document.getElementById('rEcName').value = user.emergencyContact.name;
+          if (user.emergencyContact.phone) document.getElementById('rEcPhone').value = user.emergencyContact.phone;
+        }
+      }
+    } catch(e) {}
+  })();
+
+  function toggleIncident(btn, label) {
+    const idx = selectedIncidents.indexOf(label);
+    if (idx === -1) { selectedIncidents.push(label); btn.classList.add('selected'); }
+    else { selectedIncidents.splice(idx, 1); btn.classList.remove('selected'); }
+  }
+
+  function sanitize(v) { return String(v || '').replace(/[$<>]/g, '').trim(); }
+
+  function showErr(id, show) {
+    document.getElementById(id).classList.toggle('show', show);
+    return show;
+  }
+
+  function submitReport() {
+    let ok = true;
+    const name  = sanitize(document.getElementById('rName').value);
+    const email = sanitize(document.getElementById('rEmail').value);
+    const desc  = sanitize(document.getElementById('rDescription').value);
+
+    if (showErr('err-rName', !name)) ok = false;
+    if (showErr('err-rEmail', !email || !email.includes('@'))) ok = false;
+    if (showErr('err-incident', selectedIncidents.length === 0)) ok = false;
+    if (showErr('err-desc', desc.length < 30)) ok = false;
+    if (!ok) {
+      const first = document.querySelector('.field-error.show');
+      if (first) first.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      return;
+    }
+
+    const btn = document.getElementById('submitReportBtn');
+    btn.disabled = true;
+    btn.textContent = 'Submitting…';
+
+    const report = {
+      reporterName:    name,
+      reporterEmail:   email,
+      reportedName:    sanitize(document.getElementById('rInvolved').value),
+      reportedEmail:   sanitize(document.getElementById('rInvolvedEmail').value),
+      incidentTypes:   selectedIncidents,
+      description:     desc,
+      date:            document.getElementById('rDate').value || null,
+      location:        sanitize(document.getElementById('rLocation').value),
+      emergencyContact: {
+        name:  sanitize(document.getElementById('rEcName').value),
+        phone: sanitize(document.getElementById('rEcPhone').value)
+      },
+      submittedAt: new Date().toISOString(),
+      resolved: false
+    };
+
+    // If logged-in user, update their emergency contact on file
+    try {
+      let users = JSON.parse(localStorage.getItem('kk_users') || '[]');
+      const ui = users.findIndex(u => u.email && u.email.toLowerCase() === email.toLowerCase());
+      if (ui !== -1 && (report.emergencyContact.name || report.emergencyContact.phone)) {
+        users[ui].emergencyContact = report.emergencyContact;
+        localStorage.setItem('kk_users', JSON.stringify(users));
+      }
+    } catch(e) {}
+
+    // Save report
+    const reports = JSON.parse(localStorage.getItem('kk_safety_reports') || '[]');
+    reports.push(report);
+    localStorage.setItem('kk_safety_reports', JSON.stringify(reports));
+
+    // Log auth event
+    const logs = JSON.parse(localStorage.getItem('kk_auth_log') || '[]');
+    logs.push({ event: 'safety_report', email, ts: new Date().toISOString() });
+    localStorage.setItem('kk_auth_log', JSON.stringify(logs));
+
+    // Show success
+    document.getElementById('reportForm').style.display = 'none';
+    document.getElementById('successOverlay').classList.add('show');
+  }
+
+  // Mobile nav
+  (function() {
+    const hamburger = document.getElementById('navHamburger');
+    const mobileNav = document.getElementById('navMobileDropdown');
+    if (hamburger && mobileNav) {
+      hamburger.addEventListener('click', () => {
+        mobileNav.classList.toggle('open');
+        hamburger.textContent = mobileNav.classList.contains('open') ? '✕' : '☰';
+      });
+      document.addEventListener('click', e => {
+        if (!hamburger.contains(e.target) && !mobileNav.contains(e.target)) {
+          mobileNav.classList.remove('open');
+          hamburger.textContent = '☰';
+        }
+      });
+    }
+  })();
+  </script>
+</body>
+</html>

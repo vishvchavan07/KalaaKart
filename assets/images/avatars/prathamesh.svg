@@ -1,0 +1,10 @@
+<svg width="320" height="320" viewBox="0 0 320 320" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="320" height="320" rx="36" fill="#D8F5F3"/>
+  <circle cx="160" cy="122" r="68" fill="#E4B899"/>
+  <path d="M96 110C96 74.6538 124.654 46 160 46H174C209.346 46 238 74.6538 238 110V129H96V110Z" fill="#1D4850"/>
+  <rect x="101" y="179" width="118" height="92" rx="44" fill="#4CB7AA"/>
+  <circle cx="136" cy="123" r="8" fill="#17313E"/>
+  <circle cx="184" cy="123" r="8" fill="#17313E"/>
+  <path d="M140 154C148.667 161.333 171.333 164 183 150" stroke="#17313E" stroke-width="8" stroke-linecap="round"/>
+  <text x="160" y="291" text-anchor="middle" fill="#17313E" font-family="Arial, sans-serif" font-size="25" font-weight="700">PRATHAMESH</text>
+</svg>

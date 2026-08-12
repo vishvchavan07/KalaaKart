@@ -1,0 +1,9 @@
+<svg width="480" height="300" viewBox="0 0 480 300" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="480" height="300" rx="26" fill="#F7FAFF"/>
+  <rect x="88" y="84" width="128" height="128" rx="28" fill="#7E9DFF"/>
+  <rect x="264" y="84" width="128" height="128" rx="28" fill="#F1C36B"/>
+  <rect x="146" y="111" width="188" height="74" rx="22" fill="#FFFFFF"/>
+  <path d="M118 146H190" stroke="#FFFFFF" stroke-width="8" stroke-linecap="round"/>
+  <path d="M290 146H362" stroke="#FFFFFF" stroke-width="8" stroke-linecap="round"/>
+  <text x="240" y="278" text-anchor="middle" fill="#111827" font-family="Arial, sans-serif" font-size="25" font-weight="700">Knitted Cup Cozy Pack</text>
+</svg>

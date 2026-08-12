@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark-cold">
+<head>
+  <script>
+    (function() {
+      const t = localStorage.getItem('kk-theme') || 'dark-cold';
+      document.documentElement.setAttribute('data-theme', t);
+    })();
+  </script>
+  <script src="assets/js/branding.js"></script>
+  <script src="assets/js/chat.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Messages — Kalaa Kart</title>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/styles.css">
+  <style>
+    .inbox-container {
+      max-width: 800px;
+      margin: 40px auto;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: var(--shadow);
+    }
+    .inbox-header {
+      padding: 20px;
+      border-bottom: 1px solid var(--border);
+      background: var(--surface);
+    }
+    .inbox-header h2 { margin: 0; font-size: 1.5rem; }
+    
+    .thread-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    .thread-item {
+      display: flex;
+      padding: 20px;
+      border-bottom: 1px solid var(--border);
+      text-decoration: none;
+      color: inherit;
+      transition: background 0.2s;
+    }
+    .thread-item:hover { background: var(--surface); }
+    .thread-item:last-child { border-bottom: none; }
+    
+    .thread-avatar {
+      width: 50px; height: 50px;
+      border-radius: 50%;
+      background: var(--surface);
+      margin-right: 15px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.5rem; border: 1px solid var(--border);
+    }
+    .thread-info { flex: 1; min-width: 0; }
+    .thread-top { display: flex; justify-content: space-between; margin-bottom: 5px; }
+    .thread-name { font-weight: 700; font-size: 1.1rem; }
+    .thread-time { font-size: 0.8rem; color: var(--text-secondary); }
+    .thread-listing { font-size: 0.8rem; color: var(--accent); font-weight: 600; margin-bottom: 5px; }
+    .thread-preview {
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .empty-inbox { padding: 40px; text-align: center; color: var(--text-secondary); }
+  </style>
+</head>
+<body data-page="messages">
+
+  <header class="navbar">
+    <a class="nav-brand" href="index.html">
+        <img src="assets/images/main_logo_final.jpeg" data-kk-logo alt="Kalaa Kart logo" style="height: 45px; width: auto;">
+    </a>
+    <div class="nav-links">
+        <a href="index.html">HOME</a>
+        <a href="profiles.html">PROFILES</a>
+        <a href="marketplace.html">REUSE SECTION</a>
+        <a href="messages.html" style="color:var(--accent);font-weight:700;">MESSAGES</a>
+    </div>
+  </header>
+
+  <main class="container">
+    <div class="inbox-container">
+      <div class="inbox-header">
+        <h2>Your Messages</h2>
+      </div>
+      <ul class="thread-list" id="threadList">
+        <!-- JS populated -->
+      </ul>
+    </div>
+  </main>
+
+  <script src="assets/js/data.js"></script>
+  <script>
+    // Security check
+    const currentUserEmail = localStorage.getItem('kk_user_email');
+    if (!currentUserEmail || localStorage.getItem('kk_user_logged_in') !== 'true') {
+      window.location.href = 'login.html';
+    }
+
+    function loadInbox() {
+      const threads = KKChat.getThreadsForUser(currentUserEmail);
+      const listEl = document.getElementById('threadList');
+      
+      if (threads.length === 0) {
+        listEl.innerHTML = `<div class="empty-inbox">No messages yet. Check the marketplace to contact sellers!</div>`;
+        return;
+      }
+
+      // We need to resolve listing names. We'll pull from data.js + localStorage
+      const allListings = [...data.marketplace, ...(JSON.parse(localStorage.getItem('kk_user_listings') || '[]'))];
+
+      let html = '';
+      threads.forEach(t => {
+        const otherUser = t.buyerEmail === currentUserEmail ? t.sellerEmail : t.buyerEmail;
+        const lastMsg = t.messages.length > 0 ? t.messages[t.messages.length - 1] : null;
+        const preview = lastMsg ? lastMsg.text : 'No messages yet';
+        const time = lastMsg ? new Date(lastMsg.ts).toLocaleDateString([], { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' }) : '';
+        
+        const listing = allListings.find(l => l.id === t.listingId || l.name === t.listingId);
+        const listingName = listing ? listing.name : 'Unknown Item';
+
+        html += `
+          <a href="chat.html?t=${t.id}" class="thread-item">
+            <div class="thread-avatar">👤</div>
+            <div class="thread-info">
+              <div class="thread-top">
+                <div class="thread-name">${otherUser}</div>
+                <div class="thread-time">${time}</div>
+              </div>
+              <div class="thread-listing">Item: ${listingName}</div>
+              <div class="thread-preview">${preview}</div>
+            </div>
+          </a>
+        `;
+      });
+      listEl.innerHTML = html;
+    }
+
+    loadInbox();
+    // Re-render if storage updates
+    window.addEventListener('storage', (e) => {
+      if (e.key === 'kk_chats') loadInbox();
+    });
+  </script>
+</body>
+</html>

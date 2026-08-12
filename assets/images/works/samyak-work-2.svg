@@ -1,0 +1,10 @@
+<svg width="480" height="300" viewBox="0 0 480 300" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="480" height="300" rx="26" fill="#F5F8FC"/>
+  <rect x="78" y="54" width="324" height="192" rx="24" fill="#111827"/>
+  <rect x="104" y="82" width="180" height="136" rx="18" fill="#2F5D50"/>
+  <path d="M126 196L168 154L198 176L240 126L261 145" stroke="#FFD36B" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="307" y="96" width="56" height="14" rx="7" fill="#D6DEE8"/>
+  <rect x="307" y="126" width="72" height="14" rx="7" fill="#7EB6FF"/>
+  <rect x="307" y="156" width="44" height="14" rx="7" fill="#F08A64"/>
+  <text x="240" y="278" text-anchor="middle" fill="#111827" font-family="Arial, sans-serif" font-size="25" font-weight="700">Birthday Reel Edit</text>
+</svg>

@@ -1,0 +1,1101 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark-cold">
+<head>
+  <script>
+    (function() {
+      const t = localStorage.getItem('kk-theme') || 'dark-cold';
+      document.documentElement.setAttribute('data-theme', t);
+    })();
+  </script>
+  <script src="assets/js/branding.js"></script>
+  <script src="assets/js/imageProcessor.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sign Up — Kalaa Kart</title>
+  <meta name="description" content="Join Kalaa Kart as a Buyer or Seller — India's premier campus marketplace for student art, skills, and essentials.">
+  <link rel="icon" type="image/jpeg" href="assets/images/main_logo_final.jpeg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/styles.css?v=4">
+  <style>
+    /* ── Wizard Shell ── */
+    .signup-wrap {
+      min-height: 100vh;
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      padding: 100px 16px 60px;
+    }
+    .signup-card {
+      width: 100%;
+      max-width: 560px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 28px;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+    /* ── Progress Bar ── */
+    .wizard-progress {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 28px 32px 0;
+      gap: 0;
+    }
+    .wizard-step-dot {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      border: 2px solid var(--border);
+      background: var(--card-bg);
+      color: var(--text-secondary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+      font-weight: 700;
+      transition: all 0.35s ease;
+      flex-shrink: 0;
+      position: relative;
+      z-index: 1;
+    }
+    .wizard-step-dot.active {
+      border-color: var(--accent);
+      background: var(--accent);
+      color: #fff;
+      box-shadow: 0 0 0 6px var(--tag-bg);
+    }
+    .wizard-step-dot.done {
+      border-color: var(--accent);
+      background: var(--tag-bg);
+      color: var(--accent);
+    }
+    .wizard-connector {
+      flex: 1;
+      height: 2px;
+      background: var(--border);
+      margin: 0 4px;
+      transition: background 0.35s ease;
+    }
+    .wizard-connector.done { background: var(--accent); }
+    /* ── Step Panels ── */
+    .wizard-body { padding: 32px; }
+    .wizard-panel { display: none; }
+    .wizard-panel.active { display: block; animation: fadeUp 0.35s ease; }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(16px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .wizard-title {
+      font-size: 1.6rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      margin: 0 0 6px;
+    }
+    .wizard-sub {
+      color: var(--text-secondary);
+      margin: 0 0 28px;
+      font-size: 0.9rem;
+    }
+    /* ── Role Cards ── */
+    .role-cards {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-bottom: 16px;
+    }
+    .role-card {
+      background: var(--card-bg);
+      border: 2px solid var(--border);
+      border-radius: 20px;
+      padding: 24px 18px;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      text-align: center;
+      user-select: none;
+    }
+    .role-card:hover {
+      border-color: var(--accent);
+      transform: translateY(-3px);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+    }
+    .role-card.selected {
+      border-color: var(--accent);
+      background: var(--tag-bg);
+      box-shadow: 0 0 0 4px var(--tag-bg);
+    }
+    .role-card .role-icon {
+      font-size: 2.4rem;
+      margin-bottom: 12px;
+      display: block;
+    }
+    .role-card .role-name {
+      font-size: 1rem;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+    .role-card .role-desc {
+      font-size: 0.78rem;
+      color: var(--text-secondary);
+      line-height: 1.5;
+    }
+    .role-both-hint {
+      text-align: center;
+      font-size: 0.8rem;
+      color: var(--text-secondary);
+      margin-bottom: 28px;
+    }
+    .role-both-hint strong { color: var(--accent); }
+    /* ── Form Fields ── */
+    .field {
+      margin-bottom: 18px;
+    }
+    .field label {
+      display: block;
+      font-size: 0.85rem;
+      font-weight: 600;
+      margin-bottom: 7px;
+      color: var(--text-primary);
+    }
+    .field label .opt {
+      font-weight: 400;
+      color: var(--text-secondary);
+      margin-left: 4px;
+    }
+    .field input,
+    .field select,
+    .field textarea {
+      width: 100%;
+      padding: 12px 16px;
+      background: var(--card-bg);
+      border: 1.5px solid var(--border);
+      border-radius: 12px;
+      color: var(--text-primary);
+      font-family: inherit;
+      font-size: 0.92rem;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+      box-sizing: border-box;
+    }
+    .field input:focus,
+    .field select:focus,
+    .field textarea:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px var(--tag-bg);
+    }
+    .field input.error { border-color: #ef4444; }
+    .field-error {
+      font-size: 0.78rem;
+      color: #ef4444;
+      margin-top: 5px;
+      display: none;
+    }
+    .field-error.show { display: block; }
+    .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    /* Password strength */
+    .pw-strength-bar {
+      height: 4px;
+      border-radius: 4px;
+      background: var(--border);
+      margin-top: 8px;
+      overflow: hidden;
+    }
+    .pw-strength-fill {
+      height: 100%;
+      width: 0%;
+      border-radius: 4px;
+      transition: width 0.3s ease, background 0.3s ease;
+    }
+    .pw-strength-label {
+      font-size: 0.75rem;
+      margin-top: 4px;
+      color: var(--text-secondary);
+    }
+    /* ── Portfolio Section ── */
+    .portfolio-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin-bottom: 8px;
+    }
+    .portfolio-slot {
+      aspect-ratio: 1;
+      border-radius: 14px;
+      border: 2px dashed var(--border);
+      background: var(--card-bg);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+      transition: border-color 0.2s;
+    }
+    .portfolio-slot:hover { border-color: var(--accent); }
+    .portfolio-slot.has-img { border-style: solid; border-color: var(--accent); }
+    .portfolio-slot input[type="file"] {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      cursor: pointer;
+      width: 100%;
+      height: 100%;
+    }
+    .portfolio-slot img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: none;
+    }
+    .portfolio-slot.has-img img { display: block; }
+    .portfolio-slot .slot-label {
+      font-size: 0.7rem;
+      color: var(--text-secondary);
+      text-align: center;
+      padding: 4px;
+      pointer-events: none;
+    }
+    .portfolio-slot .slot-plus {
+      font-size: 1.5rem;
+      color: var(--text-secondary);
+      pointer-events: none;
+      margin-bottom: 4px;
+    }
+    .portfolio-slot.has-img .slot-label,
+    .portfolio-slot.has-img .slot-plus { display: none; }
+    .portfolio-remove {
+      position: absolute;
+      top: 4px;
+      right: 4px;
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background: rgba(0,0,0,0.6);
+      color: #fff;
+      border: none;
+      font-size: 12px;
+      cursor: pointer;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 5;
+    }
+    .portfolio-slot.has-img .portfolio-remove { display: flex; }
+    .portfolio-count {
+      font-size: 0.78rem;
+      color: var(--text-secondary);
+      margin-bottom: 14px;
+    }
+    .portfolio-count span { color: var(--accent); font-weight: 700; }
+    /* ID Upload */
+    .id-upload-area {
+      border: 2px dashed var(--border);
+      border-radius: 16px;
+      padding: 24px;
+      text-align: center;
+      cursor: pointer;
+      transition: border-color 0.2s;
+      position: relative;
+    }
+    .id-upload-area:hover { border-color: var(--accent); }
+    .id-upload-area input[type="file"] {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      cursor: pointer;
+      width: 100%;
+      height: 100%;
+    }
+    .id-upload-icon { font-size: 2rem; margin-bottom: 8px; }
+    .id-upload-area p { margin: 4px 0; font-size: 0.85rem; }
+    /* ── Safety Section ── */
+    .safety-card {
+      background: var(--tag-bg);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 18px;
+      margin-bottom: 20px;
+    }
+    .safety-card-title {
+      font-weight: 700;
+      font-size: 0.95rem;
+      margin-bottom: 4px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .safety-card-sub {
+      font-size: 0.8rem;
+      color: var(--text-secondary);
+      margin-bottom: 14px;
+    }
+    /* ── Buttons ── */
+    .wizard-actions {
+      display: flex;
+      gap: 12px;
+      margin-top: 28px;
+    }
+    .btn-wizard-back {
+      flex: 0 0 auto;
+      padding: 13px 20px;
+      border-radius: 12px;
+      border: 1.5px solid var(--border);
+      background: transparent;
+      color: var(--text-secondary);
+      font-family: inherit;
+      font-weight: 600;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .btn-wizard-back:hover { border-color: var(--accent); color: var(--text-primary); }
+    .btn-wizard-next {
+      flex: 1;
+      padding: 14px;
+      border-radius: 12px;
+      border: none;
+      background: var(--accent);
+      color: #fff;
+      font-family: inherit;
+      font-weight: 700;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: opacity 0.2s, transform 0.15s;
+    }
+    .btn-wizard-next:hover { opacity: 0.9; transform: translateY(-2px); }
+    .btn-wizard-next:active { transform: scale(0.98); }
+    .btn-wizard-next:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+    /* ── Success ── */
+    .success-panel {
+      text-align: center;
+      padding: 16px 0;
+    }
+    .success-icon {
+      font-size: 4rem;
+      margin-bottom: 16px;
+      animation: bounceIn 0.5s ease;
+    }
+    @keyframes bounceIn {
+      0%   { transform: scale(0.3); opacity: 0; }
+      50%  { transform: scale(1.1); }
+      100% { transform: scale(1); opacity: 1; }
+    }
+    .success-heading {
+      font-size: 1.5rem;
+      font-weight: 800;
+      margin: 0 0 10px;
+    }
+    .success-body {
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+      line-height: 1.6;
+      max-width: 340px;
+      margin: 0 auto 24px;
+    }
+    .verification-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 18px;
+      border-radius: 50px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      margin-bottom: 20px;
+    }
+    .verification-badge.pending {
+      background: rgba(234,179,8,0.15);
+      color: #ca8a04;
+      border: 1px solid rgba(234,179,8,0.3);
+    }
+    .verification-badge.buyer {
+      background: var(--tag-bg);
+      color: var(--accent);
+      border: 1px solid var(--border);
+    }
+    /* ── Divider ── */
+    .divider {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin: 18px 0;
+      color: var(--text-secondary);
+      font-size: 0.8rem;
+    }
+    .divider::before,
+    .divider::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+    /* ── Char counter ── */
+    .char-counter {
+      text-align: right;
+      font-size: 0.75rem;
+      color: var(--text-secondary);
+      margin-top: 4px;
+    }
+    /* Verified check overlay */
+    .check-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(0,0,0,0.45);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-size: 1.4rem;
+      border-radius: 12px;
+      opacity: 0;
+      transition: opacity 0.2s;
+    }
+    .portfolio-slot.has-img:hover .check-overlay { opacity: 1; }
+    /* Domain check indicator */
+    .email-status {
+      display: none;
+      font-size: 0.75rem;
+      margin-top: 5px;
+      font-weight: 600;
+    }
+    .email-status.valid { display: block; color: #22c55e; }
+    .email-status.invalid { display: block; color: #ef4444; }
+    /* Login redirect */
+    .login-redirect {
+      text-align: center;
+      margin-top: 20px;
+      font-size: 0.88rem;
+      color: var(--text-secondary);
+    }
+    .login-redirect a { color: var(--accent); font-weight: 600; text-decoration: none; }
+    /* Pill checkboxes for terms */
+    .check-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      font-size: 0.83rem;
+      color: var(--text-secondary);
+      cursor: pointer;
+    }
+    .check-row input[type="checkbox"] {
+      width: 16px;
+      height: 16px;
+      flex-shrink: 0;
+      accent-color: var(--accent);
+      margin-top: 2px;
+    }
+  </style>
+</head>
+<body data-page="signup">
+  <div id="cursor-dot"></div>
+  <div id="cursor-ring"></div>
+
+  <header class="navbar">
+    <a class="nav-brand" href="index.html">
+      <img src="assets/images/main_logo_final.jpeg" alt="Kalaa Kart logo" style="height:45px;width:auto;object-fit:contain;">
+    </a>
+    <div class="nav-links">
+      <a href="index.html">HOME</a>
+      <a href="profiles.html">PROFILES</a>
+      <a href="mentor-booking.html">MENTOR BOOKING</a>
+      <a href="marketplace.html">REUSE SECTION</a>
+      <a href="login.html">LOG IN</a>
+      <a href="signup.html" style="color:var(--accent);font-weight:700;">SIGN UP</a>
+    </div>
+    <button class="nav-hamburger" id="navHamburger" aria-label="Toggle menu">☰</button>
+  </header>
+  <nav class="nav-mobile-dropdown" id="navMobileDropdown">
+    <a href="index.html">HOME</a>
+    <a href="profiles.html">PROFILES</a>
+    <a href="mentor-booking.html">MENTOR BOOKING</a>
+    <a href="marketplace.html">REUSE SECTION</a>
+    <a href="login.html" style="color:var(--accent);">LOG IN</a>
+    <a href="signup.html" style="color:var(--accent);font-weight:700;">SIGN UP</a>
+  </nav>
+
+  <main class="signup-wrap">
+    <div class="signup-card">
+      <!-- Progress -->
+      <div class="wizard-progress" id="wizardProgress">
+        <div class="wizard-step-dot active" id="dot1" title="Step 1: Choose Role">1</div>
+        <div class="wizard-connector" id="conn1"></div>
+        <div class="wizard-step-dot" id="dot2" title="Step 2: Your Details">2</div>
+        <div class="wizard-connector" id="conn2"></div>
+        <div class="wizard-step-dot" id="dot3" title="Step 3: Safety & Verify">3</div>
+      </div>
+
+      <div class="wizard-body">
+
+        <!-- ═══ STEP 1: ROLE SELECTION ═══ -->
+        <div class="wizard-panel active" id="step1">
+          <h1 class="wizard-title">Join Kalaa Kart</h1>
+          <p class="wizard-sub">Choose how you'll use the platform. You can hold both roles.</p>
+
+          <div class="role-cards">
+            <div class="role-card" id="roleCardBuyer" onclick="toggleRole('buyer')" role="button" tabindex="0" aria-pressed="false">
+              <span class="role-icon">🛍️</span>
+              <div class="role-name">Buyer</div>
+              <div class="role-desc">Browse artwork, book mentors, and rent/buy student essentials.</div>
+            </div>
+            <div class="role-card" id="roleCardSeller" onclick="toggleRole('seller')" role="button" tabindex="0" aria-pressed="false">
+              <span class="role-icon">🎨</span>
+              <div class="role-name">Seller</div>
+              <div class="role-desc">List your art, skills, items for sale or rent on campus.</div>
+            </div>
+          </div>
+          <p class="role-both-hint">Select <strong>both</strong> to hold the Buyer + Seller dual-role.</p>
+
+          <div id="roleError" class="field-error show" style="text-align:center; display:none;">Please select at least one role to continue.</div>
+
+          <div class="wizard-actions" style="margin-top:8px;">
+            <button class="btn-wizard-next" id="step1Next" onclick="goStep2()">Continue →</button>
+          </div>
+
+          <div class="login-redirect">Already have an account? <a href="login.html">Log In</a></div>
+        </div>
+
+        <!-- ═══ STEP 2: CORE DETAILS ═══ -->
+        <div class="wizard-panel" id="step2">
+          <h2 class="wizard-title" id="step2Title">Your Details</h2>
+          <p class="wizard-sub" id="step2Sub">Fill in your campus information to get started.</p>
+
+          <!-- Core fields (all roles) -->
+          <div class="field-row">
+            <div class="field">
+              <label for="s2fullName">Full Name</label>
+              <input type="text" id="s2fullName" placeholder="Ananya Iyer" autocomplete="name">
+              <div class="field-error" id="err-name">Full name is required.</div>
+            </div>
+            <div class="field">
+              <label for="s2year">Year</label>
+              <select id="s2year">
+                <option value="">Select…</option>
+                <option value="First Year">First Year</option>
+                <option value="Second Year">Second Year</option>
+                <option value="Third Year">Third Year</option>
+                <option value="Final Year">Final Year</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="s2college">College Name</label>
+            <input type="text" id="s2college" placeholder="E.g. MIT World Peace University" autocomplete="organization">
+            <div class="field-error" id="err-college">College name is required.</div>
+          </div>
+
+          <div class="field">
+            <label for="s2email">College Email</label>
+            <input type="email" id="s2email" placeholder="ananya@campus.edu" autocomplete="email" oninput="checkEmailDomain(this.value)">
+            <div class="email-status" id="emailStatus"></div>
+            <div class="field-error" id="err-email">A valid college email (.edu / .ac.in) is required.</div>
+          </div>
+
+          <div class="field">
+            <label for="s2password">Password</label>
+            <input type="password" id="s2password" placeholder="At least 8 characters" autocomplete="new-password" oninput="updateStrength(this.value)">
+            <div class="pw-strength-bar"><div class="pw-strength-fill" id="pwFill"></div></div>
+            <div class="pw-strength-label" id="pwLabel">Enter a password</div>
+            <div class="field-error" id="err-password">Password must be at least 8 characters.</div>
+          </div>
+
+          <!-- Seller-only fields -->
+          <div id="sellerFields" style="display:none;">
+            <div class="divider">Seller Portfolio</div>
+            <p style="font-size:0.82rem;color:var(--text-secondary);margin-bottom:14px;">Upload 3–6 images of your work. These will be reviewed before your Seller account is verified.</p>
+
+            <div class="portfolio-grid" id="portfolioGrid">
+              <!-- slots injected by JS -->
+            </div>
+            <div class="portfolio-count">Images added: <span id="portfolioCountNum">0</span> / 6 <em style="margin-left:4px;opacity:0.6;">(min 3)</em></div>
+            <div class="field-error" id="err-portfolio">Please upload at least 3 portfolio images.</div>
+
+            <div class="field">
+              <label for="s2bio">Seller Bio <em style="font-weight:400;font-size:0.78rem;color:var(--text-secondary);">(1–2 lines)</em></label>
+              <textarea id="s2bio" rows="2" maxlength="200" placeholder="Hi, I'm Ananya — resin artist specialising in custom jewellery and keychains." oninput="updateBioCount()"></textarea>
+              <div class="char-counter"><span id="bioCount">0</span> / 200</div>
+              <div class="field-error" id="err-bio">A short bio is required for Seller accounts.</div>
+            </div>
+
+            <div class="field">
+              <label for="s2link">Portfolio Link <span class="opt">(Optional)</span></label>
+              <input type="url" id="s2link" placeholder="https://instagram.com/yourshop">
+            </div>
+
+            <div class="divider">Identity Verification</div>
+            <p style="font-size:0.82rem;color:var(--text-secondary);margin-bottom:10px;">Upload a college ID or government-issued ID. Used for trust & safety — never shown publicly.</p>
+            <div class="id-upload-area" id="idUploadArea">
+              <input type="file" id="s2idFile" accept="image/*,.pdf" onchange="handleIdUpload(this)">
+              <div class="id-upload-icon" id="idIcon">🪪</div>
+              <p id="idFileName">Click to upload ID (image or PDF)</p>
+              <p style="font-size:0.75rem;color:var(--text-secondary);">Max 5MB · JPG, PNG, PDF</p>
+            </div>
+            <div class="field-error" id="err-id">Please upload a college or government ID.</div>
+          </div>
+
+          <div class="wizard-actions">
+            <button class="btn-wizard-back" onclick="goStep(1)">← Back</button>
+            <button class="btn-wizard-next" onclick="goStep3()">Continue →</button>
+          </div>
+        </div>
+
+        <!-- ═══ STEP 3: SAFETY + SUBMIT ═══ -->
+        <div class="wizard-panel" id="step3">
+          <h2 class="wizard-title">Safety & Review</h2>
+          <p class="wizard-sub">Your emergency contact is private — only used if you report an unsafe meetup.</p>
+
+          <div class="safety-card">
+            <div class="safety-card-title">🛡️ Emergency Contact <em style="font-size:0.75rem;font-weight:400;color:var(--text-secondary);margin-left:4px;">Optional but recommended</em></div>
+            <div class="safety-card-sub">Visible only to Kalaa Kart admins if you trigger a safety report. Never shown to other users.</div>
+            <div class="field-row">
+              <div class="field">
+                <label for="s3ecName">Contact Name</label>
+                <input type="text" id="s3ecName" placeholder="Parent / Guardian name" autocomplete="off">
+              </div>
+              <div class="field">
+                <label for="s3ecPhone">Phone Number</label>
+                <input type="tel" id="s3ecPhone" placeholder="+91 98765 43210" autocomplete="off">
+              </div>
+            </div>
+          </div>
+
+          <!-- Review summary -->
+          <div id="reviewSummary" style="background:var(--card-bg);border:1px solid var(--border);border-radius:16px;padding:16px;margin-bottom:20px;">
+            <div style="font-weight:700;font-size:0.9rem;margin-bottom:12px;display:flex;align-items:center;gap:8px;">📋 Account Summary</div>
+            <div id="summaryContent" style="font-size:0.83rem;color:var(--text-secondary);line-height:1.8;"></div>
+          </div>
+
+          <label class="check-row" style="margin-bottom:14px;">
+            <input type="checkbox" id="termsCheck">
+            <span>I agree to the <a href="#" style="color:var(--accent);">Terms of Service</a> and <a href="#" style="color:var(--accent);">Community Guidelines</a>.</span>
+          </label>
+
+          <div class="wizard-actions">
+            <button class="btn-wizard-back" onclick="goStep(2)">← Back</button>
+            <button class="btn-wizard-next" id="submitBtn" onclick="handleSubmit()">🎉 Create Account</button>
+          </div>
+        </div>
+
+        <!-- ═══ STEP 4: SUCCESS ═══ -->
+        <div class="wizard-panel" id="stepSuccess">
+          <div class="success-panel">
+            <div class="success-icon" id="successIcon">🎉</div>
+            <h2 class="success-heading" id="successHeading">Welcome to Kalaa Kart!</h2>
+            <div id="verificationBadge"></div>
+            <p class="success-body" id="successBody">Your account has been created. Redirecting you now…</p>
+            <a href="index.html" class="btn-wizard-next" style="display:inline-block;text-align:center;text-decoration:none;padding:14px 32px;border-radius:12px;max-width:220px;">Go to Home</a>
+          </div>
+        </div>
+
+      </div><!-- /wizard-body -->
+    </div><!-- /signup-card -->
+  </main>
+
+  <!-- Theme switcher (standard across all pages) -->
+  <div id="theme-switcher">
+    <button class="theme-toggle-btn" onclick="document.getElementById('theme-panel').classList.toggle('open')">🎨 Theme</button>
+    <div class="theme-panel" id="theme-panel">
+      <button class="theme-opt" data-theme="dark-cold"       onclick="setTheme('dark-cold')"><span class="swatch" style="background:linear-gradient(135deg,#0D0F1A,#7C6EF5)"></span>Dark Cold</button>
+      <button class="theme-opt" data-theme="dark-warm"       onclick="setTheme('dark-warm')"><span class="swatch" style="background:linear-gradient(135deg,#120A05,#E8832A)"></span>Dark Warm</button>
+      <button class="theme-opt" data-theme="light-pro"       onclick="setTheme('light-pro')"><span class="swatch" style="background:linear-gradient(135deg,#F7F8FC,#5046E5)"></span>Light Pro</button>
+      <button class="theme-opt" data-theme="sakura"          onclick="setTheme('sakura')"><span class="swatch" style="background:linear-gradient(135deg,#12080A,#FF78A5)"></span>Sakura</button>
+      <button class="theme-opt" data-theme="midnight-ink"    onclick="setTheme('midnight-ink')"><span class="swatch" style="background:linear-gradient(135deg,#040406,#5C5CFF)"></span>Midnight Ink</button>
+      <button class="theme-opt" data-theme="stone-gold"      onclick="setTheme('stone-gold')"><span class="swatch" style="background:linear-gradient(135deg,#0F0E0C,#D4AF37)"></span>Stone &amp; Gold</button>
+      <button class="theme-opt" data-theme="cyber-campus"    onclick="setTheme('cyber-campus')"><span class="swatch" style="background:linear-gradient(135deg,#020205,#00F2FF)"></span>Cyber Campus</button>
+      <button class="theme-opt" data-theme="vintage-vinyl"   onclick="setTheme('vintage-vinyl')"><span class="swatch" style="background:linear-gradient(135deg,#F2E8D5,#D95D39)"></span>Vintage Vinyl</button>
+      <button class="theme-opt" data-theme="emerald-forest"  onclick="setTheme('emerald-forest')"><span class="swatch" style="background:linear-gradient(135deg,#0A1A12,#4CAF50)"></span>Emerald Forest</button>
+      <button class="theme-opt" data-theme="ocean-abyss"     onclick="setTheme('ocean-abyss')"><span class="swatch" style="background:linear-gradient(135deg,#010B13,#00BCD4)"></span>Ocean Abyss</button>
+      <button class="theme-opt" data-theme="sunset-mirage"   onclick="setTheme('sunset-mirage')"><span class="swatch" style="background:linear-gradient(135deg,#1A0B2E,#FF4E50)"></span>Sunset Mirage</button>
+      <button class="theme-opt" data-theme="parchment-quill" onclick="setTheme('parchment-quill')"><span class="swatch" style="background:linear-gradient(135deg,#D6C6B0,#8B4513)"></span>Parchment &amp; Quill</button>
+    </div>
+  </div>
+
+  <script src="assets/js/main.js?v=1.1"></script>
+  <script>
+  /* ═══════════════════════════════════════════════
+     KALAA KART — SIGNUP WIZARD
+     All data stored in localStorage with backend-
+     ready schema matching Mongoose models.
+  ═══════════════════════════════════════════════ */
+
+  // ── State ──────────────────────────────────────
+  const state = {
+    roles: [],          // ['buyer'] | ['seller'] | ['buyer','seller']
+    portfolioImages: [], // array of base64 strings
+    portfolioCount: 0,
+    idFileData: null,
+    currentStep: 1
+  };
+
+  // ── Allowed college email domains ──────────────
+  const ALLOWED_DOMAINS = ['.edu', '.ac.in', '.edu.in', '.ac.uk', '.university'];
+  function isCollegeEmail(email) {
+    const lower = email.toLowerCase();
+    return ALLOWED_DOMAINS.some(d => lower.endsWith(d)) || lower.includes('@');
+  }
+  function isStrictCollegeEmail(email) {
+    const lower = email.toLowerCase();
+    return ALLOWED_DOMAINS.some(d => lower.endsWith(d));
+  }
+
+  // ── Role Toggle ────────────────────────────────
+  function toggleRole(role) {
+    const idx = state.roles.indexOf(role);
+    if (idx === -1) { state.roles.push(role); }
+    else { state.roles.splice(idx, 1); }
+    document.getElementById('roleCardBuyer').classList.toggle('selected', state.roles.includes('buyer'));
+    document.getElementById('roleCardSeller').classList.toggle('selected', state.roles.includes('seller'));
+    document.getElementById('roleCardBuyer').setAttribute('aria-pressed', state.roles.includes('buyer'));
+    document.getElementById('roleCardSeller').setAttribute('aria-pressed', state.roles.includes('seller'));
+  }
+
+  // ── Email domain check ─────────────────────────
+  function checkEmailDomain(val) {
+    const el = document.getElementById('emailStatus');
+    if (!val) { el.className = 'email-status'; el.textContent = ''; return; }
+    const ok = isStrictCollegeEmail(val);
+    el.className = 'email-status ' + (ok ? 'valid' : 'invalid');
+    el.textContent = ok ? '✓ Recognised college domain' : '⚠ Must be a .edu or .ac.in address';
+  }
+
+  // ── Password strength ──────────────────────────
+  function updateStrength(pw) {
+    const fill = document.getElementById('pwFill');
+    const label = document.getElementById('pwLabel');
+    let score = 0;
+    if (pw.length >= 8) score++;
+    if (/[A-Z]/.test(pw)) score++;
+    if (/[0-9]/.test(pw)) score++;
+    if (/[^A-Za-z0-9]/.test(pw)) score++;
+    const pct = (score / 4) * 100;
+    const colors = ['#ef4444','#f97316','#eab308','#22c55e'];
+    const labels = ['Too weak','Fair','Good','Strong 💪'];
+    fill.style.width = pct + '%';
+    fill.style.background = colors[score - 1] || '#ef4444';
+    label.textContent = pw.length === 0 ? 'Enter a password' : (labels[score - 1] || 'Too weak');
+  }
+
+  // ── Bio char counter ───────────────────────────
+  function updateBioCount() {
+    const val = document.getElementById('s2bio').value.length;
+    document.getElementById('bioCount').textContent = val;
+  }
+
+  // ── Portfolio slots ────────────────────────────
+  function buildPortfolioSlots() {
+    const grid = document.getElementById('portfolioGrid');
+    grid.innerHTML = '';
+    for (let i = 0; i < 6; i++) {
+      const slot = document.createElement('div');
+      slot.className = 'portfolio-slot';
+      slot.id = 'pSlot' + i;
+      slot.innerHTML = `
+        <input type="file" accept="image/*" onchange="handlePortfolioImg(this, ${i})" id="pInput${i}">
+        <span class="slot-plus">+</span>
+        <span class="slot-label">Image ${i + 1}${i < 3 ? ' *' : ''}</span>
+        <img src="" alt="Portfolio ${i + 1}" id="pImg${i}">
+        <div class="check-overlay">✕ Remove</div>
+        <button class="portfolio-remove" type="button" onclick="removePortfolioImg(event, ${i})">✕</button>
+      `;
+      grid.appendChild(slot);
+    }
+  }
+  buildPortfolioSlots();
+
+  async function handlePortfolioImg(input, idx) {
+    const file = input.files[0];
+    if (!file) return;
+
+    // Use KKImageProcessor
+    const result = await KKImageProcessor.processImage(file);
+    const slotEl = document.getElementById('pSlot' + idx);
+    const imgEl = document.getElementById('pImg' + idx);
+
+    if (!result.ok) {
+      alert(`Image upload failed: ${result.reason}`);
+      input.value = '';
+      return;
+    }
+
+    // Process pHash and duplicates via KKImageProcessor
+    const imgObj = new Image();
+    imgObj.src = result.dataUrl;
+    imgObj.onload = () => {
+      const pHash = KKImageProcessor.computePHash(imgObj);
+      const dupMatches = KKImageProcessor.checkDuplicates(pHash);
+      const dupFlags = dupMatches.map(d => ({ flag: 'potential_duplicate', detail: `Similar to: ${d.name}` }));
+      
+      const contentFlags = KKImageProcessor.checkImageContent(result.canvas, 'portfolio');
+      const allFlags = [...contentFlags, ...dupFlags];
+
+      // Format flags for signup state
+      const flagStrings = allFlags.map(f => f.flag);
+
+      state.portfolioImages[idx] = { 
+        data: result.dataUrl, 
+        flags: flagStrings, 
+        hash: pHash,
+        filename: file.name, 
+        size: result.compressedSize || file.size, 
+        type: file.type 
+      };
+
+      imgEl.src = result.dataUrl;
+      slotEl.classList.add('has-img');
+      updatePortfolioCount();
+    };
+  }
+
+  function removePortfolioImg(e, idx) {
+    e.stopPropagation();
+    state.portfolioImages[idx] = null;
+    document.getElementById('pImg' + idx).src = '';
+    document.getElementById('pSlot' + idx).classList.remove('has-img');
+    document.getElementById('pInput' + idx).value = '';
+    updatePortfolioCount();
+  }
+
+  function updatePortfolioCount() {
+    const count = state.portfolioImages.filter(Boolean).length;
+    state.portfolioCount = count;
+    document.getElementById('portfolioCountNum').textContent = count;
+  }
+
+  // ── ID upload ──────────────────────────────────
+  function handleIdUpload(input) {
+    const file = input.files[0];
+    if (!file) return;
+    if (file.size > 5 * 1024 * 1024) {
+      alert('ID file must be under 5MB.');
+      input.value = '';
+      return;
+    }
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      state.idFileData = { data: reader.result, name: file.name, type: file.type };
+      document.getElementById('idFileName').textContent = '✓ ' + file.name;
+      document.getElementById('idIcon').textContent = '✅';
+    };
+    reader.readAsDataURL(file);
+  }
+
+  // ── Validation helpers ─────────────────────────
+  function showErr(id, show) {
+    document.getElementById(id).classList.toggle('show', show);
+    return show;
+  }
+  function val(id) { return (document.getElementById(id) || {}).value || ''; }
+
+  // ── Step navigation ────────────────────────────
+  function goStep(n) {
+    document.querySelectorAll('.wizard-panel').forEach(p => p.classList.remove('active'));
+    document.getElementById(n === 'success' ? 'stepSuccess' : 'step' + n).classList.add('active');
+    state.currentStep = n;
+    updateProgress(n);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function updateProgress(step) {
+    const nums = [1, 2, 3];
+    nums.forEach(n => {
+      const dot = document.getElementById('dot' + n);
+      if (!dot) return;
+      dot.classList.remove('active', 'done');
+      if (typeof step === 'number') {
+        if (n < step) dot.classList.add('done');
+        if (n === step) dot.classList.add('active');
+      }
+    });
+    if (document.getElementById('conn1')) document.getElementById('conn1').classList.toggle('done', typeof step === 'number' && step > 1);
+    if (document.getElementById('conn2')) document.getElementById('conn2').classList.toggle('done', typeof step === 'number' && step > 2);
+  }
+
+  function goStep2() {
+    const roleErr = document.getElementById('roleError');
+    if (state.roles.length === 0) {
+      roleErr.style.display = 'block';
+      return;
+    }
+    roleErr.style.display = 'none';
+
+    // Show/hide seller fields
+    const isSeller = state.roles.includes('seller');
+    document.getElementById('sellerFields').style.display = isSeller ? 'block' : 'none';
+    document.getElementById('step2Title').textContent = isSeller ? 'Your Details & Portfolio' : 'Your Details';
+    document.getElementById('step2Sub').textContent = isSeller
+      ? 'Fill in your details and upload your portfolio images.'
+      : 'Fill in your campus information to get started.';
+    goStep(2);
+  }
+
+  function goStep3() {
+    let ok = true;
+    const name = val('s2fullName').trim();
+    const email = val('s2email').trim();
+    const pw = val('s2password');
+    const college = val('s2college').trim();
+
+    if (showErr('err-name', !name)) ok = false;
+    if (showErr('err-email', !isStrictCollegeEmail(email))) ok = false;
+    if (showErr('err-password', pw.length < 8)) ok = false;
+    if (showErr('err-college', !college)) ok = false;
+
+    if (state.roles.includes('seller')) {
+      const bioOk = val('s2bio').trim().length >= 10;
+      if (showErr('err-bio', !bioOk)) ok = false;
+      if (showErr('err-portfolio', state.portfolioCount < 3)) ok = false;
+      if (showErr('err-id', !state.idFileData)) ok = false;
+    }
+    if (!ok) {
+      const firstErr = document.querySelector('.field-error.show');
+      if (firstErr) firstErr.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      return;
+    }
+
+    // Populate review summary
+    const roles = state.roles.map(r => r.charAt(0).toUpperCase() + r.slice(1)).join(' + ');
+    const sellerExtra = state.roles.includes('seller')
+      ? `<br>📸 Portfolio images: ${state.portfolioCount}<br>🪪 ID uploaded: ${state.idFileData ? 'Yes' : 'No'}`
+      : '';
+    document.getElementById('summaryContent').innerHTML =
+      `👤 <strong>${name}</strong><br>
+       🎓 ${college} · ${val('s2year') || 'Year not set'}<br>
+       📧 ${email}<br>
+       🏷️ Roles: <strong>${roles}</strong>${sellerExtra}`;
+    goStep(3);
+  }
+
+  async function handleSubmit() {
+    if (!document.getElementById('termsCheck').checked) {
+      alert('Please accept the Terms of Service to continue.');
+      return;
+    }
+
+    const btn = document.getElementById('submitBtn');
+    btn.disabled = true;
+    btn.textContent = 'Creating account…';
+
+    const isSeller = state.roles.includes('seller');
+
+    // Collect all flags from uploaded portfolio images
+    let allFlags = [];
+    if (isSeller) {
+      allFlags = state.portfolioImages.filter(Boolean).flatMap((img, i) =>
+        (img.flags || []).map(f => ({ imageIndex: i, flag: f }))
+      );
+    }
+
+    const needsReview = isSeller && allFlags.length > 0;
+    const verifiedBadge = isSeller ? false : true; // buyers auto-verified; sellers need review
+
+    // ── Build user document (backend-ready schema) ──
+    const now = new Date().toISOString();
+    const userId = 'u_' + Date.now();
+    const userDoc = {
+      _id: userId,
+      name: val('s2fullName').trim(),
+      email: val('s2email').trim(),
+      college: val('s2college').trim(),
+      year: val('s2year'),
+      roles: state.roles,                   // roles stored as array
+      passwordHash: btoa(val('s2password')), // placeholder — use bcrypt on real backend
+      verifiedBadge: verifiedBadge,
+      reviewStatus: isSeller ? (needsReview ? 'flagged' : 'pending') : 'approved',
+      createdAt: now,
+      emergencyContact: {
+        name: val('s3ecName').trim() || null,
+        phone: val('s3ecPhone').trim() || null
+      },
+      portfolio: isSeller ? {
+        v: 1,
+        bio: val('s2bio').trim(),
+        link: val('s2link').trim() || null,
+        images: state.portfolioImages.filter(Boolean),
+        submittedAt: now,
+        history: []
+      } : null,
+      idVerification: isSeller ? {
+        file: state.idFileData,
+        uploadedAt: now,
+        status: 'pending'
+      } : null
+    };
+
+    // ── Save user to localStorage ──
+    const users = JSON.parse(localStorage.getItem('kk_users') || '[]');
+    users.push(userDoc);
+    localStorage.setItem('kk_users', JSON.stringify(users));
+    localStorage.setItem('kk_current_user', JSON.stringify(userDoc));
+    localStorage.setItem('kk_user_logged_in', 'true');
+    localStorage.setItem('kk_user_email', userDoc.email);
+
+    // ── Queue flagged sellers for admin review ──
+    if (needsReview) {
+      const queue = JSON.parse(localStorage.getItem('kk_review_queue') || '[]');
+      queue.push({
+        userId: userId,
+        name: userDoc.name,
+        email: userDoc.email,
+        roles: userDoc.roles,
+        portfolio: userDoc.portfolio,
+        flags: allFlags,
+        queuedAt: now,
+        status: 'pending'
+      });
+      localStorage.setItem('kk_review_queue', JSON.stringify(queue));
+    }
+
+    // ── Log auth event ──
+    const authLogs = JSON.parse(localStorage.getItem('kk_auth_log') || '[]');
+    authLogs.push({ event: 'signup', userId, email: userDoc.email, roles: state.roles, ts: now });
+    localStorage.setItem('kk_auth_log', JSON.stringify(authLogs));
+
+    // ── Show success ──
+    const successIcon = document.getElementById('successIcon');
+    const successHeading = document.getElementById('successHeading');
+    const successBody = document.getElementById('successBody');
+    const badge = document.getElementById('verificationBadge');
+
+    if (isSeller && needsReview) {
+      successIcon.textContent = '⏳';
+      successHeading.textContent = 'Almost there!';
+      badge.innerHTML = '<div class="verification-badge pending">⚠️ Seller account pending review</div>';
+      successBody.textContent = `Welcome, ${userDoc.name}! Your portfolio has been flagged for a quick authenticity check. We'll notify you at ${userDoc.email} once approved — usually within 24 hours.`;
+    } else if (isSeller) {
+      successIcon.textContent = '🎨';
+      successHeading.textContent = 'Seller account created!';
+      badge.innerHTML = '<div class="verification-badge pending">🕐 Awaiting admin approval</div>';
+      successBody.textContent = `Welcome, ${userDoc.name}! Your portfolio is with our team for review. You'll be able to list items once approved.`;
+    } else {
+      successIcon.textContent = '🎉';
+      successHeading.textContent = 'Welcome to Kalaa Kart!';
+      badge.innerHTML = '<div class="verification-badge buyer">✅ Buyer account active</div>';
+      successBody.textContent = `You're all set, ${userDoc.name}! Start browsing campus talent and essentials.`;
+    }
+
+    goStep('success');
+    setTimeout(() => { window.location.href = 'index.html'; }, 4000);
+  }
+
+  // ── Mobile nav ─────────────────────────────────
+  (function() {
+    const hamburger = document.getElementById('navHamburger');
+    const mobileNav = document.getElementById('navMobileDropdown');
+    if (hamburger && mobileNav) {
+      hamburger.addEventListener('click', () => {
+        mobileNav.classList.toggle('open');
+        hamburger.textContent = mobileNav.classList.contains('open') ? '✕' : '☰';
+      });
+      document.addEventListener('click', e => {
+        if (!hamburger.contains(e.target) && !mobileNav.contains(e.target)) {
+          mobileNav.classList.remove('open');
+          hamburger.textContent = '☰';
+        }
+      });
+    }
+  })();
+  </script>
+</body>
+</html>

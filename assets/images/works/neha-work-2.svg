@@ -1,0 +1,11 @@
+<svg width="480" height="300" viewBox="0 0 480 300" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="480" height="300" rx="26" fill="#F5FFF8"/>
+  <rect x="86" y="56" width="308" height="188" rx="22" fill="#FFFFFF"/>
+  <circle cx="154" cy="124" r="24" fill="#9CCB8F"/>
+  <circle cx="240" cy="124" r="24" fill="#D5E7A0"/>
+  <circle cx="326" cy="124" r="24" fill="#9CCB8F"/>
+  <path d="M178 124H216" stroke="#2F5D50" stroke-width="7" stroke-linecap="round"/>
+  <path d="M264 124H302" stroke="#2F5D50" stroke-width="7" stroke-linecap="round"/>
+  <path d="M132 186H348" stroke="#2F5D50" stroke-width="7" stroke-linecap="round"/>
+  <text x="240" y="278" text-anchor="middle" fill="#111827" font-family="Arial, sans-serif" font-size="25" font-weight="700">Reaction Flow Chart</text>
+</svg>

@@ -1,0 +1,9 @@
+<svg width="480" height="300" viewBox="0 0 480 300" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="480" height="300" rx="26" fill="#F7FAFF"/>
+  <path d="M99 187C99 152.206 127.206 124 162 124H318C352.794 124 381 152.206 381 187V199H99V187Z" fill="#7E9DFF"/>
+  <path d="M154 113C165.333 92.3333 180.867 82 201.5 82C222.133 82 237.667 92.3333 248 113" stroke="#17313E" stroke-width="8" stroke-linecap="round"/>
+  <path d="M232 113C243.333 92.3333 258.867 82 279.5 82C300.133 82 315.667 92.3333 326 113" stroke="#17313E" stroke-width="8" stroke-linecap="round"/>
+  <circle cx="196" cy="165" r="18" fill="#FFF0BA"/>
+  <circle cx="283" cy="165" r="18" fill="#D8FFE7"/>
+  <text x="240" y="278" text-anchor="middle" fill="#17313E" font-family="Arial, sans-serif" font-size="26" font-weight="700">Handmade Wool Muffler Set</text>
+</svg>
